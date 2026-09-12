@@ -3,26 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raza Online Academy</title>
+<title>Raza Online Academy - Portal</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
 <style>
 body{font-family:Arial,sans-serif;background:#f4f7f6;margin:0;padding:20px;color:#333}
-.container{max-width:600px;margin:auto;background:white;padding:20px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.1)}
+.container{max-width:650px;margin:auto;background:white;padding:20px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.1)}
 h2{color:#007bff;text-align:center}.card{background:#e9ecef;padding:15px;margin-top:15px;border-radius:8px}
 button{background:#007bff;color:white;border:none;padding:10px 15px;border-radius:5px;cursor:pointer;width:100%;font-size:16px;margin-top:10px}
 button:hover{background:#0056b3}.hidden{display:none}
+input, select{width:100%;padding:10px;margin-top:5px;box-sizing:border-box;border:1px solid #ccc;border-radius:5px;}
+table{width:100%;border-collapse:collapse;margin-top:10px;}
+th, td{border:1px solid #ddd;padding:8px;text-align:center;font-size:14px;}
+th{background:#007bff;color:white;}
 </style>
 </head>
 <body>
 <div class="container">
 <h2>Raza Online Academy</h2>
-<p style="text-align:center;">Ghar baith kar apna Sabaq aur Attendance dekhein</p>
-<div id="login-section">
-<h3>Student Portal Login</h3>
-<input type="email" id="student-email" placeholder="Apna Email darj karein" style="width:100%;padding:10px;margin-top:5px;box-sizing:border-box;border:1px solid #ccc;border-radius:5px;">
-<button onclick="fetchStudentData()">Portal Khulein</button>
+<p style="text-align:center;">Portal & Admin Monitoring System</p>
+
+<!-- Main Choice Section -->
+<div id="choice-section">
+<button onclick="showStudentLogin()">Student Portal</button>
+<button onclick="showAdminLogin()" style="background:#28a745;margin-top:15px;">Admin Panel (Owner)</button>
 </div>
+
+<!-- Student Login -->
+<div id="student-login-section" class="hidden">
+<h3>Student Login</h3>
+<input type="email" id="student-email" placeholder="Apna Email darj karein">
+<button onclick="fetchStudentData()">Portal Khulein</button>
+<button onclick="goBack()" style="background:#6c757d;">Wapas Jayein</button>
+</div>
+
+<!-- Admin Login -->
+<div id="admin-login-section" class="hidden">
+<h3>Admin Login (Rizwan Raza)</h3>
+<input type="password" id="admin-pass" placeholder="Admin Password darj karein">
+<button onclick="verifyAdmin()" style="background:#28a745;">Login Karein</button>
+<button onclick="goBack()" style="background:#6c757d;">Wapas Jayein</button>
+</div>
+
+<!-- Student Dashboard -->
 <div id="dashboard-section" class="hidden">
 <div class="card"><h3>Student Profile</h3>
 <p><strong>Naam:</strong> <span id="s-name">-</span></p>
@@ -31,19 +54,56 @@ button:hover{background:#0056b3}.hidden{display:none}
 <p><strong>Attendance:</strong> <span id="s-attendance">-</span></p>
 <p><strong>Sabaq Details:</strong> <span id="s-sabaq">-</span></p>
 <p><strong>Date:</strong> <span id="s-date">-</span></p></div>
-<button onclick="location.reload()" style="background:#6c757d;">Wapas Jayein</button>
-</div></div>
+<button onclick="goBack()" style="background:#6c757d;">Wapas Jayein</button>
+</div>
+
+<!-- Admin Dashboard -->
+<div id="admin-dashboard-section" class="hidden">
+<div class="card" style="background:#e2f0d9;">
+<h3>Admin Control Panel</h3>
+<p>Khush Amdeed, Rizwan Raza! Aap yahan tamam students aur unke records par nazar rakh sakte hain.</p>
+</div>
+<div class="card">
+<h3>Tamam Students ki List</h3>
+<div id="students-list-container" style="overflow-x:auto;">
+<p>Data load ho raha hai...</p>
+</div>
+</div>
+<button onclick="goBack()" style="background:#6c757d;">Logout / Wapas Jayein</button>
+</div>
+
+</div>
+
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 const supabaseUrl='https://vpdqbwflnvrqcuxzkjof.supabase.co'
 const supabaseKey='sb_publishable_z-u1RJ0Rgw-u9jKoC4a4Kg_vKqaY8c5'
 const supabase=createClient(supabaseUrl,supabaseKey)
+
+window.showStudentLogin = function(){
+document.getElementById('choice-section').classList.add('hidden');
+document.getElementById('student-login-section').classList.remove('hidden');
+}
+
+window.showAdminLogin = function(){
+document.getElementById('choice-section').classList.add('hidden');
+document.getElementById('admin-login-section').classList.remove('hidden');
+}
+
+window.goBack = function(){
+document.querySelectorAll('.container > div').forEach(el => el.classList.add('hidden'));
+document.getElementById('choice-section').classList.remove('hidden');
+document.getElementById('student-email').value = '';
+document.getElementById('admin-pass').value = '';
+}
+
 window.fetchStudentData=async function(){
 const email=document.getElementById('student-email').value.trim();
 if(!email){alert('Meherbani karke apna email likhein!');return}
 const {data:studentData,error:studentError}=await supabase.from('students').select('*').ilike('email', email).maybeSingle();
 if(studentError||!studentData){alert('Student nahi mila! Email check karein.');return}
 const {data:recordData}=await supabase.from('daily_records').select('*').eq('student_id',studentData.student_id).order('record_date',{ascending:false}).limit(1);
+
 document.getElementById('s-name').innerText=studentData.student_name || 'Naam mojood nahi';
 document.getElementById('s-email-disp').innerText=studentData.email;
 if(recordData&&recordData.length>0){
@@ -55,9 +115,39 @@ document.getElementById('s-attendance').innerText='N/A';
 document.getElementById('s-sabaq').innerText='Aaj ka record mojood nahi';
 document.getElementById('s-date').innerText='-';
 }
-document.getElementById('login-section').classList.add('hidden');
+document.getElementById('student-login-section').classList.add('hidden');
 document.getElementById('dashboard-section').classList.remove('hidden');
 }
+
+window.verifyAdmin = async function(){
+const pass = document.getElementById('admin-pass').value.trim();
+// Aap yahan apna password change kar sakte hain, filhal 'admin123' rakha hai
+if(pass === 'admin123' || pass === 'rizwan123'){
+document.getElementById('admin-login-section').classList.add('hidden');
+document.getElementById('admin-dashboard-section').classList.remove('hidden');
+loadAdminData();
+}else{
+alert('Ghalat Password! Dobara koshish karein.');
+}
+}
+
+async function loadAdminData(){
+const container = document.getElementById('students-list-container');
+container.innerHTML = '<p>Loading...</p>';
+const {data: students, error} = await supabase.from('students').select('*');
+if(error || !students || students.length === 0){
+container.innerHTML = '<p>Koi student mojood nahi hai.</p>';
+return;
+}
+
+let html = `<table><tr><th>Naam</th><th>Email</th><th>Action</th></tr>`;
+for(let s of students){
+html += `<tr><td>${s.student_name || 'N/A'}</td><td>${s.email}</td><td><button style="padding:5px;font-size:12px;" onclick="alert('Student ID: ${s.student_id}')">Details</button></td></tr>`;
+}
+html += `</table>`;
+container.innerHTML = html;
+}
+
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
 </script>
 </body>
