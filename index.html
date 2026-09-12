@@ -7,33 +7,34 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0b192c">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
-body{background:#f0f2f5;color:#333;display:flex;min-height:100vh;}
-.sidebar{width:260px;background:#0b192c;color:white;position:fixed;height:100%;padding:20px 10px;z-index:100;overflow-y:auto;}
-.sidebar-logo{display:flex;align-items:center;background:#f59e0b;color:#0b192c;padding:10px 15px;border-radius:8px;font-weight:bold;font-size:16px;margin-bottom:20px;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+body{background:#f8fafc;color:#1e293b;display:flex;min-height:100vh;}
+.sidebar{width:260px;background:#0b192c;color:white;position:fixed;height:100%;padding:20px 12px;z-index:100;overflow-y:auto;box-shadow:2px 0 10px rgba(0,0,0,0.1);}
+.sidebar-logo{display:flex;align-items:center;background:#f59e0b;color:#0b192c;padding:12px 15px;border-radius:10px;font-weight:bold;font-size:15px;margin-bottom:20px;}
 .sidebar-logo span{font-size:10px;display:block;color:#0b192c;font-weight:normal;}
-.sidebar a{display:block;color:#cbd5e1;padding:12px 15px;text-decoration:none;border-radius:6px;margin-bottom:6px;font-size:13px;cursor:pointer;}
-.sidebar a:hover, .sidebar a.active{background:#1e3e62;color:#fff;}
-.main-content{margin-left:260px;flex:1;padding:20px;width:calc(100% - 260px);}
-.top-header{display:flex;justify-content:space-between;align-items:center;background:#0b192c;color:white;padding:15px 20px;border-radius:8px;margin-bottom:20px;}
-.top-header h1{font-size:16px;}
-.top-header p{font-size:11px;color:#94a3b8;}
-.badge-active{background:#065f46;color:#34d399;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:bold;}
-.card{background:white;padding:20px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,.05);margin-bottom:20px;}
-h3{color:#0f172a;margin-bottom:15px;font-size:16px;border-bottom:2px solid #f1f5f9;padding-bottom:8px;}
-button{background:#4f46e5;color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:14px;}
+.sidebar a{display:block;color:#cbd5e1;padding:12px 15px;text-decoration:none;border-radius:8px;margin-bottom:8px;font-size:13px;cursor:pointer;transition:all 0.2s;}
+.sidebar a:hover, .sidebar a.active{background:#1e3e62;color:#fff;padding-left:18px;}
+.main-content{margin-left:260px;flex:1;padding:25px;width:calc(100% - 260px);}
+.top-header{display:flex;justify-content:space-between;align-items:center;background:#0b192c;color:white;padding:18px 24px;border-radius:10px;margin-bottom:25px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);}
+.top-header h1{font-size:18px;}
+.top-header p{font-size:12px;color:#94a3b8;}
+.badge-active{background:#065f46;color:#34d399;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:bold;}
+.card{background:white;padding:25px;border-radius:12px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);margin-bottom:25px;border:1px solid #e2e8f0;}
+h3{color:#0f172a;margin-bottom:18px;font-size:17px;border-bottom:2px solid #f1f5f9;padding-bottom:10px;font-weight:600;}
+button{background:#4f46e5;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;transition:background 0.2s;}
 button:hover{background:#4338ca;}
 .btn-danger{background:#dc3545;} .btn-danger:hover{background:#bd2130;}
-.btn-success{background:#28a745;} .btn-success:hover{background:#218838;}
-input, select{width:100%;padding:8px;margin-top:4px;margin-bottom:10px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;}
+.btn-success{background:#059669;} .btn-success:hover{background:#047857;}
+input, select{width:100%;padding:10px 12px;margin-top:6px;margin-bottom:14px;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;background:#fff;color:#1e293b;}
+input:focus, select:focus{outline:none;border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79, 70, 229, 0.1);}
 .hidden{display:none}
 table{width:100%;border-collapse:collapse;margin-top:10px;}
-th, td{border:1px solid #e2e8f0;padding:8px;text-align:center;font-size:12px;}
-th{background:#f8fafc;color:#475569;}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
-.grid-3{display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;}
-.student-card{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #e2e8f0;padding:15px;border-radius:8px;margin-bottom:10px;}
-.avatar-img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid #cbd5e1;}
+th, td{border:1px solid #e2e8f0;padding:12px 10px;text-align:center;font-size:13px;}
+th{background:#f8fafc;color:#334155;font-weight:600;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.grid-3{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px;}
+.student-card{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #e2e8f0;padding:18px;border-radius:10px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.02);}
+.avatar-img{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #cbd5e1;box-shadow:0 2px 4px rgba(0,0,0,0.1);}
 </style>
 </head>
 <body>
@@ -42,12 +43,12 @@ th{background:#f8fafc;color:#475569;}
 <div class="sidebar" id="app-sidebar" style="display:none;">
 <div class="sidebar-logo">
 <div>ROA</div>
-<div style="margin-left:10px;line-height:1.2;">
+<div style="margin-left:12px;line-height:1.2;">
 Raza Online Islamic Academy
-<span>Admin & Student Management Portal</span>
+<span>Management Portal</span>
 </div>
 </div>
-<div style="font-size:11px;color:#64748b;margin:10px 0 5px 10px;">MAIN MENU</div>
+<div style="font-size:11px;color:#64748b;margin:15px 0 8px 10px;letter-spacing:0.5px;font-weight:bold;">MAIN MENU</div>
 <a href="#" class="active" onclick="switchTab('add-student', this)">➕ Add Student</a>
 <a href="#" onclick="switchTab('students-dir', this)">👥 Students Directory</a>
 <a href="#" onclick="switchTab('daily-rec', this)">📅 Daily Sabaq & Attendance</a>
@@ -56,53 +57,59 @@ Raza Online Islamic Academy
 <a href="#" onclick="switchTab('donation', this)">🤲 Zakat, Fitra & Donations</a>
 <a href="#" onclick="switchTab('ibadat', this)">🕌 Ibadat Tracker</a>
 <a href="#" onclick="switchTab('library', this)">📚 Islamic Books Library</a>
-<a href="#" onclick="switchTab('logout', this)" style="color:#fca5a5;margin-top:20px;">🚪 Logout Portal</a>
+<a href="#" onclick="switchTab('logout', this)" style="color:#fca5a5;margin-top:25px;">🚪 Logout Portal</a>
 </div>
 
 <div class="main-content" style="margin-left:0;" id="main-area">
 
 <!-- Choice / Login Screen -->
-<div id="choice-section" class="card" style="max-width:450px;margin:80px auto;text-align:center;">
-<h2>Raza Online Islamic Academy</h2>
-<p style="color:#64748b;margin:15px 0 25px;">Apna Portal muntakhib karein</p>
-<button onclick="showStudentLogin()">Student Portal (Record Dekhein)</button>
-<button onclick="showAdminLogin()" class="btn-success" style="margin-top:12px;">Admin Panel Login (Owner)</button>
+<div id="choice-section" class="card" style="max-width:450px;margin:80px auto;text-align:center;padding:40px;">
+<h2 style="color:#0b192c;margin-bottom:8px;">Raza Online Islamic Academy</h2>
+<p style="color:#64748b;margin-bottom:30px;font-size:14px;">Apna Portal muntakhib karein</p>
+<button onclick="showStudentLogin()" style="width:100%;padding:12px;font-size:14px;">Student Portal (Record Dekhein)</button>
+<button onclick="showAdminLogin()" class="btn-success" style="width:100%;padding:12px;font-size:14px;margin-top:14px;">Admin Panel Login (Owner)</button>
 </div>
 
 <!-- Student Login -->
-<div id="student-login-section" class="hidden card" style="max-width:400px;margin:80px auto;">
+<div id="student-login-section" class="hidden card" style="max-width:400px;margin:80px auto;padding:35px;">
 <h3>Student Portal Login</h3>
+<label style="font-size:12px;color:#475569;font-weight:bold;">Student Name</label>
 <input type="text" id="student-name-input" placeholder="Apna Poora Naam darj karein">
-<button onclick="fetchStudentData()">Portal Khulein</button>
-<button onclick="goBack()" style="background:#6c757d;margin-top:10px;">Wapas Jayein</button>
+<button onclick="fetchStudentData()" style="width:100%;margin-top:10px;padding:11px;">Portal Khulein</button>
+<button onclick="goBack()" style="background:#64748b;width:100%;margin-top:10px;padding:11px;">Wapas Jayein</button>
 </div>
 
 <!-- Admin Login -->
-<div id="admin-login-section" class="hidden card" style="max-width:400px;margin:80px auto;">
+<div id="admin-login-section" class="hidden card" style="max-width:400px;margin:80px auto;padding:35px;">
 <h3>Admin Panel Login</h3>
+<label style="font-size:12px;color:#475569;font-weight:bold;">Password</label>
 <input type="password" id="admin-pass" placeholder="Admin Password (admin123)">
-<button onclick="verifyAdmin()" class="btn-success">Login Karein</button>
-<button onclick="goBack()" style="background:#6c757d;margin-top:10px;">Wapas Jayein</button>
+<button onclick="verifyAdmin()" class="btn-success" style="width:100%;margin-top:10px;padding:11px;">Login Karein</button>
+<button onclick="goBack()" style="background:#64748b;width:100%;margin-top:10px;padding:11px;">Wapas Jayein</button>
 </div>
 
 <!-- Student Dashboard -->
-<div id="dashboard-section" class="hidden card">
-<div style="text-align:center;margin-bottom:15px;">
-<img id="s-photo" src="" class="avatar-img" style="width:80px;height:80px;display:none;margin:0 auto 10px;" alt="Student Photo">
-<h3 id="s-name" style="border:none;margin:0;">-</h3>
+<div id="dashboard-section" class="hidden card" style="max-width:600px;margin:30px auto;">
+<div style="text-align:center;margin-bottom:20px;">
+<img id="s-photo" src="" class="avatar-img" style="width:90px;height:90px;display:none;margin:0 auto 12px;" alt="Student Photo">
+<h3 id="s-name" style="border:none;margin:0;font-size:20px;color:#0b192c;">-</h3>
 </div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f8fafc;padding:15px;border-radius:8px;border:1px solid #e2e8f0;font-size:13px;">
 <p><strong>Father's Name:</strong> <span id="s-fname">-</span></p>
 <p><strong>Age:</strong> <span id="s-age">-</span></p>
 <p><strong>Course:</strong> <span id="s-course">-</span></p>
 <p><strong>Country & Currency:</strong> <span id="s-country">-</span></p>
-<p><strong>Skip Days (Chhutti ke Din):</strong> <span id="s-skype">-</span></p>
+<p><strong>Skip Days:</strong> <span id="s-skype">-</span></p>
 <p><strong>Class Timing:</strong> <span id="s-timing">-</span></p>
 <p><strong>Weekend Days:</strong> <span id="s-weekend">-</span></p>
-<hr style="margin:15px 0;">
-<p><strong>Attendance:</strong> <span id="s-attendance">-</span></p>
-<p><strong>Sabaq Details:</strong> <span id="s-sabaq">-</span></p>
-<p><strong>Fee Status:</strong> <span id="s-fee" style="font-weight:bold;color:green;">-</span></p>
-<button onclick="goBack()" style="background:#6c757d;margin-top:15px;">Wapas Jayein</button>
+</div>
+<hr style="margin:20px 0;border:0;border-top:1px solid #e2e8f0;">
+<div style="background:#f0fdf4;padding:15px;border-radius:8px;border:1px solid #bbf7d0;font-size:13px;">
+<p><strong>Attendance:</strong> <span id="s-attendance" style="color:#047857;font-weight:bold;">-</span></p>
+<p style="margin-top:8px;"><strong>Sabaq Details:</strong> <span id="s-sabaq">-</span></p>
+<p style="margin-top:8px;"><strong>Fee Status:</strong> <span id="s-fee" style="font-weight:bold;color:#059669;">-</span></p>
+</div>
+<button onclick="goBack()" style="background:#64748b;margin-top:20px;width:100%;">Wapas Jayein</button>
 </div>
 
 <!-- Admin Dashboard Wrapper -->
@@ -114,7 +121,7 @@ Raza Online Islamic Academy
 </div>
 <div>
 <span class="badge-active">● System Active</span>
-<button onclick="goBack()" style="background:#334155;padding:6px 14px;font-size:12px;margin-left:10px;">Switch to Parent View</button>
+<button onclick="goBack()" style="background:#334155;padding:7px 16px;font-size:12px;margin-left:12px;border-radius:6px;">Switch to Parent View</button>
 </div>
 </div>
 
@@ -140,7 +147,7 @@ Raza Online Islamic Academy
 <option value="Pakistan (PKR)">🇵🇰 Pakistan (PKR)</option>
 <option value="Australia (AUD)">🇦🇺 Australia (AUD)</option>
 <option value="United Kingdom (GBP)">🇬🇧 United Kingdom - UK (GBP)</option>
-<option value="United States (USD)">🇦🇺 United States - USA (USD)</option>
+<option value="United States (USD)">🇺🇸 United States - USA (USD)</option>
 <option value="Canada (CAD)">🇨🇦 Canada (CAD)</option>
 <option value="Saudi Arabia (SAR)">🇸🇦 Saudi Arabia (SAR)</option>
 <option value="UAE (AED)">🇦🇪 United Arab Emirates - UAE (AED)</option>
@@ -164,19 +171,19 @@ Raza Online Islamic Academy
 <div><label>Class End Time</label><input type="time" id="new-end-time"></div>
 </div>
 <div>
-<label>Student Photo (Upload / Image Link)</label>
+<label>Student Photo (Upload / Image)</label>
 <input type="file" id="new-photo-file" accept="image/*" onchange="convertImageToBase64(event)">
 <input type="hidden" id="new-photo-url">
 </div>
 <div style="margin-bottom:15px;font-size:13px;color:#4f46e5;font-weight:bold;">Calculated Age: <span id="preview-age">0 Years</span></div>
-<button onclick="addStudent()" class="btn-success">+ Save Student Profile</button>
+<button onclick="addStudent()" class="btn-success" style="padding:11px 24px;">+ Save Student Profile</button>
 </div>
 
 <!-- Tab 2: Students Directory -->
 <div id="tab-students-dir" class="card hidden">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
 <h3 style="border:none;margin:0;">👥 Students Profile Directory</h3>
-<span id="total-students-badge" style="background:#f1f5f9;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:bold;color:#0f172a;">Total Students: 0</span>
+<span id="total-students-badge" style="background:#f1f5f9;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:bold;color:#0f172a;border:1px solid #cbd5e1;">Total Students: 0</span>
 </div>
 <div id="students-directory-list"><p>Data load ho raha hai...</p></div>
 </div>
@@ -465,18 +472,18 @@ return;
 document.getElementById('total-students-badge').innerText = `Total Students: ${students.length}`;
 let html = '';
 for(let s of students){
-const photoTag = s.photo_url ? `<img src="${s.photo_url}" class="avatar-img">` : `<div style="width:45px;height:45px;background:#e0e7ff;color:#4f46e5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;">${s.student_name.charAt(0).toUpperCase()}</div>`;
+const photoTag = s.photo_url ? `<img src="${s.photo_url}" class="avatar-img">` : `<div style="width:50px;height:50px;background:#e0e7ff;color:#4f46e5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;">${s.student_name.charAt(0).toUpperCase()}</div>`;
 html += `
 <div class="student-card">
 <div style="display:flex;align-items:center;gap:15px;">
 ${photoTag}
 <div>
-<strong>${s.student_name}</strong><br>
+<strong style="font-size:15px;color:#0f172a;">${s.student_name}</strong><br>
 <span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age: <strong style="color:#059669;">${calculateAge(s.dob)}</strong> | Skip Days: <strong style="color:#0284c7;">${s.skype_id || 'N/A'}</strong></span><br>
 <span style="color:#4f46e5;font-size:11px;">🌍 Country: ${s.country_currency || 'Pakistan'} | ⏰ Timing: ${(s.class_start_time && s.class_end_time)?(s.class_start_time+' - '+s.class_end_time):'N/A'} | Weekend: ${s.weekend || 'N/A'}</span>
 </div>
 </div>
-<div><button onclick="deleteStudent(${s.student_id})" class="btn-danger" style="padding:6px 12px;font-size:12px;">Delete</button></div>
+<div><button onclick="deleteStudent(${s.student_id})" class="btn-danger" style="padding:7px 14px;font-size:12px;">Delete</button></div>
 </div>`;
 }
 container.innerHTML = html;
@@ -488,22 +495,22 @@ container.innerHTML = '<p>Loading...</p>';
 const {data: students, error} = await supabase.from('students').select('*');
 if(error || !students || students.length === 0){ container.innerHTML = '<p>Koi student mojood nahi hai.</p>'; return; }
 
-let html = `<table><tr><th>Student Detail & Skip Days</th><th>Attendance & Conditional Sabaq / Timing</th></tr>`;
+let html = `<table><tr><th>Student Detail</th><th>Attendance, Skip Days, Timing & Sabaq</th></tr>`;
 for(let s of students){
 const {data: recs} = await supabase.from('daily_records').select('*').eq('student_id', s.student_id).order('record_date', {ascending:false}).limit(1);
 const lastRec = (recs && recs.length > 0) ? recs[0] : {attendance_status: 'Present', sabaq_details: '', fee_status: 'Pending', record_date: new Date().toISOString().split('T')[0]};
 const isPresent = lastRec.attendance_status === 'Present';
-const photoTag = s.photo_url ? `<img src="${s.photo_url}" style="width:35px;height:35px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:5px;">` : '';
+const photoTag = s.photo_url ? `<img src="${s.photo_url}" style="width:45px;height:45px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-bottom:6px;border:2px solid #cbd5e1;">` : `<div style="width:45px;height:45px;background:#e0e7ff;color:#4f46e5;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:bold;font-size:15px;margin-bottom:6px;">${s.student_name.charAt(0).toUpperCase()}</div>`;
 
 html += `
 <tr>
-<td style="text-align:left;width:30%;">
-${photoTag}<strong>${s.student_name}</strong><br>
-<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'}</span><br>
-<span style="color:#0284c7;font-size:12px;font-weight:bold;">Skip Days: ${s.skype_id || 'N/A'}</span><br>
-<span style="color:#059669;font-weight:bold;font-size:11px;">Country: ${s.country_currency || 'Pakistan'}</span>
+<td style="text-align:left;width:32%;vertical-align:top;">
+<div style="text-align:center;margin-bottom:8px;">${photoTag}</div>
+<strong style="font-size:14px;color:#0f172a;display:block;text-align:center;">${s.student_name}</strong>
+<div style="font-size:12px;color:#64748b;margin-top:4px;">S/O: ${s.father_name || '-'}</div>
+<div style="font-size:12px;color:#059669;font-weight:bold;margin-top:2px;">🌍 ${s.country_currency || 'Pakistan'}</div>
 </td>
-<td style="text-align:left;">
+<td style="text-align:left;vertical-align:top;">
 <div class="grid-2">
 <div>
 <label><strong>Attendance:</strong></label>
@@ -520,19 +527,20 @@ ${photoTag}<strong>${s.student_name}</strong><br>
 </div>
 </div>
 
-<div id="timing-box-${s.student_id}" style="margin-top:5px;background:#f8fafc;padding:6px;border-radius:6px;border:1px solid #e2e8f0;font-size:12px;display:${isPresent?'block':'none'};">
-⏰ <strong>Class Timing:</strong> ${(s.class_start_time && s.class_end_time) ? (`${s.class_start_time} to ${s.class_end_time}`) : 'Timings not set'} | <strong>Weekend:</strong> ${s.weekend || 'N/A'}
+<div id="timing-box-${s.student_id}" style="margin-top:8px;background:#f8fafc;padding:8px 10px;border-radius:6px;border:1px solid #e2e8f0;font-size:12px;display:${isPresent?'block':'none'};">
+⏳ <strong>Skip Days:</strong> <span style="color:#0284c7;font-weight:bold;">${s.skype_id || 'N/A'}</span><br>
+⏰ <strong>Class Timing:</strong> ${(s.class_start_time && s.class_end_time) ? (`${s.class_start_time} to ${s.class_end_time}`) : 'N/A'} | <strong>Weekend:</strong> ${s.weekend || 'N/A'}
 </div>
 
-<div id="sabaq-box-${s.student_id}" style="margin-top:5px;display:${isPresent?'block':'none'};">
+<div id="sabaq-box-${s.student_id}" style="margin-top:8px;display:${isPresent?'block':'none'};">
 <label><strong>Add Sabaq / Lesson Details:</strong></label>
 <input type="text" id="sabaq-${s.student_id}" value="${lastRec.sabaq_details || ''}" placeholder="Aaj ka sabaq yahan likhein">
 </div>
 
-<label style="margin-top:5px;display:block;"><strong>Date:</strong></label>
-<input type="date" id="date-${s.student_id}" value="${lastRec.record_date || new Date().toISOString().split('T')[0]}">
-
-<button onclick="saveRecord(${s.student_id})" class="btn-success" style="margin-top:5px;width:100%;">Update Record</button>
+<div style="display:flex;gap:10px;align-items:center;margin-top:5px;">
+<div style="flex:1;"><label><strong>Date:</strong></label><input type="date" id="date-${s.student_id}" value="${lastRec.record_date || new Date().toISOString().split('T')[0]}" style="margin-bottom:0;"></div>
+<div style="flex:1;padding-top:18px;"><button onclick="saveRecord(${s.student_id})" class="btn-success" style="width:100%;padding:10px;">Update Record</button></div>
+</div>
 </td>
 </tr>`;
 }
@@ -656,9 +664,6 @@ container.innerHTML = html;
 }
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
-</script>
-</body>
-</html>vigator.serviceWorker.register('sw.js');}
 </script>
 </body>
 </html>
