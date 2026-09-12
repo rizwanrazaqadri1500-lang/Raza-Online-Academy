@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raza Online Islamic Academy - Portal</title>
+    <title>Raza Online Islamic Academy - Dual Exam Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="h-full flex font-sans antialiased text-slate-800 overflow-hidden">
 
-    <!-- SIDEBAR (Admin Navigation) -->
+    <!-- SIDEBAR -->
     <aside id="sidebar" class="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between hidden md:flex z-20 shadow-xl">
         <div>
             <div class="p-4 bg-amber-500 text-slate-950 flex items-center space-x-3">
@@ -23,470 +23,237 @@
                 <button onclick="switchTab('add-student')" id="nav-add-student" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl bg-blue-600 text-white transition shadow-sm">
                     <i class="fa-solid fa-user-plus w-4"></i><span>Add Student</span>
                 </button>
-                <button onclick="switchTab('directory')" id="nav-directory" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-users w-4"></i><span>Students Directory</span>
-                </button>
                 <button onclick="switchTab('sabaq')" id="nav-sabaq" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-book-open w-4"></i><span>Daily Sabaq & Attendance</span>
-                </button>
-                <button onclick="switchTab('ibadat')" id="nav-ibadat" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-mosque w-4"></i><span>Daily Ibadat & Namaz</span>
+                    <i class="fa-solid fa-book-open w-4"></i><span>Daily Sabaq & Progress</span>
                 </button>
                 <button onclick="switchTab('exams')" id="nav-exams" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-award w-4"></i><span>Monthly Exams & Results</span>
-                </button>
-                <button onclick="switchTab('fees')" id="nav-fees" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-file-invoice-dollar w-4"></i><span>Fees & Vouchers</span>
-                </button>
-                <button onclick="switchTab('zakat')" id="nav-zakat" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-hand-holding-dollar w-4"></i><span>Zakat Receipt Generator</span>
-                </button>
-                <button onclick="switchTab('library')" id="nav-library" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-book-bookmark w-4"></i><span>Islamic Books Library</span>
+                    <i class="fa-solid fa-award w-4"></i><span>Taleemi & Nisabi Exams</span>
                 </button>
             </nav>
-        </div>
-        <div class="p-3 border-t border-slate-800">
-            <button onclick="logoutAdmin()" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-red-400 hover:bg-red-500/10 transition text-xs font-medium">
-                <i class="fa-solid fa-right-from-bracket w-4"></i><span>Logout Portal</span>
-            </button>
         </div>
     </aside>
 
     <!-- MAIN WRAPPER -->
     <div class="flex-1 flex flex-col h-full overflow-hidden">
         
-        <!-- Top Header -->
         <header class="bg-slate-900 text-white shadow-md h-14 flex items-center justify-between px-6 z-10">
             <div class="flex items-center space-x-3">
-                <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-300 hover:text-white text-lg">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <div>
-                    <h2 class="font-bold text-sm leading-tight">Raza Online Islamic Academy</h2>
-                    <span class="text-[10px] text-slate-400">Admin & Student Management Portal</span>
-                </div>
+                <h2 class="font-bold text-sm leading-tight">Raza Online Islamic Academy Portal</h2>
             </div>
             <div class="flex items-center space-x-3">
-                <span class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] px-2.5 py-0.5 rounded-full font-medium flex items-center">
-                    <i class="fa-solid fa-circle text-[6px] mr-1.5 animate-pulse"></i> System Active
-                </span>
                 <button onclick="toggleMainView()" id="view-switch-btn" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-[11px] px-3 py-1.5 rounded-lg font-semibold transition shadow">
-                    Switch to Parent View
+                    Switch to Student View
                 </button>
             </div>
         </header>
 
-        <!-- Scrollable Content Area -->
         <main class="flex-1 overflow-y-auto p-4 lg:p-6">
             
-            <!-- ADMIN VIEW CONTAINER -->
+            <!-- ADMIN CONTAINER -->
             <div id="admin-container" class="max-w-4xl mx-auto space-y-6">
                 
-                <!-- Tab 1: Add Student -->
+                <!-- Add Student Tab -->
                 <div id="tab-add-student" class="admin-tab space-y-6">
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                        <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
-                            <div class="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center font-bold text-sm">
-                                <i class="fa-solid fa-user-plus"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-base font-bold text-slate-900">Naya Student Add Karein</h3>
-                                <p class="text-[11px] text-slate-500">Student ki tafseelat aur default class timings darj karein.</p>
-                            </div>
-                        </div>
-
-                        <form onsubmit="handleSaveStudent(event)" class="space-y-4">
+                        <h3 class="text-base font-bold text-slate-900 mb-4">Student Registration & Profile</h3>
+                        <form onsubmit="handleSaveStudent(event)" class="space-y-4 text-xs">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Student Name *</label>
-                                    <input type="text" id="input-name" placeholder="e.g. Abdul Rehman" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none transition">
+                                    <label class="block font-bold text-slate-700 mb-1">Student ID *</label>
+                                    <input type="text" id="input-id" value="ROA-1092" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Father's Name *</label>
-                                    <input type="text" id="input-father" placeholder="e.g. Ali" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none transition">
+                                    <label class="block font-bold text-slate-700 mb-1">Student Name *</label>
+                                    <input type="text" id="input-name" value="Abdul Rehman" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Age *</label>
-                                    <input type="number" id="input-age" value="6" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none transition">
+                                    <label class="block font-bold text-slate-700 mb-1">Age *</label>
+                                    <input type="number" id="input-age" value="6" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Select Course *</label>
-                                    <select id="input-course" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none font-medium">
-                                        <option>Hifz-ul-Quran</option>
-                                        <option>Nazrah Quran Pak</option>
-                                        <option>Madani Qaida</option>
-                                        <option>Tajweed & Qirat Masterclass</option>
-                                    </select>
+                                    <label class="block font-bold text-slate-700 mb-1">Course *</label>
+                                    <input type="text" id="input-course" value="Hifz-ul-Quran" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
                                 </div>
                             </div>
-                            <div class="flex justify-end pt-3 border-t border-slate-100">
-                                <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs transition shadow-md flex items-center space-x-2">
-                                    <i class="fa-solid fa-user-plus"></i><span>Save Student Profile</span>
-                                </button>
-                            </div>
+                            <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition shadow-md">Save Profile</button>
                         </form>
                     </div>
                 </div>
 
-                <!-- Tab 2: Students Directory -->
-                <div id="tab-directory" class="admin-tab hidden space-y-6">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                        <h3 class="text-base font-bold text-slate-900 mb-3">Students Directory</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs">
-                                <thead>
-                                    <tr class="bg-slate-50 border-b border-slate-200 text-slate-600">
-                                        <th class="p-2.5">Student Name</th>
-                                        <th class="p-2.5">Father's Name</th>
-                                        <th class="p-2.5">Age</th>
-                                        <th class="p-2.5">Course</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-b border-slate-100">
-                                        <td class="p-2.5 font-semibold text-blue-600" id="dir-name">Abdul Rehman</td>
-                                        <td class="p-2.5" id="dir-father">Ali</td>
-                                        <td class="p-2.5" id="dir-age">6</td>
-                                        <td class="p-2.5" id="dir-course">Hifz-ul-Quran</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tab 3: Sabaq & Attendance -->
+                <!-- Daily Sabaq Tab -->
                 <div id="tab-sabaq" class="admin-tab hidden space-y-6">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                        <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center space-x-3">
-                            <i class="fa-solid fa-calendar-days text-amber-500 text-base"></i>
-                            <h3 class="text-sm font-bold text-slate-900">Daily Sabaq & Attendance</h3>
-                        </div>
-
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs">
-                                <thead>
-                                    <tr class="border-b border-slate-200 text-slate-600 uppercase tracking-wider bg-slate-50/50">
-                                        <th class="p-3.5 w-1/3 border-r border-slate-200">Student Detail</th>
-                                        <th class="p-3.5">Attendance & Sabaq Details</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <!-- Student Detail Column -->
-                                        <td class="p-3.5 border-r border-slate-200 align-top bg-slate-50/30">
-                                            <div class="font-bold text-slate-900 text-sm" id="table-disp-name">Abdul Rehman</div>
-                                            <div class="text-[11px] text-slate-500 mt-0.5">S/O: <span id="table-disp-father">Ali</span></div>
-                                        </td>
-
-                                        <!-- Attendance & Schedule Details Column -->
-                                        <td class="p-3.5 space-y-3 align-top">
-                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                                <div>
-                                                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Attendance:</label>
-                                                    <select id="admin-att-status" onchange="toggleTimeFields()" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none">
-                                                        <option value="Present">Present</option>
-                                                        <option value="Absent">Absent</option>
-                                                        <option value="Leave">Leave</option>
-                                                        <option value="Weekend - Sunday (Off)">Weekend - Sunday (Off)</option>
-                                                        <option value="Other Off / Skipped">Other Off / Skipped</option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Fee Status:</label>
-                                                    <select id="admin-fee-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none">
-                                                        <option>Paid</option>
-                                                        <option>Pending</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <!-- DYNAMIC DATE & TIME SETTINGS BOX (Appears ONLY when Present) -->
-                                            <div id="datetime-options-box" class="p-3 bg-blue-50/80 border border-blue-200 rounded-xl space-y-3">
-                                                <div class="text-[11px] font-bold text-blue-900 flex items-center space-x-1.5">
-                                                    <i class="fa-solid fa-clock"></i>
-                                                    <span>Class Date & Time Settings:</span>
-                                                </div>
-
-                                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                                    <div>
-                                                        <label class="block text-[10px] font-semibold text-slate-600 mb-1">Select Date:</label>
-                                                        <input type="date" id="admin-class-date" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-blue-900 shadow-inner outline-none">
-                                                    </div>
-                                                    <div>
-                                                        <label class="block text-[10px] font-semibold text-slate-600 mb-1">Class Start Time:</label>
-                                                        <input type="text" id="admin-start-time" value="04:00 PM" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-blue-900 shadow-inner outline-none">
-                                                    </div>
-                                                    <div>
-                                                        <label class="block text-[10px] font-semibold text-slate-600 mb-1">Class End Time:</label>
-                                                        <input type="text" id="admin-end-time" value="05:00 PM" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-emerald-800 shadow-inner outline-none">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div>
-                                                <label class="block text-[11px] font-semibold text-slate-700 mb-1">Sabaq Details:</label>
-                                                <input type="text" id="admin-sabaq-text" placeholder="Aaj ka sabaq" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs outline-none">
-                                            </div>
-
-                                            <div class="flex justify-end pt-1">
-                                                <button onclick="saveSabaqAttendance()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm">
-                                                    Update Daily Record
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tab 4: Daily Ibadat & Namaz (UPDATED WITH 5 SEPARATE PRAYERS) -->
-                <div id="tab-ibadat" class="admin-tab hidden space-y-6">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                        <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
-                            <div class="w-8 h-8 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center font-bold text-sm">
-                                <i class="fa-solid fa-mosque"></i>
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs space-y-4">
+                        <h3 class="text-base font-bold text-slate-900">Daily Sabaq Progress Update</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Total Sabaq Finished / Completed:</label>
+                                <input type="text" id="admin-sabaq-finished" value="Para 3 (Surah Al-Imran Ayat 50 Completed)" class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
                             </div>
                             <div>
-                                <h3 class="text-base font-bold text-slate-900">Daily Ibadat, Namaz & Surah Tracker</h3>
-                                <p class="text-[11px] text-slate-500">Panj waqta namazon ki alag-alag hazri darj karein.</p>
+                                <label class="block font-bold text-slate-700 mb-1">Aaj ka Mujaddaha / Sabaq:</label>
+                                <input type="text" id="admin-mujaddaha" value="Para 3 - Ruku 4" class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
                             </div>
                         </div>
-
-                        <div class="space-y-4 text-xs">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <!-- Student Info card inside ibadat -->
-                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex flex-col justify-center">
-                                    <div class="font-bold text-slate-900 text-sm" id="ibadat-disp-name">Abdul Rehman</div>
-                                    <div class="text-[11px] text-slate-500 mt-0.5">S/O: <span id="ibadat-disp-father">Ali</span></div>
-                                    <div class="text-[11px] font-bold text-emerald-600 mt-1">Age: <span id="ibadat-disp-age">6</span></div>
-                                </div>
-
-                                <!-- Durood and Date -->
-                                <div class="space-y-3">
-                                    <div>
-                                        <label class="block text-[11px] font-semibold text-slate-700 mb-1">Durood-e-Pak:</label>
-                                        <input type="number" id="ibadat-durood" value="3" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl outline-none font-semibold text-blue-900">
-                                    </div>
-                                    <div>
-                                        <label class="block text-[11px] font-semibold text-slate-700 mb-1">Date:</label>
-                                        <input type="date" id="ibadat-date" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl outline-none font-semibold text-blue-900">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 5 SEPARATE PRAYERS ATTENDANCE -->
-                            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
-                                <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-2">Namaz Attendance (5 Prayers):</h4>
-                                <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
-                                    <!-- Fajr -->
-                                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
-                                        <label class="block text-[10px] font-bold text-slate-600 mb-1">FAJR</label>
-                                        <select id="pnamaz-fajr" class="w-full p-1.5 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                    <!-- Zuhur -->
-                                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
-                                        <label class="block text-[10px] font-bold text-slate-600 mb-1">ZUHUR</label>
-                                        <select id="pnamaz-zuhur" class="w-full p-1.5 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                    <!-- Asr -->
-                                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
-                                        <label class="block text-[10px] font-bold text-slate-600 mb-1">ASR</label>
-                                        <select id="pnamaz-asr" class="w-full p-1.5 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                    <!-- Maghrib -->
-                                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
-                                        <label class="block text-[10px] font-bold text-slate-600 mb-1">MAGHRIB</label>
-                                        <select id="pnamaz-maghrib" class="w-full p-1.5 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                    <!-- Isha -->
-                                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
-                                        <label class="block text-[10px] font-bold text-slate-600 mb-1">ISHA</label>
-                                        <select id="pnamaz-isha" class="w-full p-1.5 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Surah Recitation Checkboxes -->
-                            <div class="p-3 bg-white border border-slate-200 rounded-xl flex flex-wrap items-center gap-6">
-                                <span class="font-bold text-slate-700">Surah Recitation:</span>
-                                <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" id="surah-yassen" checked class="w-4 h-4 text-blue-600 rounded"><span>Surah Yassen</span></label>
-                                <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" id="surah-waaqia" checked class="w-4 h-4 text-blue-600 rounded"><span>Surah Waaqia</span></label>
-                                <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" id="surah-rahman" checked class="w-4 h-4 text-blue-600 rounded"><span>Surah Rahman</span></label>
-                            </div>
-
-                            <div class="flex justify-end pt-2">
-                                <button onclick="saveIbadatRecord()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition shadow-md">
-                                    Save Ibadat Record
-                                </button>
-                            </div>
-                        </div>
+                        <button onclick="saveSabaqProgress()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition">Update Progress</button>
                     </div>
                 </div>
 
-                <!-- Tab 5: Exams -->
+                <!-- Dual Exams Tab -->
                 <div id="tab-exams" class="admin-tab hidden space-y-6">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs">
-                        <h3 class="text-base font-bold text-slate-900 mb-1">Monthly Exams & Results</h3>
-                        <p class="text-[11px] text-slate-500 mb-3">Mahana imtihaan ke marks.</p>
-                        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex justify-between items-center">
-                            <div>
-                                <h4 class="font-bold text-emerald-900">Monthly Assessment</h4>
-                                <p class="text-[11px] text-emerald-700">Grade: A+ (95 Marks)</p>
-                            </div>
-                            <span class="bg-emerald-700 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold">Passed</span>
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6 text-xs">
+                        <div class="border-b pb-3">
+                            <h3 class="text-base font-bold text-slate-900">Exam Forms & Marks Entry</h3>
+                            <p class="text-slate-500 text-[11px]">Student ID: <span id="form-disp-id" class="font-bold text-blue-600">ROA-1092</span> | Name: <span id="form-disp-name" class="font-bold text-blue-600">Abdul Rehman</span></p>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Tab 6: Fees -->
-                <div id="tab-fees" class="admin-tab hidden space-y-6">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs">
-                        <h3 class="text-base font-bold text-slate-900 mb-1">Fees & Vouchers Management</h3>
-                        <p class="text-[11px] text-slate-500 mb-3">Mahana fees status.</p>
-                        <div class="p-3 bg-slate-50 border rounded-xl flex justify-between items-center">
-                            <div>
-                                <h4 class="font-bold text-slate-800">Fee Voucher Status</h4>
-                                <p class="text-[11px] text-slate-500">Status: Paid Online</p>
+                        <!-- 1. Taleemi Exam Form -->
+                        <div class="p-4 bg-slate-50 border rounded-2xl space-y-3">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-2 text-indigo-700">
+                                <i class="fa-solid fa-book-bookmark"></i> <span>1. Taleemi Exam Form (Total: 100 Marks)</span>
+                            </h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Makharij (Max 30):</label>
+                                    <input type="number" id="t-makharij" value="28" max="30" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Adaigi (Max 20):</label>
+                                    <input type="number" id="t-adaigi" value="18" max="20" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Rawah (Max 30):</label>
+                                    <input type="number" id="t-rawah" value="27" max="30" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Hifz (Max 10):</label>
+                                    <input type="number" id="t-hifz" value="10" max="10" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Q. Malumaat (Max 05):</label>
+                                    <input type="number" id="t-malumaat" value="5" max="5" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Q. Pehchan (Max 05):</label>
+                                    <input type="number" id="t-pehchan" value="5" max="5" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
                             </div>
-                            <span class="bg-emerald-600 text-white text-[10px] px-2.5 py-1 rounded-lg font-semibold">Paid</span>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Tab 7: Zakat -->
-                <div id="tab-zakat" class="admin-tab hidden space-y-6">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs">
-                        <h3 class="text-base font-bold text-slate-900 mb-1">Zakat Receipt Generator</h3>
-                        <p class="text-[11px] text-slate-500 mb-3">Official receipt generate karein.</p>
-                        <button onclick="alert('Zakat receipt generated successfully!')" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-bold text-xs shadow">Generate Receipt</button>
-                    </div>
-                </div>
-
-                <!-- Tab 8: Library -->
-                <div id="tab-library" class="admin-tab hidden space-y-6">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs">
-                        <h3 class="text-base font-bold text-slate-900 mb-1">Islamic Books Library</h3>
-                        <p class="text-[11px] text-slate-500 mb-3">Islamic books aur notes.</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="p-3 border rounded-xl bg-slate-50 flex items-center justify-between">
-                                <div><h4 class="font-bold text-xs">Noorul Itqan (Tajweed Book)</h4><span class="text-[10px] text-slate-500">PDF Document</span></div>
-                                <i class="fa-solid fa-book text-amber-500 text-lg"></i>
+                        <!-- 2. Nisabi Exam Form -->
+                        <div class="p-4 bg-slate-50 border rounded-2xl space-y-3">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-2 text-emerald-700">
+                                <i class="fa-solid fa-list-check"></i> <span>2. Nisabi Exam Form (Total: 100 Marks)</span>
+                            </h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">5 Qaid Questions (Max 50):</label>
+                                    <input type="number" id="n-qaid" value="45" max="50" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Kalimah (Max 10):</label>
+                                    <input type="number" id="n-kalimah" value="10" max="10" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Dua (Max 20):</label>
+                                    <input type="number" id="n-dua" value="18" max="20" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Miswak Practice (Max 10):</label>
+                                    <input type="number" id="n-miswak" value="10" max="10" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Sunnah at Home (Max 10):</label>
+                                    <input type="number" id="n-sunnah" value="9" max="10" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
                             </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button onclick="saveDualExams()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md">
+                                Save Exams & Generate Automatic Result Cards
+                            </button>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-
-            <!-- PARENT / STUDENT VIEW CONTAINER -->
+            <!-- STUDENT / PARENT VIEW CONTAINER -->
             <div id="student-container" class="max-w-3xl mx-auto space-y-6 hidden">
-                
-                <!-- Login Box -->
-                <div id="student-login-box" class="max-w-sm mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center space-y-4 mt-8">
-                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mx-auto font-bold shadow-inner">
-                        <i class="fa-solid fa-user-lock"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-base font-bold text-slate-900">Parent / Student Portal Login</h3>
-                        <p class="text-[11px] text-slate-500 mt-0.5">Apna Student Name darj karein</p>
-                    </div>
-                    <div class="space-y-3 text-left text-xs">
-                        <div>
-                            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Student Name</label>
-                            <input type="text" id="login-input-id" placeholder="e.g. Abdul Rehman" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none font-semibold text-blue-700">
-                        </div>
-                        <button onclick="handleStudentLogin()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition shadow-md">
-                            Portal Khulein
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Dashboard -->
-                <div id="student-dashboard" class="hidden space-y-6">
-                    <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl shadow-md p-6 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 space-y-6">
+                    
+                    <!-- Header Info with ID & Age -->
+                    <div class="flex justify-between items-center border-b pb-4">
                         <div class="flex items-center space-x-3">
-                            <div class="w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center border border-white/20 text-2xl font-bold text-amber-400">
+                            <div class="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold text-lg">
                                 <i class="fa-solid fa-user-graduate"></i>
                             </div>
                             <div>
-                                <span class="bg-emerald-500 text-slate-950 text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider" id="disp-age-badge">Age: 6</span>
-                                <h2 class="text-xl font-bold mt-1.5" id="disp-name">Abdul Rehman</h2>
-                                <p class="text-slate-300 text-xs">Father's Name: <span id="disp-father" class="font-medium">Ali</span></p>
+                                <h3 class="text-base font-bold text-slate-900" id="card-disp-name">Abdul Rehman</h3>
+                                <p class="text-xs text-slate-500">ID: <span id="card-disp-id" class="font-semibold text-blue-600">ROA-1092</span> | Age: <span id="card-disp-age" class="font-semibold text-emerald-600">6</span></p>
                             </div>
                         </div>
-                        <div class="flex flex-col items-end gap-2">
-                            <div class="bg-white/10 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/10 text-right">
-                                <span class="text-[9px] text-amber-400 block uppercase tracking-wider font-semibold">Enrolled Course</span>
-                                <span class="text-xs font-bold text-white" id="disp-course">Hifz-ul-Quran</span>
-                            </div>
-                            <button onclick="logoutStudent()" class="text-[11px] text-red-300 hover:text-white underline font-medium">
-                                <i class="fa-solid fa-right-from-bracket mr-1"> Logout Portal</i>
-                            </button>
+                        <button onclick="toggleMainView()" class="text-xs text-blue-600 hover:underline font-bold">Back to Admin</button>
+                    </div>
+
+                    <!-- Sabaq Progress Box -->
+                    <div class="p-4 bg-slate-50 border rounded-xl grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <span class="text-slate-500 block font-semibold">Total Sabaq Finished:</span>
+                            <span class="font-bold text-slate-900 text-sm" id="card-disp-finished">Para 3 (Surah Al-Imran Ayat 50 Completed)</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 block font-semibold">Current Mujaddaha / Sabaq:</span>
+                            <span class="font-bold text-blue-700 text-sm" id="card-disp-mujaddaha">Para 3 - Ruku 4</span>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                            <div class="flex items-center space-x-2 text-blue-600 mb-1">
-                                <i class="fa-solid fa-calendar-check text-sm"></i>
-                                <h4 class="font-bold text-slate-700">Class Attendance</h4>
+                    <!-- 1. Taleemi Report Card -->
+                    <div class="p-5 bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl space-y-4 shadow-lg">
+                        <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                            <div>
+                                <span class="text-[10px] text-amber-400 font-bold uppercase tracking-wider">Official Assessment Report</span>
+                                <h4 class="text-lg font-bold">Taleemi Exam Result Card</h4>
                             </div>
-                            <p class="text-base font-bold text-emerald-600" id="disp-attendance">Present</p>
-                            <span class="text-[10px] text-slate-500 block mt-0.5" id="disp-timestamp">Date: --</span>
+                            <span id="t-badge-status" class="px-3 py-1 bg-emerald-500 text-slate-950 text-xs font-bold rounded-full">Passed</span>
                         </div>
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                            <div class="flex items-center space-x-2 text-blue-600 mb-1">
-                                <i class="fa-solid fa-book-open text-sm"></i>
-                                <h4 class="font-bold text-slate-700">Sabaq & Timings</h4>
-                            </div>
-                            <p class="text-xs font-bold text-slate-900" id="disp-sabaq">Aaj ka sabaq</p>
-                            <span class="text-[10px] text-blue-600 font-semibold block mt-1" id="disp-time-range">Time: 04:00 PM - 05:00 PM</span>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Makharij:</span><span id="res-t-mak" class="font-bold">28/30</span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Adaigi:</span><span id="res-t-ada" class="font-bold">18/20</span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Rawah:</span><span id="res-t-raw" class="font-bold">27/30</span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Hifz:</span><span id="res-t-hif" class="font-bold">10/10</span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Malumaat:</span><span id="res-t-mal" class="font-bold">5/05</span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Pehchan:</span><span id="res-t-peh" class="font-bold">5/05</span></div>
                         </div>
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                            <div class="flex items-center space-x-2 text-blue-600 mb-1">
-                                <i class="fa-solid fa-mosque text-sm"></i>
-                                <h4 class="font-bold text-slate-700">Namaz (5 Prayers)</h4>
-                            </div>
-                            <div id="disp-prayers-box" class="space-y-1 mt-1 text-[11px] font-bold">
-                                <!-- Dynamically populated prayer icons -->
-                            </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
+                            <div>Total: <span id="res-t-total" class="font-black text-amber-400 text-base">93/100</span></div>
+                            <div>Performance: <span id="res-t-grade" class="font-black text-amber-400 text-base">Mumtaz</span></div>
                         </div>
                     </div>
 
-                    <!-- Surah & Durood Card for Parent/Student -->
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-xs space-y-2">
-                        <h4 class="font-bold text-slate-800 border-b pb-1">Ibadat & Recitation Summary</h4>
-                        <div class="flex justify-between">
-                            <span class="text-slate-600">Durood-e-Pak Count:</span>
-                            <span class="font-bold text-blue-600" id="disp-durood">3</span>
+                    <!-- 2. Nisabi Report Card -->
+                    <div class="p-5 bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-2xl space-y-4 shadow-lg">
+                        <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                            <div>
+                                <span class="text-[10px] text-amber-400 font-bold uppercase tracking-wider">Official Assessment Report</span>
+                                <h4 class="text-lg font-bold">Nisabi Exam Result Card</h4>
+                            </div>
+                            <span id="n-badge-status" class="px-3 py-1 bg-emerald-500 text-slate-950 text-xs font-bold rounded-full">Passed</span>
                         </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-600">Surahs Recited:</span>
-                            <span class="font-bold text-emerald-600" id="disp-surahs">Surah Yassen, Surah Waaqia, Surah Rahman</span>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>5 Qaid Qs:</span><span id="res-n-qaid" class="font-bold">45/50</span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Kalimah:</span><span id="res-n-kal" class="font-bold">10/10</span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Dua:</span><span id="res-n-dua" class="font-bold">18/20</span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Miswak:</span><span id="res-n-mis" class="font-bold">10/10</span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Sunnah Home:</span><span id="res-n-sun" class="font-bold">9/10</span></div>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
+                            <div>Total: <span id="res-n-total" class="font-black text-amber-400 text-base">92/100</span></div>
+                            <div>Performance: <span id="res-n-grade" class="font-black text-amber-400 text-base">Mumtaz</span></div>
                         </div>
                     </div>
+
                 </div>
-
             </div>
 
         </main>
@@ -494,96 +261,56 @@
 
     <!-- Script Logic -->
     <script>
-        let defaultStudent = {
+        let db = {
+            id: "ROA-1092",
             name: "Abdul Rehman",
-            father: "Ali",
-            age: "6",
+            age: 6,
             course: "Hifz-ul-Quran",
-            attendance: "Present",
-            feeStatus: "Paid",
-            classDate: "2026-09-12",
-            startTime: "04:00 PM",
-            endTime: "05:00 PM",
-            sabaq: "Aaj ka sabaq",
-            ibadatDate: "2026-09-12",
-            durood: 3,
-            fajr: "Yes",
-            zuhur: "Yes",
-            asr: "Yes",
-            maghrib: "Yes",
-            isha: "Yes",
-            surahYassen: true,
-            surahWaaqia: true,
-            surahRahman: true
+            sabaqFinished: "Para 3 (Surah Al-Imran Ayat 50 Completed)",
+            mujaddaha: "Para 3 - Ruku 4",
+            t: { makharij: 28, adaigi: 18, rawah: 27, hifz: 10, malumaat: 5, pehchan: 5 },
+            n: { qaid: 45, kalimah: 10, dua: 18, miswak: 10, sunnah: 9 }
         };
 
-        function getStudentData() {
-            let saved = localStorage.getItem('raza_academy_unified_portal_v12');
-            return saved ? JSON.parse(saved) : defaultStudent;
+        function loadData() {
+            let saved = localStorage.getItem('raza_academy_dual_exams_v1');
+            return saved ? JSON.parse(saved) : db;
         }
 
-        let studentData = getStudentData();
-        let isStudentView = false;
+        let currentData = loadData();
 
         window.onload = function() {
-            populateAdminForm();
-            toggleTimeFields();
+            populateAdmin();
+            updateReportCards();
         };
 
-        function populateAdminForm() {
-            document.getElementById('input-name').value = studentData.name;
-            document.getElementById('input-father').value = studentData.father;
-            document.getElementById('input-age').value = studentData.age;
-            document.getElementById('input-course').value = studentData.course;
-            
-            document.getElementById('admin-att-status').value = studentData.attendance || "Present";
-            document.getElementById('admin-fee-status').value = studentData.feeStatus || "Paid";
-            document.getElementById('admin-class-date').value = studentData.classDate || "2026-09-12";
-            document.getElementById('admin-start-time').value = studentData.startTime || "04:00 PM";
-            document.getElementById('admin-end-time').value = studentData.endTime || "05:00 PM";
-            document.getElementById('admin-sabaq-text').value = studentData.sabaq || "Aaj ka sabaq";
+        function populateAdmin() {
+            document.getElementById('input-id').value = currentData.id;
+            document.getElementById('input-name').value = currentData.name;
+            document.getElementById('input-age').value = currentData.age;
+            document.getElementById('input-course').value = currentData.course;
+            document.getElementById('admin-sabaq-finished').value = currentData.sabaqFinished;
+            document.getElementById('admin-mujaddaha').value = currentData.mujaddaha;
 
-            document.getElementById('dir-name').innerText = studentData.name;
-            document.getElementById('dir-father').innerText = studentData.father;
-            document.getElementById('dir-age').innerText = studentData.age;
-            document.getElementById('dir-course').innerText = studentData.course;
+            document.getElementById('form-disp-id').innerText = currentData.id;
+            document.getElementById('form-disp-name').innerText = currentData.name;
 
-            document.getElementById('table-disp-name').innerText = studentData.name;
-            document.getElementById('table-disp-father').innerText = studentData.father;
+            document.getElementById('t-makharij').value = currentData.t.makharij;
+            document.getElementById('t-adaigi').value = currentData.t.adaigi;
+            document.getElementById('t-rawah').value = currentData.t.rawah;
+            document.getElementById('t-hifz').value = currentData.t.hifz;
+            document.getElementById('t-malumaat').value = currentData.t.malumaat;
+            document.getElementById('t-pehchan').value = currentData.t.pehchan;
 
-            document.getElementById('ibadat-disp-name').innerText = studentData.name;
-            document.getElementById('ibadat-disp-father').innerText = studentData.father;
-            document.getElementById('ibadat-disp-age').innerText = studentData.age;
-            document.getElementById('ibadat-durood').value = studentData.durood || 3;
-            document.getElementById('ibadat-date').value = studentData.ibadatDate || "2026-09-12";
-
-            document.getElementById('pnamaz-fajr').value = studentData.fajr || "Yes";
-            document.getElementById('pnamaz-zuhur').value = studentData.zuhur || "Yes";
-            document.getElementById('pnamaz-asr').value = studentData.asr || "Yes";
-            document.getElementById('pnamaz-maghrib').value = studentData.maghrib || "Yes";
-            document.getElementById('pnamaz-isha').value = studentData.isha || "Yes";
-
-            document.getElementById('surah-yassen').checked = studentData.surahYassen;
-            document.getElementById('surah-waaqia').checked = studentData.surahWaaqia;
-            document.getElementById('surah-rahman').checked = studentData.surahRahman;
-            
-            toggleTimeFields();
-        }
-
-        function toggleTimeFields() {
-            let attStatus = document.getElementById('admin-att-status').value;
-            let datetimeBox = document.getElementById('datetime-options-box');
-
-            if (attStatus === "Present") {
-                datetimeBox.style.display = "block";
-            } else {
-                datetimeBox.style.display = "none";
-            }
+            document.getElementById('n-qaid').value = currentData.n.qaid;
+            document.getElementById('n-kalimah').value = currentData.n.kalimah;
+            document.getElementById('n-dua').value = currentData.n.dua;
+            document.getElementById('n-miswak').value = currentData.n.miswak;
+            document.getElementById('n-sunnah').value = currentData.n.sunnah;
         }
 
         function switchTab(tabId) {
-            const tabs = ['add-student', 'directory', 'sabaq', 'ibadat', 'exams', 'fees', 'zakat', 'library'];
-            tabs.forEach(t => {
+            ['add-student', 'sabaq', 'exams'].forEach(t => {
                 document.getElementById('tab-' + t).classList.add('hidden');
                 document.getElementById('nav-' + t).classList.remove('bg-blue-600', 'text-white');
                 document.getElementById('nav-' + t).classList.add('hover:bg-slate-800');
@@ -595,149 +322,91 @@
 
         function handleSaveStudent(e) {
             e.preventDefault();
-            studentData.name = document.getElementById('input-name').value.trim();
-            studentData.father = document.getElementById('input-father').value.trim();
-            studentData.age = document.getElementById('input-age').value.trim();
-            studentData.course = document.getElementById('input-course').value;
-
-            localStorage.setItem('raza_academy_unified_portal_v12', JSON.stringify(studentData));
-            populateAdminForm();
-            alert("Student profile successfully saved!");
+            currentData.id = document.getElementById('input-id').value;
+            currentData.name = document.getElementById('input-name').value;
+            currentData.age = document.getElementById('input-age').value;
+            currentData.course = document.getElementById('input-course').value;
+            localStorage.setItem('raza_academy_dual_exams_v1', JSON.stringify(currentData));
+            populateAdmin();
+            alert("Student Profile Saved Successfully!");
         }
 
-        function saveSabaqAttendance() {
-            studentData.attendance = document.getElementById('admin-att-status').value;
-            studentData.feeStatus = document.getElementById('admin-fee-status').value;
-            studentData.sabaq = document.getElementById('admin-sabaq-text').value;
-            
-            if (studentData.attendance === "Present") {
-                studentData.classDate = document.getElementById('admin-class-date').value;
-                studentData.startTime = document.getElementById('admin-start-time').value;
-                studentData.endTime = document.getElementById('admin-end-time').value;
-            } else {
-                studentData.classDate = "N/A";
-                studentData.startTime = "N/A";
-                studentData.endTime = "N/A";
-            }
-
-            localStorage.setItem('raza_academy_unified_portal_v12', JSON.stringify(studentData));
-            alert("Daily Attendance & Sabaq updated successfully!");
+        function saveSabaqProgress() {
+            currentData.sabaqFinished = document.getElementById('admin-sabaq-finished').value;
+            currentData.mujaddaha = document.getElementById('admin-mujaddaha').value;
+            localStorage.setItem('raza_academy_dual_exams_v1', JSON.stringify(currentData));
+            alert("Sabaq Progress Updated!");
         }
 
-        function saveIbadatRecord() {
-            studentData.ibadatDate = document.getElementById('ibadat-date').value;
-            studentData.durood = document.getElementById('ibadat-durood').value;
-            studentData.fajr = document.getElementById('pnamaz-fajr').value;
-            studentData.zuhur = document.getElementById('pnamaz-zuhur').value;
-            studentData.asr = document.getElementById('pnamaz-asr').value;
-            studentData.maghrib = document.getElementById('pnamaz-maghrib').value;
-            studentData.isha = document.getElementById('pnamaz-isha').value;
+        function getStatusTitle(score) {
+            if (score >= 85) return "Mumtaz";
+            if (score >= 70) return "Behtar";
+            if (score >= 60) return "Munasib";
+            return "Needs Improvement";
+        }
 
-            studentData.surahYassen = document.getElementById('surah-yassen').checked;
-            studentData.surahWaaqia = document.getElementById('surah-waaqia').checked;
-            studentData.surahRahman = document.getElementById('surah-rahman').checked;
+        function saveDualExams() {
+            currentData.t.makharij = parseInt(document.getElementById('t-makharij').value) || 0;
+            currentData.t.adaigi = parseInt(document.getElementById('t-adaigi').value) || 0;
+            currentData.t.rawah = parseInt(document.getElementById('t-rawah').value) || 0;
+            currentData.t.hifz = parseInt(document.getElementById('t-hifz').value) || 0;
+            currentData.t.malumaat = parseInt(document.getElementById('t-malumaat').value) || 0;
+            currentData.t.pehchan = parseInt(document.getElementById('t-pehchan').value) || 0;
 
-            localStorage.setItem('raza_academy_unified_portal_v12', JSON.stringify(studentData));
-            alert("Ibadat & Namaz record saved successfully!");
+            currentData.n.qaid = parseInt(document.getElementById('n-qaid').value) || 0;
+            currentData.n.kalimah = parseInt(document.getElementById('n-kalimah').value) || 0;
+            currentData.n.dua = parseInt(document.getElementById('n-dua').value) || 0;
+            currentData.n.miswak = parseInt(document.getElementById('n-miswak').value) || 0;
+            currentData.n.sunnah = parseInt(document.getElementById('n-sunnah').value) || 0;
+
+            localStorage.setItem('raza_academy_dual_exams_v1', JSON.stringify(currentData));
+            updateReportCards();
+            alert("Exams Saved & Report Cards Automatically Updated!");
+        }
+
+        function updateReportCards() {
+            document.getElementById('card-disp-name').innerText = currentData.name;
+            document.getElementById('card-disp-id').innerText = currentData.id;
+            document.getElementById('card-disp-age').innerText = currentData.age;
+            document.getElementById('card-disp-finished').innerText = currentData.sabaqFinished;
+            document.getElementById('card-disp-mujaddaha').innerText = currentData.mujaddaha;
+
+            // Taleemi Totals
+            let tTotal = currentData.t.makharij + currentData.t.adaigi + currentData.t.rawah + currentData.t.hifz + currentData.t.malumaat + currentData.t.pehchan;
+            document.getElementById('res-t-mak').innerText = currentData.t.makharij + "/30";
+            document.getElementById('res-t-ada').innerText = currentData.t.adaigi + "/20";
+            document.getElementById('res-t-raw').innerText = currentData.t.rawah + "/30";
+            document.getElementById('res-t-hif').innerText = currentData.t.hifz + "/10";
+            document.getElementById('res-t-mal').innerText = currentData.t.malumaat + "/05";
+            document.getElementById('res-t-peh').innerText = currentData.t.pehchan + "/05";
+            document.getElementById('res-t-total').innerText = tTotal + "/100";
+            document.getElementById('res-t-grade').innerText = getStatusTitle(tTotal);
+
+            // Nisabi Totals
+            let nTotal = currentData.n.qaid + currentData.n.kalimah + currentData.n.dua + currentData.n.miswak + currentData.n.sunnah;
+            document.getElementById('res-n-qaid').innerText = currentData.n.qaid + "/50";
+            document.getElementById('res-n-kal').innerText = currentData.n.kalimah + "/10";
+            document.getElementById('res-n-dua').innerText = currentData.n.dua + "/20";
+            document.getElementById('res-n-mis').innerText = currentData.n.miswak + "/10";
+            document.getElementById('res-n-sun').innerText = currentData.n.sunnah + "/10";
+            document.getElementById('res-n-total').innerText = nTotal + "/100";
+            document.getElementById('res-n-grade').innerText = getStatusTitle(nTotal);
         }
 
         function toggleMainView() {
-            isStudentView = !isStudentView;
-            const adminContainer = document.getElementById('admin-container');
-            const studentContainer = document.getElementById('student-container');
-            const switchBtn = document.getElementById('view-switch-btn');
-            const sidebar = document.getElementById('sidebar');
-
-            if (isStudentView) {
-                adminContainer.classList.add('hidden');
-                studentContainer.classList.remove('hidden');
-                sidebar.classList.add('md:hidden');
-                switchBtn.innerText = "Switch to Admin Panel";
-                switchBtn.className = "bg-blue-600 hover:bg-blue-700 text-white text-[11px] px-3 py-1.5 rounded-lg font-semibold transition shadow";
-                
-                document.getElementById('student-dashboard').classList.add('hidden');
-                document.getElementById('student-login-box').classList.remove('hidden');
-                document.getElementById('login-input-id').value = "";
+            let admin = document.getElementById('admin-container');
+            let student = document.getElementById('student-container');
+            let btn = document.getElementById('view-switch-btn');
+            if(admin.classList.contains('hidden')) {
+                admin.classList.remove('hidden');
+                student.classList.add('hidden');
+                btn.innerText = "Switch to Student View";
             } else {
-                studentContainer.classList.add('hidden');
-                adminContainer.classList.remove('hidden');
-                sidebar.classList.remove('md:hidden');
-                switchBtn.innerText = "Switch to Parent View";
-                switchBtn.className = "bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-[11px] px-3 py-1.5 rounded-lg font-semibold transition shadow";
+                admin.classList.add('hidden');
+                student.classList.remove('hidden');
+                btn.innerText = "Switch to Admin Panel";
+                updateReportCards();
             }
-        }
-
-        function handleStudentLogin() {
-            let inputName = document.getElementById('login-input-id').value.trim().toLowerCase();
-            let current = getStudentData();
-
-            if (inputName === current.name.trim().toLowerCase()) {
-                document.getElementById('student-login-box').classList.add('hidden');
-                document.getElementById('student-dashboard').classList.remove('hidden');
-
-                document.getElementById('disp-age-badge').innerText = "Age: " + current.age;
-                document.getElementById('disp-name').innerText = current.name;
-                document.getElementById('disp-father').innerText = current.father;
-                document.getElementById('disp-course').innerText = current.course;
-                document.getElementById('disp-attendance').innerText = current.attendance;
-                
-                if (current.attendance === "Present") {
-                    document.getElementById('disp-timestamp').innerText = "Date: " + current.classDate;
-                    document.getElementById('disp-time-range').innerText = "Time: " + current.startTime + " to " + current.endTime;
-                } else {
-                    document.getElementById('disp-timestamp').innerText = "Status: " + current.attendance;
-                    document.getElementById('disp-time-range').innerText = "Class Off / No Timing";
-                }
-
-                document.getElementById('disp-sabaq').innerText = current.sabaq;
-                document.getElementById('disp-durood').innerText = current.durood;
-
-                // Format 5 Prayers with Green Tick / Red Cancel
-                let prayersList = [
-                    { name: 'Fajr', val: current.fajr },
-                    { name: 'Zuhur', val: current.zuhur },
-                    { name: 'Asr', val: current.asr },
-                    { name: 'Maghrib', val: current.maghrib },
-                    { name: 'Isha', val: current.isha }
-                ];
-
-                let prayerHtml = "";
-                prayersList.forEach(p => {
-                    if (p.val === "Yes") {
-                        prayerHtml += `<div class="flex justify-between items-center text-slate-700"><span>${p.name}:</span> <span class="text-emerald-600"><i class="fa-solid fa-check text-xs"></i> Yes</span></div>`;
-                    } else {
-                        prayerHtml += `<div class="flex justify-between items-center text-slate-700"><span>${p.name}:</span> <span class="text-red-500"><i class="fa-solid fa-xmark text-xs"></i> No</span></div>`;
-                    }
-                });
-                document.getElementById('disp-prayers-box').innerHTML = prayerHtml;
-
-                // Surahs list
-                let surahsArr = [];
-                if(current.surahYassen) surahsArr.push("Surah Yassen");
-                if(current.surahWaaqia) surahsArr.push("Surah Waaqia");
-                if(current.surahRahman) surahsArr.push("Surah Rahman");
-                document.getElementById('disp-surahs').innerText = surahsArr.length > 0 ? surahsArr.join(", ") : "None";
-
-            } else {
-                alert("Student Name ghalat hai! Sahi Naam likhein (misal: " + current.name + ")");
-            }
-        }
-
-        function logoutStudent() {
-            document.getElementById('student-dashboard').classList.add('hidden');
-            document.getElementById('student-login-box').classList.remove('hidden');
-            document.getElementById('login-input-id').value = "";
-        }
-
-        function logoutAdmin() {
-            if(confirm("Kya aap portal se logout karna chahte hain?")) {
-                alert("Logged out successfully.");
-            }
-        }
-
-        function toggleMobileSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('hidden');
         }
     </script>
 </body>
