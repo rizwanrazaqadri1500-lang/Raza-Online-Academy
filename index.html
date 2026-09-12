@@ -200,11 +200,11 @@
                                                 <div>
                                                     <label class="block text-[11px] font-semibold text-slate-700 mb-1">Attendance:</label>
                                                     <select id="admin-att-status" onchange="toggleTimeField()" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none">
-                                                        <option>Present</option>
-                                                        <option>Absent</option>
-                                                        <option>Leave</option>
-                                                        <option>Weekend (Skipped)</option>
-                                                        <option>Other Off / Skipped</option>
+                                                        <option value="Present">Present</option>
+                                                        <option value="Absent">Absent</option>
+                                                        <option value="Leave">Leave</option>
+                                                        <option value="Weekend - Sunday (Off)">Weekend - Sunday (Off)</option>
+                                                        <option value="Other Off / Skipped">Other Off / Skipped</option>
                                                     </select>
                                                 </div>
                                                 <div>
@@ -408,7 +408,7 @@
         };
 
         function getStudentData() {
-            let saved = localStorage.getItem('raza_academy_unified_portal_v6');
+            let saved = localStorage.getItem('raza_academy_unified_portal_v7');
             return saved ? JSON.parse(saved) : defaultStudent;
         }
 
@@ -417,8 +417,8 @@
 
         window.onload = function() {
             let today = new Date().getDay(); // 0 is Sunday
-            if (today === 0) {
-                studentData.attendance = "Weekend (Skipped)";
+            if (today === 0 && !localStorage.getItem('raza_academy_unified_portal_v7')) {
+                studentData.attendance = "Weekend - Sunday (Off)";
             }
             populateAdminForm();
             toggleTimeField();
@@ -436,9 +436,10 @@
             let attSelect = document.getElementById('admin-att-status');
             let todayDay = new Date().getDay();
 
-            if (todayDay === 0) {
-                attSelect.value = "Weekend (Skipped)";
-                studentData.attendance = "Weekend (Skipped)";
+            // Agar aaj Sunday hai aur pehle se save nahi hua toh automatic Sunday off select hojaye
+            if (todayDay === 0 && !studentData.attendanceUpdatedToday) {
+                attSelect.value = "Weekend - Sunday (Off)";
+                studentData.attendance = "Weekend - Sunday (Off)";
             } else {
                 attSelect.value = studentData.attendance || "Present";
             }
@@ -460,7 +461,7 @@
             toggleTimeField();
         }
 
-        // Toggle automatic time field based on Attendance selection
+        // Toggle automatic time field strictly based on "Present" selection
         function toggleTimeField() {
             let attStatus = document.getElementById('admin-att-status').value;
             let timeContainer = document.getElementById('auto-time-container');
@@ -494,7 +495,7 @@
             studentData.mobile = document.getElementById('input-mobile').value.trim();
             studentData.currency = document.getElementById('input-currency').value;
 
-            localStorage.setItem('raza_academy_unified_portal_v6', JSON.stringify(studentData));
+            localStorage.setItem('raza_academy_unified_portal_v7', JSON.stringify(studentData));
             populateAdminForm();
             alert("Student profile successfully saved!");
         }
@@ -503,6 +504,7 @@
             studentData.attendance = document.getElementById('admin-att-status').value;
             studentData.feeStatus = document.getElementById('admin-fee-status').value;
             studentData.sabaq = document.getElementById('admin-sabaq-text').value;
+            studentData.attendanceUpdatedToday = true;
             
             if (studentData.attendance === "Present") {
                 studentData.timestamp = document.getElementById('admin-att-timestamp').value;
@@ -510,7 +512,7 @@
                 studentData.timestamp = "N/A (" + studentData.attendance + ")";
             }
 
-            localStorage.setItem('raza_academy_unified_portal_v6', JSON.stringify(studentData));
+            localStorage.setItem('raza_academy_unified_portal_v7', JSON.stringify(studentData));
             alert("Daily Attendance & Sabaq updated successfully!");
         }
 
