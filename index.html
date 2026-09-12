@@ -161,7 +161,7 @@
                                 </thead>
                                 <tbody id="directory-table-body">
                                     <tr class="border-b border-slate-100">
-                                        <td class="p-3 font-semibold text-blue-600" id="dir-name">Muhammad</td>
+                                        <td class="p-3 font-semibold text-blue-600" id="dir-name">Abdul Rehman</td>
                                         <td class="p-3" id="dir-father">Ali</td>
                                         <td class="p-3" id="dir-course">Hifz-ul-Quran</td>
                                         <td class="p-3" id="dir-age">9</td>
@@ -173,59 +173,71 @@
                     </div>
                 </div>
 
-                <!-- Tab 3: Sabaq & Attendance (Updated as per user requirement) -->
+                <!-- Tab 3: Sabaq & Attendance (Updated layout matching user's image & conditional time toggle) -->
                 <div id="tab-sabaq" class="admin-tab hidden space-y-6">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Daily Sabaq & Attendance Tracker</h3>
-                        <p class="text-xs text-slate-500 mb-6">Rozana ki attendance, date, weekend skip option aur sabaq details yahan update karein.</p>
-                        
-                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-4">
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                <!-- Attendance Dropdown -->
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Attendance:</label>
-                                    <select id="admin-att-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium">
-                                        <option>Present</option>
-                                        <option>Absent</option>
-                                        <option>Leave</option>
-                                        <option>Weekend (Skipped)</option>
-                                    </select>
-                                </div>
-                                
-                                <!-- Fee Status -->
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Fee Status:</label>
-                                    <select id="admin-fee-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium">
-                                        <option>Paid</option>
-                                        <option>Pending</option>
-                                    </select>
-                                </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="p-4 sm:p-6 bg-slate-50 border-b border-slate-200 flex items-center space-x-3">
+                            <i class="fa-solid fa-calendar-days text-amber-500 text-lg"></i>
+                            <h3 class="text-lg font-bold text-slate-900">Daily Sabaq & Attendance</h3>
+                        </div>
 
-                                <!-- Date Field -->
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Select Date:</label>
-                                    <input type="date" id="admin-att-date" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm">
-                                </div>
-                            </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-slate-200 text-slate-600 text-xs uppercase tracking-wider bg-slate-50/50">
+                                        <th class="p-4 w-1/3 border-r border-slate-200">Student Detail</th>
+                                        <th class="p-4">Attendance & Sabaq Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-4 border-r border-slate-200 align-top bg-slate-50/30">
+                                            <div class="font-bold text-slate-900 text-base" id="table-disp-name">Abdul Rehman</div>
+                                            <div class="text-xs text-slate-500 mt-0.5">S/O: <span id="table-disp-father">Ali</span></div>
+                                        </td>
+                                        <td class="p-4 space-y-4 align-top">
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                <div>
+                                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Attendance:</label>
+                                                    <select id="admin-att-status" onchange="toggleTimeField()" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-600 outline-none">
+                                                        <option>Present</option>
+                                                        <option>Absent</option>
+                                                        <option>Leave</option>
+                                                        <option>Weekend (Skipped)</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Fee Status:</label>
+                                                    <select id="admin-fee-status" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-600 outline-none">
+                                                        <option>Paid</option>
+                                                        <option>Pending</option>
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                                <!-- Sabaq Details Input -->
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Sabaq Details:</label>
-                                    <input type="text" id="admin-sabaq-text" placeholder="Aaj ka sabaq" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm">
-                                </div>
+                                            <!-- Automatic Date & Time Option (Only shows when Present is selected) -->
+                                            <div id="auto-time-container" class="p-3 bg-blue-50/60 border border-blue-200 rounded-xl flex items-center justify-between transition-all">
+                                                <div class="flex items-center space-x-2 text-blue-800 text-xs font-semibold">
+                                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                                    <span>Automatic Date & Time Stamp:</span>
+                                                </div>
+                                                <input type="text" id="admin-att-timestamp" readonly class="bg-white border border-blue-200 px-3 py-1 rounded-lg text-xs font-bold text-blue-900 w-44 text-center shadow-inner">
+                                            </div>
 
-                                <!-- Skip Weekends Quick Button -->
-                                <div class="flex items-end">
-                                    <button type="button" onclick="autoSkipWeekend()" class="w-full py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-sm transition shadow-sm">
-                                        <i class="fa-solid fa-calendar-xmark mr-1"></i> Skip Weekend (Sat/Sun)
-                                    </button>
-                                </div>
-                            </div>
+                                            <div>
+                                                <label class="block text-xs font-semibold text-slate-700 mb-1">Sabaq Details:</label>
+                                                <input type="text" id="admin-sabaq-text" placeholder="Aaj ka sabaq" class="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-600">
+                                            </div>
 
-                            <div class="pt-4 border-t border-slate-200 flex justify-end">
-                                <button onclick="saveSabaqAttendance()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition shadow">Update Daily Record</button>
-                            </div>
+                                            <div class="flex justify-end pt-2">
+                                                <button onclick="saveSabaqAttendance()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm">
+                                                    Update Daily Record
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -316,7 +328,7 @@
                     <div class="space-y-4 text-left">
                         <div>
                             <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Student Name</label>
-                            <input type="text" id="login-input-id" placeholder="e.g. Muhammad" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-sm outline-none font-semibold text-blue-700">
+                            <input type="text" id="login-input-id" placeholder="e.g. Abdul Rehman" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-sm outline-none font-semibold text-blue-700">
                         </div>
                         <button onclick="handleStudentLogin()" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition shadow-lg shadow-blue-600/20">
                             Portal Khulein
@@ -333,7 +345,7 @@
                             </div>
                             <div>
                                 <span class="bg-amber-500 text-slate-950 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider" id="disp-currency">AUSTRALIA (AUD)</span>
-                                <h2 class="text-2xl font-bold mt-2" id="disp-name">Muhammad</h2>
+                                <h2 class="text-2xl font-bold mt-2" id="disp-name">Abdul Rehman</h2>
                                 <p class="text-slate-300 text-sm">Father's Name: <span id="disp-father" class="font-medium">Ali</span></p>
                             </div>
                         </div>
@@ -352,10 +364,10 @@
                         <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                             <div class="flex items-center space-x-3 text-blue-600 mb-2">
                                 <i class="fa-solid fa-calendar-check text-xl"></i>
-                                <h4 class="font-bold text-slate-700 text-sm">Attendance & Date</h4>
+                                <h4 class="font-bold text-slate-700 text-sm">Attendance Status</h4>
                             </div>
                             <p class="text-lg font-bold text-emerald-600" id="disp-attendance">Present</p>
-                            <span class="text-xs text-slate-400 block mt-1" id="disp-date">Date: --</span>
+                            <span class="text-xs text-slate-400 block mt-1" id="disp-timestamp">Time: --</span>
                         </div>
                         <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                             <div class="flex items-center space-x-3 text-blue-600 mb-2">
@@ -382,7 +394,7 @@
     <!-- Script Logic -->
     <script>
         let defaultStudent = {
-            name: "Muhammad",
+            name: "Abdul Rehman",
             father: "Ali",
             course: "Hifz-ul-Quran",
             age: "9",
@@ -390,12 +402,12 @@
             currency: "AU Australia (AUD)",
             attendance: "Present",
             feeStatus: "Paid",
-            date: new Date().toISOString().split('T')[0],
+            timestamp: new Date().toLocaleString(),
             sabaq: "Aaj ka sabaq"
         };
 
         function getStudentData() {
-            let saved = localStorage.getItem('raza_academy_unified_portal_v2');
+            let saved = localStorage.getItem('raza_academy_unified_portal_v3');
             return saved ? JSON.parse(saved) : defaultStudent;
         }
 
@@ -404,10 +416,7 @@
 
         window.onload = function() {
             populateAdminForm();
-            // Set today's date by default if not set
-            if(!document.getElementById('admin-att-date').value) {
-                document.getElementById('admin-att-date').value = new Date().toISOString().split('T')[0];
-            }
+            toggleTimeField();
         };
 
         function populateAdminForm() {
@@ -421,7 +430,7 @@
             // Attendance inputs
             document.getElementById('admin-att-status').value = studentData.attendance || "Present";
             document.getElementById('admin-fee-status').value = studentData.feeStatus || "Paid";
-            document.getElementById('admin-att-date').value = studentData.date || new Date().toISOString().split('T')[0];
+            document.getElementById('admin-att-timestamp').value = studentData.timestamp || new Date().toLocaleString();
             document.getElementById('admin-sabaq-text').value = studentData.sabaq || "Aaj ka sabaq";
 
             // Directory update
@@ -429,6 +438,24 @@
             document.getElementById('dir-father').innerText = studentData.father;
             document.getElementById('dir-course').innerText = studentData.course;
             document.getElementById('dir-age').innerText = studentData.age;
+
+            // Table labels update
+            document.getElementById('table-disp-name').innerText = studentData.name;
+            document.getElementById('table-disp-father').innerText = studentData.father;
+        }
+
+        // Toggle automatic time field based on Attendance selection
+        function toggleTimeField() {
+            let attStatus = document.getElementById('admin-att-status').value;
+            let timeContainer = document.getElementById('auto-time-container');
+
+            if (attStatus === "Present") {
+                timeContainer.classList.remove('hidden');
+                // Set current fresh timestamp when Present is selected
+                document.getElementById('admin-att-timestamp').value = new Date().toLocaleString();
+            } else {
+                timeContainer.classList.add('hidden');
+            }
         }
 
         function switchTab(tabId) {
@@ -452,7 +479,7 @@
             studentData.mobile = document.getElementById('input-mobile').value.trim();
             studentData.currency = document.getElementById('input-currency').value;
 
-            localStorage.setItem('raza_academy_unified_portal_v2', JSON.stringify(studentData));
+            localStorage.setItem('raza_academy_unified_portal_v3', JSON.stringify(studentData));
             populateAdminForm();
             alert("Student profile successfully saved!");
         }
@@ -460,30 +487,16 @@
         function saveSabaqAttendance() {
             studentData.attendance = document.getElementById('admin-att-status').value;
             studentData.feeStatus = document.getElementById('admin-fee-status').value;
-            studentData.date = document.getElementById('admin-att-date').value;
             studentData.sabaq = document.getElementById('admin-sabaq-text').value;
-
-            localStorage.setItem('raza_academy_unified_portal_v2', JSON.stringify(studentData));
-            alert("Daily Attendance & Sabaq updated successfully!");
-        }
-
-        // Skip Weekend Auto Function (Checks selected date, if Sat/Sun, marks Weekend Skipped)
-        function autoSkipWeekend() {
-            let dateVal = document.getElementById('admin-att-date').value;
-            if(!dateVal) {
-                alert("Pehle date select karein!");
-                return;
-            }
-            let d = new Date(dateVal);
-            let day = d.getDay(); // 0 is Sunday, 6 is Saturday
             
-            if(day === 0 || day === 6) {
-                document.getElementById('admin-att-status').value = "Weekend (Skipped)";
-                document.getElementById('admin-sabaq-text').value = "Weekend - Academy Closed";
-                alert("Selected date is a Weekend! Status automatically set to Weekend (Skipped).");
+            if (studentData.attendance === "Present") {
+                studentData.timestamp = document.getElementById('admin-att-timestamp').value;
             } else {
-                alert("Selected date weekend (Sat/Sun) nahi hai. Yeh ek working day hai.");
+                studentData.timestamp = "N/A (" + studentData.attendance + ")";
             }
+
+            localStorage.setItem('raza_academy_unified_portal_v3', JSON.stringify(studentData));
+            alert("Daily Attendance & Sabaq updated successfully!");
         }
 
         function toggleMainView() {
@@ -525,7 +538,7 @@
                 document.getElementById('disp-father').innerText = current.father;
                 document.getElementById('disp-course').innerText = current.course;
                 document.getElementById('disp-attendance').innerText = current.attendance;
-                document.getElementById('disp-date').innerText = "Date: " + (current.date || "N/A");
+                document.getElementById('disp-timestamp').innerText = "Time: " + current.timestamp;
                 document.getElementById('disp-sabaq').innerText = current.sabaq;
                 document.getElementById('disp-fee-status').innerText = current.feeStatus;
             } else {
