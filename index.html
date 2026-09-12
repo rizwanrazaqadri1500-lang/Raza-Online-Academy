@@ -9,111 +9,398 @@
 </head>
 <body class="h-full flex font-sans antialiased text-slate-800 overflow-hidden">
 
+    <!-- SIDEBAR (Admin Navigation) -->
+    <aside id="sidebar" class="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between hidden md:flex z-20 shadow-xl">
+        <div>
+            <div class="p-4 bg-amber-500 text-slate-950 flex items-center space-x-3">
+                <div class="font-black text-base tracking-wider bg-slate-950 text-amber-400 px-2 py-0.5 rounded-lg">ROA</div>
+                <div>
+                    <h1 class="font-bold text-xs leading-tight">Raza Online Islamic</h1>
+                    <span class="text-[10px] font-semibold text-slate-900 block">Academy Management Portal</span>
+                </div>
+            </div>
+            <nav class="p-3 space-y-1 text-xs font-medium">
+                <button onclick="switchTab('add-student')" id="nav-add-student" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl bg-blue-600 text-white transition shadow-sm">
+                    <i class="fa-solid fa-user-plus w-4"></i><span>Add Student</span>
+                </button>
+                <button onclick="switchTab('directory')" id="nav-directory" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-users w-4"></i><span>Students Directory</span>
+                </button>
+                <button onclick="switchTab('sabaq')" id="nav-sabaq" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-book-open w-4"></i><span>Daily Sabaq & Attendance</span>
+                </button>
+                <button onclick="switchTab('ibadat')" id="nav-ibadat" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-mosque w-4"></i><span>Daily Ibadat & Namaz</span>
+                </button>
+                <button onclick="switchTab('exams')" id="nav-exams" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-award w-4"></i><span>Monthly Exams & Results</span>
+                </button>
+                <button onclick="switchTab('fees')" id="nav-fees" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-file-invoice-dollar w-4"></i><span>Fees & Vouchers</span>
+                </button>
+                <button onclick="switchTab('zakat')" id="nav-zakat" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-hand-holding-dollar w-4"></i><span>Zakat Receipt Generator</span>
+                </button>
+                <button onclick="switchTab('library')" id="nav-library" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-book-bookmark w-4"></i><span>Islamic Books Library</span>
+                </button>
+            </nav>
+        </div>
+        <div class="p-3 border-t border-slate-800">
+            <button onclick="logoutAdmin()" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-red-400 hover:bg-red-500/10 transition text-xs font-medium">
+                <i class="fa-solid fa-right-from-bracket w-4"></i><span>Logout Portal</span>
+            </button>
+        </div>
+    </aside>
+
     <!-- MAIN WRAPPER -->
     <div class="flex-1 flex flex-col h-full overflow-hidden">
         
         <!-- Top Header -->
         <header class="bg-slate-900 text-white shadow-md h-14 flex items-center justify-between px-6 z-10">
             <div class="flex items-center space-x-3">
+                <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-300 hover:text-white text-lg">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <div>
                     <h2 class="font-bold text-sm leading-tight">Raza Online Islamic Academy</h2>
-                    <span class="text-[10px] text-slate-400">Admin Attendance & Schedule Management</span>
+                    <span class="text-[10px] text-slate-400">Admin & Student Management Portal</span>
                 </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] px-2.5 py-0.5 rounded-full font-medium flex items-center">
+                    <i class="fa-solid fa-circle text-[6px] mr-1.5 animate-pulse"></i> System Active
+                </span>
+                <button onclick="toggleMainView()" id="view-switch-btn" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-[11px] px-3 py-1.5 rounded-lg font-semibold transition shadow">
+                    Switch to Parent View
+                </button>
             </div>
         </header>
 
         <!-- Scrollable Content Area -->
         <main class="flex-1 overflow-y-auto p-4 lg:p-6">
             
-            <div class="max-w-4xl mx-auto space-y-6">
+            <!-- ADMIN VIEW CONTAINER -->
+            <div id="admin-container" class="max-w-4xl mx-auto space-y-6">
                 
-                <!-- Daily Sabaq & Attendance Table Box -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center space-x-3">
-                        <i class="fa-solid fa-calendar-days text-amber-500 text-base"></i>
-                        <h3 class="text-sm font-bold text-slate-900">Daily Sabaq & Attendance</h3>
+                <!-- Tab 1: Add Student -->
+                <div id="tab-add-student" class="admin-tab space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+                            <div class="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center font-bold text-sm">
+                                <i class="fa-solid fa-user-plus"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900">Naya Student Add Karein</h3>
+                                <p class="text-[11px] text-slate-500">Student ki tafseelat aur default class timings darj karein.</p>
+                            </div>
+                        </div>
+
+                        <form onsubmit="handleSaveStudent(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Student Name *</label>
+                                    <input type="text" id="input-name" placeholder="e.g. Abdul Rehman" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none transition">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Father's Name *</label>
+                                    <input type="text" id="input-father" placeholder="e.g. Ali" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none transition">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Select Course *</label>
+                                    <select id="input-course" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none font-medium">
+                                        <option>Hifz-ul-Quran</option>
+                                        <option>Nazrah Quran Pak</option>
+                                        <option>Madani Qaida</option>
+                                        <option>Tajweed & Qirat Masterclass</option>
+                                        <option>Dars-e-Nizami Core Studies</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Parent Mobile / WhatsApp</label>
+                                    <input type="text" id="input-mobile" placeholder="+61400123456" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none transition">
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Select Country & Currency *</label>
+                                    <select id="input-currency" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none font-medium">
+                                        <option>AU Australia (AUD)</option>
+                                        <option>PK Pakistan (PKR)</option>
+                                        <option>US United States (USD)</option>
+                                        <option>GB United Kingdom (GBP)</option>
+                                        <option>CA Canada (CAD)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex justify-end pt-3 border-t border-slate-100">
+                                <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs transition shadow-md flex items-center space-x-2">
+                                    <i class="fa-solid fa-user-plus"></i><span>Save Student Profile</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Students Directory -->
+                <div id="tab-directory" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <h3 class="text-base font-bold text-slate-900 mb-3">Students Directory</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-50 border-b border-slate-200 text-slate-600">
+                                        <th class="p-2.5">Student Name</th>
+                                        <th class="p-2.5">Father's Name</th>
+                                        <th class="p-2.5">Course</th>
+                                        <th class="p-2.5">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-slate-100">
+                                        <td class="p-2.5 font-semibold text-blue-600" id="dir-name">Abdul Rehman</td>
+                                        <td class="p-2.5" id="dir-father">Ali</td>
+                                        <td class="p-2.5" id="dir-course">Hifz-ul-Quran</td>
+                                        <td class="p-2.5"><span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-medium">Active</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Sabaq & Attendance -->
+                <div id="tab-sabaq" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center space-x-3">
+                            <i class="fa-solid fa-calendar-days text-amber-500 text-base"></i>
+                            <h3 class="text-sm font-bold text-slate-900">Daily Sabaq & Attendance</h3>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="border-b border-slate-200 text-slate-600 uppercase tracking-wider bg-slate-50/50">
+                                        <th class="p-3.5 w-1/3 border-r border-slate-200">Student Detail</th>
+                                        <th class="p-3.5">Attendance & Sabaq Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <!-- Student Detail Column -->
+                                        <td class="p-3.5 border-r border-slate-200 align-top bg-slate-50/30">
+                                            <div class="font-bold text-slate-900 text-sm" id="table-disp-name">Abdul Rehman</div>
+                                            <div class="text-[11px] text-slate-500 mt-0.5">S/O: <span id="table-disp-father">Ali</span></div>
+                                        </td>
+
+                                        <!-- Attendance & Schedule Details Column -->
+                                        <td class="p-3.5 space-y-3 align-top">
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                <div>
+                                                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Attendance:</label>
+                                                    <select id="admin-att-status" onchange="toggleTimeFields()" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none">
+                                                        <option value="Present">Present</option>
+                                                        <option value="Absent">Absent</option>
+                                                        <option value="Leave">Leave</option>
+                                                        <option value="Weekend - Sunday (Off)">Weekend - Sunday (Off)</option>
+                                                        <option value="Other Off / Skipped">Other Off / Skipped</option>
+                                                    </select>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Fee Status:</label>
+                                                    <select id="admin-fee-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none">
+                                                        <option>Paid</option>
+                                                        <option>Pending</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- DYNAMIC DATE & TIME SETTINGS BOX (Appears ONLY when Present) -->
+                                            <div id="datetime-options-box" class="p-3 bg-blue-50/80 border border-blue-200 rounded-xl space-y-3">
+                                                <div class="text-[11px] font-bold text-blue-900 flex items-center space-x-1.5">
+                                                    <i class="fa-solid fa-clock"></i>
+                                                    <span>Class Date & Time Settings:</span>
+                                                </div>
+
+                                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                                    <!-- Select Date -->
+                                                    <div>
+                                                        <label class="block text-[10px] font-semibold text-slate-600 mb-1">Select Date:</label>
+                                                        <input type="date" id="admin-class-date" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-blue-900 shadow-inner outline-none focus:ring-2 focus:ring-blue-600">
+                                                    </div>
+
+                                                    <!-- Class Start Time -->
+                                                    <div>
+                                                        <label class="block text-[10px] font-semibold text-slate-600 mb-1">Class Start Time:</label>
+                                                        <input type="text" id="admin-start-time" value="04:00 PM" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-blue-900 shadow-inner outline-none focus:ring-2 focus:ring-blue-600">
+                                                    </div>
+
+                                                    <!-- Class End Time -->
+                                                    <div>
+                                                        <label class="block text-[10px] font-semibold text-slate-600 mb-1">Class End Time:</label>
+                                                        <input type="text" id="admin-end-time" value="05:00 PM" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-emerald-800 shadow-inner outline-none focus:ring-2 focus:ring-blue-600">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label class="block text-[11px] font-semibold text-slate-700 mb-1">Sabaq Details:</label>
+                                                <input type="text" id="admin-sabaq-text" placeholder="Aaj ka sabaq" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-600">
+                                            </div>
+
+                                            <div class="flex justify-end pt-1">
+                                                <button onclick="saveSabaqAttendance()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm">
+                                                    Update Daily Record
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Daily Ibadat -->
+                <div id="tab-ibadat" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <h3 class="text-base font-bold text-slate-900 mb-1">Daily Ibadat & Namaz Tracker</h3>
+                        <p class="text-[11px] text-slate-500 mb-4">Student ki panj waqta namaz ka record.</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
+                            <div class="p-3 bg-slate-50 rounded-xl border text-center"><span class="block text-[10px] font-bold text-slate-500">FAJR</span><span class="text-emerald-600 font-bold">Adaa</span></div>
+                            <div class="p-3 bg-slate-50 rounded-xl border text-center"><span class="block text-[10px] font-bold text-slate-500">ZUHUR</span><span class="text-emerald-600 font-bold">Adaa</span></div>
+                            <div class="p-3 bg-slate-50 rounded-xl border text-center"><span class="block text-[10px] font-bold text-slate-500">ASR</span><span class="text-emerald-600 font-bold">Adaa</span></div>
+                            <div class="p-3 bg-slate-50 rounded-xl border text-center"><span class="block text-[10px] font-bold text-slate-500">MAGHRIB</span><span class="text-emerald-600 font-bold">Adaa</span></div>
+                            <div class="p-3 bg-slate-50 rounded-xl border text-center"><span class="block text-[10px] font-bold text-slate-500">ISHA</span><span class="text-emerald-600 font-bold">Adaa</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 5: Exams -->
+                <div id="tab-exams" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs">
+                        <h3 class="text-base font-bold text-slate-900 mb-1">Monthly Exams & Results</h3>
+                        <p class="text-[11px] text-slate-500 mb-3">Mahana imtihaan ke marks.</p>
+                        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex justify-between items-center">
+                            <div>
+                                <h4 class="font-bold text-emerald-900">Monthly Assessment</h4>
+                                <p class="text-[11px] text-emerald-700">Grade: A+ (95 Marks)</p>
+                            </div>
+                            <span class="bg-emerald-700 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold">Passed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 6: Fees -->
+                <div id="tab-fees" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs">
+                        <h3 class="text-base font-bold text-slate-900 mb-1">Fees & Vouchers Management</h3>
+                        <p class="text-[11px] text-slate-500 mb-3">Mahana fees status.</p>
+                        <div class="p-3 bg-slate-50 border rounded-xl flex justify-between items-center">
+                            <div>
+                                <h4 class="font-bold text-slate-800">Fee Voucher Status</h4>
+                                <p class="text-[11px] text-slate-500">Status: Paid Online</p>
+                            </div>
+                            <span class="bg-emerald-600 text-white text-[10px] px-2.5 py-1 rounded-lg font-semibold">Paid</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 7: Zakat -->
+                <div id="tab-zakat" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs">
+                        <h3 class="text-base font-bold text-slate-900 mb-1">Zakat Receipt Generator</h3>
+                        <p class="text-[11px] text-slate-500 mb-3">Official receipt generate karein.</p>
+                        <button onclick="alert('Zakat receipt generated successfully!')" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-bold text-xs shadow">Generate Receipt</button>
+                    </div>
+                </div>
+
+                <!-- Tab 8: Library -->
+                <div id="tab-library" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs">
+                        <h3 class="text-base font-bold text-slate-900 mb-1">Islamic Books Library</h3>
+                        <p class="text-[11px] text-slate-500 mb-3">Islamic books aur notes.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="p-3 border rounded-xl bg-slate-50 flex items-center justify-between">
+                                <div><h4 class="font-bold text-xs">Noorul Itqan (Tajweed Book)</h4><span class="text-[10px] text-slate-500">PDF Document</span></div>
+                                <i class="fa-solid fa-book text-amber-500 text-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- PARENT / STUDENT VIEW CONTAINER -->
+            <div id="student-container" class="max-w-3xl mx-auto space-y-6 hidden">
+                
+                <!-- Login Box -->
+                <div id="student-login-box" class="max-w-sm mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center space-y-4 mt-8">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mx-auto font-bold shadow-inner">
+                        <i class="fa-solid fa-user-lock"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900">Parent / Student Portal Login</h3>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Apna Student Name darj karein</p>
+                    </div>
+                    <div class="space-y-3 text-left text-xs">
+                        <div>
+                            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Student Name</label>
+                            <input type="text" id="login-input-id" placeholder="e.g. Abdul Rehman" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none font-semibold text-blue-700">
+                        </div>
+                        <button onclick="handleStudentLogin()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition shadow-md">
+                            Portal Khulein
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dashboard -->
+                <div id="student-dashboard" class="hidden space-y-6">
+                    <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl shadow-md p-6 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center border border-white/20 text-2xl font-bold text-amber-400">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                            <div>
+                                <span class="bg-amber-500 text-slate-950 text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider" id="disp-currency">AUSTRALIA (AUD)</span>
+                                <h2 class="text-xl font-bold mt-1.5" id="disp-name">Abdul Rehman</h2>
+                                <p class="text-slate-300 text-xs">Father's Name: <span id="disp-father" class="font-medium">Ali</span></p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end gap-2">
+                            <div class="bg-white/10 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/10 text-right">
+                                <span class="text-[9px] text-amber-400 block uppercase tracking-wider font-semibold">Enrolled Course</span>
+                                <span class="text-xs font-bold text-white" id="disp-course">Hifz-ul-Quran</span>
+                            </div>
+                            <button onclick="logoutStudent()" class="text-[11px] text-red-300 hover:text-white underline font-medium">
+                                <i class="fa-solid fa-right-from-bracket mr-1"> Logout Portal</i>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs">
-                            <thead>
-                                <tr class="border-b border-slate-200 text-slate-600 uppercase tracking-wider bg-slate-50/50">
-                                    <th class="p-3.5 w-1/3 border-r border-slate-200">Student Detail</th>
-                                    <th class="p-3.5">Attendance & Sabaq Details</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <!-- Student Detail Column -->
-                                    <td class="p-3.5 border-r border-slate-200 align-top bg-slate-50/30">
-                                        <div class="font-bold text-slate-900 text-sm">Abdul Rehman</div>
-                                        <div class="text-[11px] text-slate-500 mt-0.5">S/O: Ali</div>
-                                    </td>
-
-                                    <!-- Attendance & Schedule Details Column -->
-                                    <td class="p-3.5 space-y-3 align-top">
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                            <div>
-                                                <label class="block text-[11px] font-semibold text-slate-700 mb-1">Attendance:</label>
-                                                <select id="admin-att-status" onchange="toggleTimeFields()" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none">
-                                                    <option value="Present">Present</option>
-                                                    <option value="Absent">Absent</option>
-                                                    <option value="Leave">Leave</option>
-                                                    <option value="Weekend - Sunday (Off)">Weekend - Sunday (Off)</option>
-                                                    <option value="Other Off / Skipped">Other Off / Skipped</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label class="block text-[11px] font-semibold text-slate-700 mb-1">Fee Status:</label>
-                                                <select id="admin-fee-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-600 outline-none">
-                                                    <option>Paid</option>
-                                                    <option>Pending</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- DYNAMIC DATE & TIME SETTINGS BOX (Appears ONLY when Present) -->
-                                        <div id="datetime-options-box" class="p-3 bg-blue-50/80 border border-blue-200 rounded-xl space-y-3">
-                                            <div class="text-[11px] font-bold text-blue-900 flex items-center space-x-1.5">
-                                                <i class="fa-solid fa-clock"></i>
-                                                <span>Class Date & Time Settings:</span>
-                                            </div>
-
-                                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                                <!-- Select Date -->
-                                                <div>
-                                                    <label class="block text-[10px] font-semibold text-slate-600 mb-1">Select Date:</label>
-                                                    <input type="date" id="admin-class-date" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-blue-900 shadow-inner outline-none focus:ring-2 focus:ring-blue-600">
-                                                </div>
-
-                                                <!-- Class Start Time -->
-                                                <div>
-                                                    <label class="block text-[10px] font-semibold text-slate-600 mb-1">Class Start Time:</label>
-                                                    <input type="text" id="admin-start-time" value="04:00 PM" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-blue-900 shadow-inner outline-none focus:ring-2 focus:ring-blue-600">
-                                                </div>
-
-                                                <!-- Class End Time -->
-                                                <div>
-                                                    <label class="block text-[10px] font-semibold text-slate-600 mb-1">Class End Time:</label>
-                                                    <input type="text" id="admin-end-time" value="05:00 PM" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-emerald-800 shadow-inner outline-none focus:ring-2 focus:ring-blue-600">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label class="block text-[11px] font-semibold text-slate-700 mb-1">Sabaq Details:</label>
-                                            <input type="text" id="admin-sabaq-text" placeholder="Aaj ka sabaq" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-600">
-                                        </div>
-
-                                        <div class="flex justify-end pt-1">
-                                            <button onclick="alert('Daily record updated successfully!')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-sm">
-                                                Update Daily Record
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                            <div class="flex items-center space-x-2 text-blue-600 mb-1">
+                                <i class="fa-solid fa-calendar-check text-sm"></i>
+                                <h4 class="font-bold text-slate-700">Attendance Status</h4>
+                            </div>
+                            <p class="text-base font-bold text-emerald-600" id="disp-attendance">Present</p>
+                            <span class="text-[10px] text-slate-500 block mt-0.5" id="disp-timestamp">Date: --</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                            <div class="flex items-center space-x-2 text-blue-600 mb-1">
+                                <i class="fa-solid fa-book-open text-sm"></i>
+                                <h4 class="font-bold text-slate-700">Sabaq & Timings</h4>
+                            </div>
+                            <p class="text-xs font-bold text-slate-900" id="disp-sabaq">Aaj ka sabaq</p>
+                            <span class="text-[10px] text-blue-600 font-semibold block mt-1" id="disp-time-range">Time: 04:00 PM - 05:00 PM</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                            <div class="flex items-center space-x-2 text-blue-600 mb-1">
+                                <i class="fa-solid fa-file-invoice-dollar text-sm"></i>
+                                <h4 class="font-bold text-slate-700">Fee Status</h4>
+                            </div>
+                            <p class="text-base font-bold text-blue-600" id="disp-fee-status">Paid</p>
+                        </div>
                     </div>
                 </div>
 
@@ -122,23 +409,185 @@
         </main>
     </div>
 
-    <!-- Scripting for Dynamic Show/Hide -->
+    <!-- Script Logic -->
     <script>
+        let defaultStudent = {
+            name: "Abdul Rehman",
+            father: "Ali",
+            course: "Hifz-ul-Quran",
+            mobile: "+61400123456",
+            currency: "AU Australia (AUD)",
+            attendance: "Present",
+            feeStatus: "Paid",
+            classDate: new Date().toISOString().split('T')[0],
+            startTime: "04:00 PM",
+            endTime: "05:00 PM",
+            sabaq: "Aaj ka sabaq"
+        };
+
+        function getStudentData() {
+            let saved = localStorage.getItem('raza_academy_unified_portal_v11');
+            return saved ? JSON.parse(saved) : defaultStudent;
+        }
+
+        let studentData = getStudentData();
+        let isStudentView = false;
+
+        window.onload = function() {
+            populateAdminForm();
+            toggleTimeFields();
+        };
+
+        function populateAdminForm() {
+            document.getElementById('input-name').value = studentData.name;
+            document.getElementById('input-father').value = studentData.father;
+            document.getElementById('input-course').value = studentData.course;
+            document.getElementById('input-mobile').value = studentData.mobile;
+            document.getElementById('input-currency').value = studentData.currency;
+            
+            document.getElementById('admin-att-status').value = studentData.attendance || "Present";
+            document.getElementById('admin-fee-status').value = studentData.feeStatus || "Paid";
+            document.getElementById('admin-class-date').value = studentData.classDate || new Date().toISOString().split('T')[0];
+            document.getElementById('admin-start-time').value = studentData.startTime || "04:00 PM";
+            document.getElementById('admin-end-time').value = studentData.endTime || "05:00 PM";
+            document.getElementById('admin-sabaq-text').value = studentData.sabaq || "Aaj ka sabaq";
+
+            document.getElementById('dir-name').innerText = studentData.name;
+            document.getElementById('dir-father').innerText = studentData.father;
+            document.getElementById('dir-course').innerText = studentData.course;
+
+            document.getElementById('table-disp-name').innerText = studentData.name;
+            document.getElementById('table-disp-father').innerText = studentData.father;
+            
+            toggleTimeFields();
+        }
+
         function toggleTimeFields() {
             let attStatus = document.getElementById('admin-att-status').value;
             let datetimeBox = document.getElementById('datetime-options-box');
 
             if (attStatus === "Present") {
-                datetimeBox.style.display = "block"; // Show when Present
+                datetimeBox.style.display = "block";
             } else {
-                datetimeBox.style.display = "none";  // Hide for Absent, Leave, Off, etc.
+                datetimeBox.style.display = "none";
             }
         }
 
-        // Run on load
-        window.onload = function() {
-            toggleTimeFields();
-        };
+        function switchTab(tabId) {
+            const tabs = ['add-student', 'directory', 'sabaq', 'ibadat', 'exams', 'fees', 'zakat', 'library'];
+            tabs.forEach(t => {
+                document.getElementById('tab-' + t).classList.add('hidden');
+                document.getElementById('nav-' + t).classList.remove('bg-blue-600', 'text-white');
+                document.getElementById('nav-' + t).classList.add('hover:bg-slate-800');
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            document.getElementById('nav-' + tabId).classList.add('bg-blue-600', 'text-white');
+            document.getElementById('nav-' + tabId).classList.remove('hover:bg-slate-800');
+        }
+
+        function handleSaveStudent(e) {
+            e.preventDefault();
+            studentData.name = document.getElementById('input-name').value.trim();
+            studentData.father = document.getElementById('input-father').value.trim();
+            studentData.course = document.getElementById('input-course').value;
+            studentData.mobile = document.getElementById('input-mobile').value.trim();
+            studentData.currency = document.getElementById('input-currency').value;
+
+            localStorage.setItem('raza_academy_unified_portal_v11', JSON.stringify(studentData));
+            populateAdminForm();
+            alert("Student profile successfully saved!");
+        }
+
+        function saveSabaqAttendance() {
+            studentData.attendance = document.getElementById('admin-att-status').value;
+            studentData.feeStatus = document.getElementById('admin-fee-status').value;
+            studentData.sabaq = document.getElementById('admin-sabaq-text').value;
+            
+            if (studentData.attendance === "Present") {
+                studentData.classDate = document.getElementById('admin-class-date').value;
+                studentData.startTime = document.getElementById('admin-start-time').value;
+                studentData.endTime = document.getElementById('admin-end-time').value;
+            } else {
+                studentData.classDate = "N/A";
+                studentData.startTime = "N/A";
+                studentData.endTime = "N/A";
+            }
+
+            localStorage.setItem('raza_academy_unified_portal_v11', JSON.stringify(studentData));
+            alert("Daily Attendance & Sabaq updated successfully!");
+        }
+
+        function toggleMainView() {
+            isStudentView = !isStudentView;
+            const adminContainer = document.getElementById('admin-container');
+            const studentContainer = document.getElementById('student-container');
+            const switchBtn = document.getElementById('view-switch-btn');
+            const sidebar = document.getElementById('sidebar');
+
+            if (isStudentView) {
+                adminContainer.classList.add('hidden');
+                studentContainer.classList.remove('hidden');
+                sidebar.classList.add('md:hidden');
+                switchBtn.innerText = "Switch to Admin Panel";
+                switchBtn.className = "bg-blue-600 hover:bg-blue-700 text-white text-[11px] px-3 py-1.5 rounded-lg font-semibold transition shadow";
+                
+                document.getElementById('student-dashboard').classList.add('hidden');
+                document.getElementById('student-login-box').classList.remove('hidden');
+                document.getElementById('login-input-id').value = "";
+            } else {
+                studentContainer.classList.add('hidden');
+                adminContainer.classList.remove('hidden');
+                sidebar.classList.remove('md:hidden');
+                switchBtn.innerText = "Switch to Parent View";
+                switchBtn.className = "bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-[11px] px-3 py-1.5 rounded-lg font-semibold transition shadow";
+            }
+        }
+
+        function handleStudentLogin() {
+            let inputName = document.getElementById('login-input-id').value.trim().toLowerCase();
+            let current = getStudentData();
+
+            if (inputName === current.name.trim().toLowerCase()) {
+                document.getElementById('student-login-box').classList.add('hidden');
+                document.getElementById('student-dashboard').classList.remove('hidden');
+
+                document.getElementById('disp-currency').innerText = current.currency;
+                document.getElementById('disp-name').innerText = current.name;
+                document.getElementById('disp-father').innerText = current.father;
+                document.getElementById('disp-course').innerText = current.course;
+                document.getElementById('disp-attendance').innerText = current.attendance;
+                
+                if (current.attendance === "Present") {
+                    document.getElementById('disp-timestamp').innerText = "Date: " + current.classDate;
+                    document.getElementById('disp-time-range').innerText = "Time: " + current.startTime + " to " + current.endTime;
+                } else {
+                    document.getElementById('disp-timestamp').innerText = "Status: " + current.attendance;
+                    document.getElementById('disp-time-range').innerText = "Class Off / No Timing";
+                }
+
+                document.getElementById('disp-sabaq').innerText = current.sabaq;
+                document.getElementById('disp-fee-status').innerText = current.feeStatus;
+            } else {
+                alert("Student Name ghalat hai! Sahi Naam likhein (misal: " + current.name + ")");
+            }
+        }
+
+        function logoutStudent() {
+            document.getElementById('student-dashboard').classList.add('hidden');
+            document.getElementById('student-login-box').classList.remove('hidden');
+            document.getElementById('login-input-id').value = "";
+        }
+
+        function logoutAdmin() {
+            if(confirm("Kya aap portal se logout karna chahte hain?")) {
+                alert("Logged out successfully.");
+            }
+        }
+
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        }
     </script>
 </body>
 </html>
