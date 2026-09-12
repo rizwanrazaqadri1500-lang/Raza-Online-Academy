@@ -25,6 +25,7 @@ button{background:#4f46e5;color:white;border:none;padding:10px 20px;border-radiu
 button:hover{background:#4338ca;}
 .btn-danger{background:#dc3545;} .btn-danger:hover{background:#bd2130;}
 .btn-success{background:#059669;} .btn-success:hover{background:#047857;}
+.btn-warning{background:#d97706;} .btn-warning:hover{background:#b45309;}
 input, select{width:100%;padding:10px 12px;margin-top:6px;margin-bottom:14px;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;background:#fff;color:#1e293b;}
 input:focus, select:focus{outline:none;border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79, 70, 229, 0.1);}
 .hidden{display:none}
@@ -35,6 +36,13 @@ th{background:#f8fafc;color:#334155;font-weight:600;}
 .grid-3{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px;}
 .student-card{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #e2e8f0;padding:18px;border-radius:10px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.02);}
 .avatar-img{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #cbd5e1;box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+.book-card{background:#f8fafc;border:1px solid #e2e8f0;padding:18px;border-radius:10px;text-align:center;transition:transform 0.2s;}
+.book-card:hover{transform:translateY(-3px);box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+@media print {
+  body * { visibility: hidden; }
+  #print-section, #print-section * { visibility: visible; }
+  #print-section { position: absolute; left: 0; top: 0; width: 100%; }
+}
 </style>
 </head>
 <body>
@@ -53,7 +61,7 @@ Raza Online Islamic Academy
 <a href="#" onclick="switchTab('students-dir', this)">👥 Students Directory</a>
 <a href="#" onclick="switchTab('daily-rec', this)">📅 Daily Sabaq & Attendance</a>
 <a href="#" onclick="switchTab('exams', this)">📝 Monthly Exams & Results</a>
-<a href="#" onclick="switchTab('fees', this)">💰 Fees & Country Currency</a>
+<a href="#" onclick="switchTab('fees', this)">💰 Fees & Vouchers</a>
 <a href="#" onclick="switchTab('donation', this)">🤲 Zakat, Fitra & Donations</a>
 <a href="#" onclick="switchTab('ibadat', this)">🕌 Ibadat Tracker</a>
 <a href="#" onclick="switchTab('library', this)">📚 Islamic Books Library</a>
@@ -179,9 +187,12 @@ Raza Online Islamic Academy
 <div id="admin-exams-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
 </div>
 
-<!-- Tab 5: Fees & Country Currency -->
+<!-- Tab 5: Fees & Vouchers -->
 <div id="tab-fees" class="card hidden">
-<h3>💰 Fees & Country-Wise Currency Management</h3>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+<h3 style="border:none;margin:0;">💰 Fee Management & Vouchers (Student & Combined Voucher)</h3>
+<button onclick="generateCombinedVoucher()" class="btn-warning" style="padding:8px 16px;font-size:12px;">📄 Generate Combined Fee Voucher</button>
+</div>
 <div id="admin-fees-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
 </div>
 
@@ -199,13 +210,54 @@ Raza Online Islamic Academy
 
 <!-- Tab 8: Islamic Books Library -->
 <div id="tab-library" class="card hidden">
-<h3>📚 Islamic Books Library</h3>
-<p style="color:#64748b;">Quran, Hadith aur Deeni kutub ki PDF library yahan available hogi.</p>
+<h3>📚 Islamic Books Library & Madani Qutub</h3>
+<p style="color:#64748b;margin-bottom:20px;">Aap yahan se bunyadi deeni kutub aur quranic folders read ya download kar sakte hain.</p>
+<div class="grid-3">
+<div class="book-card">
+<div style="font-size:32px;margin-bottom:8px;">📖</div>
+<strong>Madani Qaida</strong>
+<p style="font-size:12px;color:#64748b;margin:6px 0 12px;">Quran e Pak sikhne ki bunyadi kitab</p>
+<a href="https://www.dawateislami.net/bookslibrary/ur/madani-qaida" target="_blank"><button style="width:100%;padding:8px;font-size:12px;">Read / Open</button></a>
+</div>
+<div class="book-card">
+<div style="font-size:32px;margin-bottom:8px;">📗</div>
+<strong>Quran-e-Kareem</strong>
+<p style="font-size:12px;color:#64748b;margin:6px 0 12px;">Kanz-ul-Iman / Tarjuma e Quran</p>
+<a href="https://www.dawateislami.net/bookslibrary/ur/holy-quran" target="_blank"><button style="width:100%;padding:8px;font-size:12px;">Read / Open</button></a>
+</div>
+<div class="book-card">
+<div style="font-size:32px;margin-bottom:8px;">📘</div>
+<strong>Seerat-ul-Jinan</strong>
+<p style="font-size:12px;color:#64748b;margin:6px 0 12px;">Mufti Kazim Ali Khan ki Tafseer</p>
+<a href="https://www.dawateislami.net/bookslibrary/ur/seerat-ul-jinan" target="_blank"><button style="width:100%;padding:8px;font-size:12px;">Read / Open</button></a>
+</div>
+<div class="book-card">
+<div style="font-size:32px;margin-bottom:8px;">📙</div>
+<strong>Islam ki Bunyadi Baten (Part 1)</strong>
+<p style="font-size:12px;color:#64748b;margin:6px 0 12px;">Aqayid, Wuzu, Ghusl aur Namaz</p>
+<a href="https://www.dawateislami.net/bookslibrary/ur/islam-ki-bunyadi-baten-part-1" target="_blank"><button style="width:100%;padding:8px;font-size:12px;">Read / Open</button></a>
+</div>
+<div class="book-card">
+<div style="font-size:32px;margin-bottom:8px;">📙</div>
+<strong>Islam ki Bunyadi Baten (Part 2)</strong>
+<p style="font-size:12px;color:#64748b;margin:6px 0 12px;">Roza, Zakat aur Deeni Ahkam</p>
+<a href="https://www.dawateislami.net/bookslibrary/ur/" target="_blank"><button style="width:100%;padding:8px;font-size:12px;">Read / Open</button></a>
+</div>
+<div class="book-card">
+<div style="font-size:32px;margin-bottom:8px;">📙</div>
+<strong>Islam ki Bunyadi Baten (Part 3)</strong>
+<p style="font-size:12px;color:#64748b;margin:6px 0 12px;">Akhlaq aur Deeni Maloomat</p>
+<a href="https://www.dawateislami.net/bookslibrary/ur/" target="_blank"><button style="width:100%;padding:8px;font-size:12px;">Read / Open</button></a>
+</div>
+</div>
 </div>
 
 </div>
 
 </div>
+
+<!-- Printable Voucher Modal / Section -->
+<div id="print-section" class="hidden" style="padding:30px;background:white;color:black;"></div>
 
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
@@ -236,7 +288,7 @@ document.getElementById('admin-login-section').classList.remove('hidden');
 }
 
 window.goBack = function(){
-document.querySelectorAll('.card, #admin-dashboard-section').forEach(el => el.classList.add('hidden'));
+document.querySelectorAll('.card, #admin-dashboard-section, #print-section').forEach(el => el.classList.add('hidden'));
 document.getElementById('choice-section').classList.remove('hidden');
 document.getElementById('app-sidebar').style.display = 'none';
 document.getElementById('main-area').style.marginLeft = '0';
@@ -401,6 +453,70 @@ alert('Fee aur Zakat/Sadaqah record update ho gaya!');
 loadFeesPanel();
 }
 
+window.printStudentVoucher = async function(studentId){
+const {data: s} = await supabase.from('students').select('*').eq('student_id', studentId).single();
+const {data: fees} = await supabase.from('student_fees').select('*').eq('student_id', studentId);
+const f = (fees && fees.length > 0) ? fees[0] : {fee_amount: 0, fee_status: 'Pending', zakat: 0, fitra: 0, sadaqah: 0};
+
+const printSec = document.getElementById('print-section');
+printSec.classList.remove('hidden');
+printSec.innerHTML = `
+<div style="border:2px dashed #0b192c;padding:25px;border-radius:12px;max-width:600px;margin:20px auto;">
+<h2 style="text-align:center;color:#0b192c;margin-bottom:5px;">Raza Online Islamic Academy</h2>
+<p style="text-align:center;font-size:12px;color:#64748b;margin-bottom:20px;">Official Fee Voucher</p>
+<hr style="border:0;border-top:1px solid #cbd5e1;margin-bottom:15px;">
+<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:10px;">
+<p><strong>Student Name:</strong> ${s.student_name}</p>
+<p><strong>Father's Name:</strong> ${s.father_name || '-'}</p>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:10px;">
+<p><strong>Course:</strong> ${s.course || '-'}</p>
+<p><strong>Country / Currency:</strong> ${s.country_currency || 'Pakistan'}</p>
+</div>
+<div style="background:#f8fafc;padding:15px;border-radius:8px;margin-top:15px;font-size:14px;">
+<p><strong>Monthly Fee Amount:</strong> <span style="color:#059669;font-weight:bold;font-size:16px;">${f.fee_amount}</span></p>
+<p style="margin-top:5px;"><strong>Zakat / Sadaqah / Fitra:</strong> ${f.zakat + f.fitra + f.sadaqah}</p>
+<p style="margin-top:5px;"><strong>Total Payable:</strong> <strong>${f.fee_amount + f.zakat + f.fitra + f.sadaqah}</strong></p>
+<p style="margin-top:5px;"><strong>Status:</strong> <span style="color:${f.fee_status==='Paid'?'#059669':'#dc3545'};font-weight:bold;">${f.fee_status}</span></p>
+</div>
+<p style="text-align:center;font-size:11px;color:#94a3b8;margin-top:30px;">Jazakallah-o-Khairan • Raza Online Islamic Academy Management</p>
+</div>
+`;
+window.print();
+setTimeout(() => printSec.classList.add('hidden'), 1000);
+}
+
+window.generateCombinedVoucher = async function(){
+const {data: students} = await supabase.from('students').select('*');
+if(!students || students.length === 0){ alert('Koi student mojood nahi hai.'); return; }
+
+let totalFee = 0;
+let rowsHtml = '';
+for(let s of students){
+const {data: fees} = await supabase.from('student_fees').select('*').eq('student_id', s.student_id);
+const f = (fees && fees.length > 0) ? fees[0] : {fee_amount: 0, fee_status: 'Pending'};
+totalFee += (f.fee_amount || 0);
+rowsHtml += `<tr><td style="border:1px solid #cbd5e1;padding:8px;">${s.student_name}</td><td style="border:1px solid #cbd5e1;padding:8px;">${s.country_currency || 'Pakistan'}</td><td style="border:1px solid #cbd5e1;padding:8px;">${f.fee_amount}</td><td style="border:1px solid #cbd5e1;padding:8px;">${f.fee_status}</td></tr>`;
+}
+
+const printSec = document.getElementById('print-section');
+printSec.classList.remove('hidden');
+printSec.innerHTML = `
+<div style="border:2px solid #0b192c;padding:25px;border-radius:12px;max-width:700px;margin:20px auto;">
+<h2 style="text-align:center;color:#0b192c;margin-bottom:5px;">Raza Online Islamic Academy</h2>
+<p style="text-align:center;font-size:13px;color:#64748b;margin-bottom:20px;">Combined Academy Fee Voucher & Summary Report</p>
+<table style="width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13px;">
+<tr><th style="background:#f1f5f9;border:1px solid #cbd5e1;padding:8px;">Student Name</th><th style="background:#f1f5f9;border:1px solid #cbd5e1;padding:8px;">Country / Currency</th><th style="background:#f1f5f9;border:1px solid #cbd5e1;padding:8px;">Fee Amount</th><th style="background:#f1f5f9;border:1px solid #cbd5e1;padding:8px;">Status</th></tr>
+${rowsHtml}
+</table>
+<h3 style="text-align:right;font-size:16px;color:#059669;">Total Academy Fee Revenue: ${totalFee}</h3>
+<p style="text-align:center;font-size:11px;color:#94a3b8;margin-top:30px;">Generated from Raza Academy Admin Portal</p>
+</div>
+`;
+window.print();
+setTimeout(() => printSec.classList.add('hidden'), 1000);
+}
+
 window.saveDonation = async function(studentId){
 const donorName = document.getElementById('don-name-'+studentId).value.trim();
 const zakat = parseFloat(document.getElementById('don-zakat-'+studentId).value) || 0;
@@ -539,7 +655,7 @@ container.innerHTML = '<p>Loading...</p>';
 const {data: students, error} = await supabase.from('students').select('*');
 if(error || !students || students.length === 0){ container.innerHTML = '<p>Koi student mojood nahi hai.</p>'; return; }
 
-let html = `<table><tr><th>Student & Country Currency</th><th>Fee Amount & Contributions</th></tr>`;
+let html = `<table><tr><th>Student & Country Currency</th><th>Fee Amount & Contributions / Voucher</th></tr>`;
 for(let s of students){
 const {data: fees} = await supabase.from('student_fees').select('*').eq('student_id', s.student_id);
 const f = (fees && fees.length > 0) ? fees[0] : {fee_amount: 0, fee_status: 'Pending', zakat: 0, fitra: 0, sadaqah: 0, nafl: 0, wajibah: 0};
@@ -560,7 +676,10 @@ html += `
 <div><label style="font-size:11px;">Fitra</label><input type="number" id="fee-fitra-${s.student_id}" value="${f.fitra || 0}"></div>
 <div><label style="font-size:11px;">Sadaqah</label><input type="number" id="fee-sadaqah-${s.student_id}" value="${f.sadaqah || 0}"></div>
 </div>
-<button onclick="saveStudentFee(${s.student_id})" class="btn-success" style="width:100%;margin-top:8px;">Save Fee & Contributions</button>
+<div style="display:flex;gap:10px;margin-top:8px;">
+<button onclick="saveStudentFee(${s.student_id})" class="btn-success" style="flex:1;">Save Fee & Contributions</button>
+<button onclick="printStudentVoucher(${s.student_id})" class="btn-warning" style="flex:1;">🖨️ Print Fee Voucher</button>
+</div>
 </td>
 </tr>`;
 }
@@ -590,7 +709,7 @@ html += `
 <div><label style="font-size:11px;">Fitra</label><input type="number" id="don-fitra-${s.student_id}" value="${d.fitra || 0}"></div>
 <div><label style="font-size:11px;">Sadaqah</label><input type="number" id="don-sadaqah-${s.student_id}" value="${d.sadaqah || 0}"></div>
 </div>
-<button onclick="saveDonation(${s.student_id})" class="btn-success" style="width:100%;margin-top:8px;">Save Donation Record</button>
+<button onclick="saveDonation(${s.student_id})" class="fd-btn btn-success" style="width:100%;margin-top:8px;">Save Donation Record</button>
 </td>
 </tr>`;
 }
@@ -649,9 +768,6 @@ container.innerHTML = html;
 }
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
-</script>
-</body>
-</html>orker' in navigator){navigator.serviceWorker.register('sw.js');}
 </script>
 </body>
 </html>
