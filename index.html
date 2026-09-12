@@ -1,4 +1,4 @@
-      <!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="en" class="h-full bg-slate-100">
 <head>
     <meta charset="UTF-8">
@@ -204,6 +204,7 @@
                                                         <option>Absent</option>
                                                         <option>Leave</option>
                                                         <option>Weekend (Skipped)</option>
+                                                        <option>Other Off / Skipped</option>
                                                     </select>
                                                 </div>
                                                 <div>
@@ -407,7 +408,7 @@
         };
 
         function getStudentData() {
-            let saved = localStorage.getItem('raza_academy_unified_portal_v4');
+            let saved = localStorage.getItem('raza_academy_unified_portal_v6');
             return saved ? JSON.parse(saved) : defaultStudent;
         }
 
@@ -415,9 +416,8 @@
         let isStudentView = false;
 
         window.onload = function() {
-            // Check if today is Sunday (0 = Sunday), if attendance not explicitly set or default, auto set weekend
-            let today = new Date().getDay();
-            if (today === 0 && !localStorage.getItem('raza_academy_unified_portal_v4')) {
+            let today = new Date().getDay(); // 0 is Sunday
+            if (today === 0) {
                 studentData.attendance = "Weekend (Skipped)";
             }
             populateAdminForm();
@@ -434,11 +434,11 @@
             
             // Attendance inputs
             let attSelect = document.getElementById('admin-att-status');
-            
-            // If Sunday and first load, auto select Weekend
             let todayDay = new Date().getDay();
-            if (todayDay === 0 && !studentData.attendanceUpdatedToday) {
+
+            if (todayDay === 0) {
                 attSelect.value = "Weekend (Skipped)";
+                studentData.attendance = "Weekend (Skipped)";
             } else {
                 attSelect.value = studentData.attendance || "Present";
             }
@@ -456,6 +456,8 @@
             // Table labels update
             document.getElementById('table-disp-name').innerText = studentData.name;
             document.getElementById('table-disp-father').innerText = studentData.father;
+            
+            toggleTimeField();
         }
 
         // Toggle automatic time field based on Attendance selection
@@ -464,10 +466,10 @@
             let timeContainer = document.getElementById('auto-time-container');
 
             if (attStatus === "Present") {
-                timeContainer.classList.remove('hidden');
+                timeContainer.style.display = "flex";
                 document.getElementById('admin-att-timestamp').value = new Date().toLocaleString();
             } else {
-                timeContainer.classList.add('hidden');
+                timeContainer.style.display = "none";
             }
         }
 
@@ -492,7 +494,7 @@
             studentData.mobile = document.getElementById('input-mobile').value.trim();
             studentData.currency = document.getElementById('input-currency').value;
 
-            localStorage.setItem('raza_academy_unified_portal_v4', JSON.stringify(studentData));
+            localStorage.setItem('raza_academy_unified_portal_v6', JSON.stringify(studentData));
             populateAdminForm();
             alert("Student profile successfully saved!");
         }
@@ -501,7 +503,6 @@
             studentData.attendance = document.getElementById('admin-att-status').value;
             studentData.feeStatus = document.getElementById('admin-fee-status').value;
             studentData.sabaq = document.getElementById('admin-sabaq-text').value;
-            studentData.attendanceUpdatedToday = true;
             
             if (studentData.attendance === "Present") {
                 studentData.timestamp = document.getElementById('admin-att-timestamp').value;
@@ -509,7 +510,7 @@
                 studentData.timestamp = "N/A (" + studentData.attendance + ")";
             }
 
-            localStorage.setItem('raza_academy_unified_portal_v4', JSON.stringify(studentData));
+            localStorage.setItem('raza_academy_unified_portal_v6', JSON.stringify(studentData));
             alert("Daily Attendance & Sabaq updated successfully!");
         }
 
