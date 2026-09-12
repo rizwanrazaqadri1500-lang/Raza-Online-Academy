@@ -107,27 +107,16 @@
                                     <input type="text" id="input-father" placeholder="e.g. Ali" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none transition">
                                 </div>
                                 <div>
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Age *</label>
+                                    <input type="number" id="input-age" value="6" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none transition">
+                                </div>
+                                <div>
                                     <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Select Course *</label>
                                     <select id="input-course" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none font-medium">
                                         <option>Hifz-ul-Quran</option>
                                         <option>Nazrah Quran Pak</option>
                                         <option>Madani Qaida</option>
                                         <option>Tajweed & Qirat Masterclass</option>
-                                        <option>Dars-e-Nizami Core Studies</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Parent Mobile / WhatsApp</label>
-                                    <input type="text" id="input-mobile" placeholder="+61400123456" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none transition">
-                                </div>
-                                <div class="sm:col-span-2">
-                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-600 mb-1">Select Country & Currency *</label>
-                                    <select id="input-currency" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-xs outline-none font-medium">
-                                        <option>AU Australia (AUD)</option>
-                                        <option>PK Pakistan (PKR)</option>
-                                        <option>US United States (USD)</option>
-                                        <option>GB United Kingdom (GBP)</option>
-                                        <option>CA Canada (CAD)</option>
                                     </select>
                                 </div>
                             </div>
@@ -150,16 +139,16 @@
                                     <tr class="bg-slate-50 border-b border-slate-200 text-slate-600">
                                         <th class="p-2.5">Student Name</th>
                                         <th class="p-2.5">Father's Name</th>
+                                        <th class="p-2.5">Age</th>
                                         <th class="p-2.5">Course</th>
-                                        <th class="p-2.5">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="border-b border-slate-100">
                                         <td class="p-2.5 font-semibold text-blue-600" id="dir-name">Abdul Rehman</td>
                                         <td class="p-2.5" id="dir-father">Ali</td>
+                                        <td class="p-2.5" id="dir-age">6</td>
                                         <td class="p-2.5" id="dir-course">Hifz-ul-Quran</td>
-                                        <td class="p-2.5"><span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-medium">Active</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -221,29 +210,24 @@
                                                 </div>
 
                                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                                    <!-- Select Date -->
                                                     <div>
                                                         <label class="block text-[10px] font-semibold text-slate-600 mb-1">Select Date:</label>
-                                                        <input type="date" id="admin-class-date" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-blue-900 shadow-inner outline-none focus:ring-2 focus:ring-blue-600">
+                                                        <input type="date" id="admin-class-date" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-blue-900 shadow-inner outline-none">
                                                     </div>
-
-                                                    <!-- Class Start Time -->
                                                     <div>
                                                         <label class="block text-[10px] font-semibold text-slate-600 mb-1">Class Start Time:</label>
-                                                        <input type="text" id="admin-start-time" value="04:00 PM" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-blue-900 shadow-inner outline-none focus:ring-2 focus:ring-blue-600">
+                                                        <input type="text" id="admin-start-time" value="04:00 PM" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-blue-900 shadow-inner outline-none">
                                                     </div>
-
-                                                    <!-- Class End Time -->
                                                     <div>
                                                         <label class="block text-[10px] font-semibold text-slate-600 mb-1">Class End Time:</label>
-                                                        <input type="text" id="admin-end-time" value="05:00 PM" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-emerald-800 shadow-inner outline-none focus:ring-2 focus:ring-blue-600">
+                                                        <input type="text" id="admin-end-time" value="05:00 PM" class="w-full bg-white border border-blue-300 px-3 py-2 rounded-lg text-xs font-bold text-emerald-800 shadow-inner outline-none">
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div>
                                                 <label class="block text-[11px] font-semibold text-slate-700 mb-1">Sabaq Details:</label>
-                                                <input type="text" id="admin-sabaq-text" placeholder="Aaj ka sabaq" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-blue-600">
+                                                <input type="text" id="admin-sabaq-text" placeholder="Aaj ka sabaq" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs outline-none">
                                             </div>
 
                                             <div class="flex justify-end pt-1">
@@ -259,17 +243,101 @@
                     </div>
                 </div>
 
-                <!-- Tab 4: Daily Ibadat -->
+                <!-- Tab 4: Daily Ibadat & Namaz (UPDATED WITH 5 SEPARATE PRAYERS) -->
                 <div id="tab-ibadat" class="admin-tab hidden space-y-6">
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                        <h3 class="text-base font-bold text-slate-900 mb-1">Daily Ibadat & Namaz Tracker</h3>
-                        <p class="text-[11px] text-slate-500 mb-4">Student ki panj waqta namaz ka record.</p>
-                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
-                            <div class="p-3 bg-slate-50 rounded-xl border text-center"><span class="block text-[10px] font-bold text-slate-500">FAJR</span><span class="text-emerald-600 font-bold">Adaa</span></div>
-                            <div class="p-3 bg-slate-50 rounded-xl border text-center"><span class="block text-[10px] font-bold text-slate-500">ZUHUR</span><span class="text-emerald-600 font-bold">Adaa</span></div>
-                            <div class="p-3 bg-slate-50 rounded-xl border text-center"><span class="block text-[10px] font-bold text-slate-500">ASR</span><span class="text-emerald-600 font-bold">Adaa</span></div>
-                            <div class="p-3 bg-slate-50 rounded-xl border text-center"><span class="block text-[10px] font-bold text-slate-500">MAGHRIB</span><span class="text-emerald-600 font-bold">Adaa</span></div>
-                            <div class="p-3 bg-slate-50 rounded-xl border text-center"><span class="block text-[10px] font-bold text-slate-500">ISHA</span><span class="text-emerald-600 font-bold">Adaa</span></div>
+                        <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+                            <div class="w-8 h-8 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center font-bold text-sm">
+                                <i class="fa-solid fa-mosque"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900">Daily Ibadat, Namaz & Surah Tracker</h3>
+                                <p class="text-[11px] text-slate-500">Panj waqta namazon ki alag-alag hazri darj karein.</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4 text-xs">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Student Info card inside ibadat -->
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex flex-col justify-center">
+                                    <div class="font-bold text-slate-900 text-sm" id="ibadat-disp-name">Abdul Rehman</div>
+                                    <div class="text-[11px] text-slate-500 mt-0.5">S/O: <span id="ibadat-disp-father">Ali</span></div>
+                                    <div class="text-[11px] font-bold text-emerald-600 mt-1">Age: <span id="ibadat-disp-age">6</span></div>
+                                </div>
+
+                                <!-- Durood and Date -->
+                                <div class="space-y-3">
+                                    <div>
+                                        <label class="block text-[11px] font-semibold text-slate-700 mb-1">Durood-e-Pak:</label>
+                                        <input type="number" id="ibadat-durood" value="3" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl outline-none font-semibold text-blue-900">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-semibold text-slate-700 mb-1">Date:</label>
+                                        <input type="date" id="ibadat-date" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl outline-none font-semibold text-blue-900">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5 SEPARATE PRAYERS ATTENDANCE -->
+                            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+                                <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-2">Namaz Attendance (5 Prayers):</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+                                    <!-- Fajr -->
+                                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+                                        <label class="block text-[10px] font-bold text-slate-600 mb-1">FAJR</label>
+                                        <select id="pnamaz-fajr" class="w-full p-1.5 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <!-- Zuhur -->
+                                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+                                        <label class="block text-[10px] font-bold text-slate-600 mb-1">ZUHUR</label>
+                                        <select id="pnamaz-zuhur" class="w-full p-1.5 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <!-- Asr -->
+                                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+                                        <label class="block text-[10px] font-bold text-slate-600 mb-1">ASR</label>
+                                        <select id="pnamaz-asr" class="w-full p-1.5 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <!-- Maghrib -->
+                                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+                                        <label class="block text-[10px] font-bold text-slate-600 mb-1">MAGHRIB</label>
+                                        <select id="pnamaz-maghrib" class="w-full p-1.5 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <!-- Isha -->
+                                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+                                        <label class="block text-[10px] font-bold text-slate-600 mb-1">ISHA</label>
+                                        <select id="pnamaz-isha" class="w-full p-1.5 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Surah Recitation Checkboxes -->
+                            <div class="p-3 bg-white border border-slate-200 rounded-xl flex flex-wrap items-center gap-6">
+                                <span class="font-bold text-slate-700">Surah Recitation:</span>
+                                <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" id="surah-yassen" checked class="w-4 h-4 text-blue-600 rounded"><span>Surah Yassen</span></label>
+                                <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" id="surah-waaqia" checked class="w-4 h-4 text-blue-600 rounded"><span>Surah Waaqia</span></label>
+                                <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" id="surah-rahman" checked class="w-4 h-4 text-blue-600 rounded"><span>Surah Rahman</span></label>
+                            </div>
+
+                            <div class="flex justify-end pt-2">
+                                <button onclick="saveIbadatRecord()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition shadow-md">
+                                    Save Ibadat Record
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -361,7 +429,7 @@
                                 <i class="fa-solid fa-user-graduate"></i>
                             </div>
                             <div>
-                                <span class="bg-amber-500 text-slate-950 text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider" id="disp-currency">AUSTRALIA (AUD)</span>
+                                <span class="bg-emerald-500 text-slate-950 text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider" id="disp-age-badge">Age: 6</span>
                                 <h2 class="text-xl font-bold mt-1.5" id="disp-name">Abdul Rehman</h2>
                                 <p class="text-slate-300 text-xs">Father's Name: <span id="disp-father" class="font-medium">Ali</span></p>
                             </div>
@@ -381,7 +449,7 @@
                         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                             <div class="flex items-center space-x-2 text-blue-600 mb-1">
                                 <i class="fa-solid fa-calendar-check text-sm"></i>
-                                <h4 class="font-bold text-slate-700">Attendance Status</h4>
+                                <h4 class="font-bold text-slate-700">Class Attendance</h4>
                             </div>
                             <p class="text-base font-bold text-emerald-600" id="disp-attendance">Present</p>
                             <span class="text-[10px] text-slate-500 block mt-0.5" id="disp-timestamp">Date: --</span>
@@ -396,10 +464,25 @@
                         </div>
                         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                             <div class="flex items-center space-x-2 text-blue-600 mb-1">
-                                <i class="fa-solid fa-file-invoice-dollar text-sm"></i>
-                                <h4 class="font-bold text-slate-700">Fee Status</h4>
+                                <i class="fa-solid fa-mosque text-sm"></i>
+                                <h4 class="font-bold text-slate-700">Namaz (5 Prayers)</h4>
                             </div>
-                            <p class="text-base font-bold text-blue-600" id="disp-fee-status">Paid</p>
+                            <div id="disp-prayers-box" class="space-y-1 mt-1 text-[11px] font-bold">
+                                <!-- Dynamically populated prayer icons -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Surah & Durood Card for Parent/Student -->
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-xs space-y-2">
+                        <h4 class="font-bold text-slate-800 border-b pb-1">Ibadat & Recitation Summary</h4>
+                        <div class="flex justify-between">
+                            <span class="text-slate-600">Durood-e-Pak Count:</span>
+                            <span class="font-bold text-blue-600" id="disp-durood">3</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-600">Surahs Recited:</span>
+                            <span class="font-bold text-emerald-600" id="disp-surahs">Surah Yassen, Surah Waaqia, Surah Rahman</span>
                         </div>
                     </div>
                 </div>
@@ -414,19 +497,28 @@
         let defaultStudent = {
             name: "Abdul Rehman",
             father: "Ali",
+            age: "6",
             course: "Hifz-ul-Quran",
-            mobile: "+61400123456",
-            currency: "AU Australia (AUD)",
             attendance: "Present",
             feeStatus: "Paid",
-            classDate: new Date().toISOString().split('T')[0],
+            classDate: "2026-09-12",
             startTime: "04:00 PM",
             endTime: "05:00 PM",
-            sabaq: "Aaj ka sabaq"
+            sabaq: "Aaj ka sabaq",
+            ibadatDate: "2026-09-12",
+            durood: 3,
+            fajr: "Yes",
+            zuhur: "Yes",
+            asr: "Yes",
+            maghrib: "Yes",
+            isha: "Yes",
+            surahYassen: true,
+            surahWaaqia: true,
+            surahRahman: true
         };
 
         function getStudentData() {
-            let saved = localStorage.getItem('raza_academy_unified_portal_v11');
+            let saved = localStorage.getItem('raza_academy_unified_portal_v12');
             return saved ? JSON.parse(saved) : defaultStudent;
         }
 
@@ -441,23 +533,39 @@
         function populateAdminForm() {
             document.getElementById('input-name').value = studentData.name;
             document.getElementById('input-father').value = studentData.father;
+            document.getElementById('input-age').value = studentData.age;
             document.getElementById('input-course').value = studentData.course;
-            document.getElementById('input-mobile').value = studentData.mobile;
-            document.getElementById('input-currency').value = studentData.currency;
             
             document.getElementById('admin-att-status').value = studentData.attendance || "Present";
             document.getElementById('admin-fee-status').value = studentData.feeStatus || "Paid";
-            document.getElementById('admin-class-date').value = studentData.classDate || new Date().toISOString().split('T')[0];
+            document.getElementById('admin-class-date').value = studentData.classDate || "2026-09-12";
             document.getElementById('admin-start-time').value = studentData.startTime || "04:00 PM";
             document.getElementById('admin-end-time').value = studentData.endTime || "05:00 PM";
             document.getElementById('admin-sabaq-text').value = studentData.sabaq || "Aaj ka sabaq";
 
             document.getElementById('dir-name').innerText = studentData.name;
             document.getElementById('dir-father').innerText = studentData.father;
+            document.getElementById('dir-age').innerText = studentData.age;
             document.getElementById('dir-course').innerText = studentData.course;
 
             document.getElementById('table-disp-name').innerText = studentData.name;
             document.getElementById('table-disp-father').innerText = studentData.father;
+
+            document.getElementById('ibadat-disp-name').innerText = studentData.name;
+            document.getElementById('ibadat-disp-father').innerText = studentData.father;
+            document.getElementById('ibadat-disp-age').innerText = studentData.age;
+            document.getElementById('ibadat-durood').value = studentData.durood || 3;
+            document.getElementById('ibadat-date').value = studentData.ibadatDate || "2026-09-12";
+
+            document.getElementById('pnamaz-fajr').value = studentData.fajr || "Yes";
+            document.getElementById('pnamaz-zuhur').value = studentData.zuhur || "Yes";
+            document.getElementById('pnamaz-asr').value = studentData.asr || "Yes";
+            document.getElementById('pnamaz-maghrib').value = studentData.maghrib || "Yes";
+            document.getElementById('pnamaz-isha').value = studentData.isha || "Yes";
+
+            document.getElementById('surah-yassen').checked = studentData.surahYassen;
+            document.getElementById('surah-waaqia').checked = studentData.surahWaaqia;
+            document.getElementById('surah-rahman').checked = studentData.surahRahman;
             
             toggleTimeFields();
         }
@@ -489,11 +597,10 @@
             e.preventDefault();
             studentData.name = document.getElementById('input-name').value.trim();
             studentData.father = document.getElementById('input-father').value.trim();
+            studentData.age = document.getElementById('input-age').value.trim();
             studentData.course = document.getElementById('input-course').value;
-            studentData.mobile = document.getElementById('input-mobile').value.trim();
-            studentData.currency = document.getElementById('input-currency').value;
 
-            localStorage.setItem('raza_academy_unified_portal_v11', JSON.stringify(studentData));
+            localStorage.setItem('raza_academy_unified_portal_v12', JSON.stringify(studentData));
             populateAdminForm();
             alert("Student profile successfully saved!");
         }
@@ -513,8 +620,25 @@
                 studentData.endTime = "N/A";
             }
 
-            localStorage.setItem('raza_academy_unified_portal_v11', JSON.stringify(studentData));
+            localStorage.setItem('raza_academy_unified_portal_v12', JSON.stringify(studentData));
             alert("Daily Attendance & Sabaq updated successfully!");
+        }
+
+        function saveIbadatRecord() {
+            studentData.ibadatDate = document.getElementById('ibadat-date').value;
+            studentData.durood = document.getElementById('ibadat-durood').value;
+            studentData.fajr = document.getElementById('pnamaz-fajr').value;
+            studentData.zuhur = document.getElementById('pnamaz-zuhur').value;
+            studentData.asr = document.getElementById('pnamaz-asr').value;
+            studentData.maghrib = document.getElementById('pnamaz-maghrib').value;
+            studentData.isha = document.getElementById('pnamaz-isha').value;
+
+            studentData.surahYassen = document.getElementById('surah-yassen').checked;
+            studentData.surahWaaqia = document.getElementById('surah-waaqia').checked;
+            studentData.surahRahman = document.getElementById('surah-rahman').checked;
+
+            localStorage.setItem('raza_academy_unified_portal_v12', JSON.stringify(studentData));
+            alert("Ibadat & Namaz record saved successfully!");
         }
 
         function toggleMainView() {
@@ -551,7 +675,7 @@
                 document.getElementById('student-login-box').classList.add('hidden');
                 document.getElementById('student-dashboard').classList.remove('hidden');
 
-                document.getElementById('disp-currency').innerText = current.currency;
+                document.getElementById('disp-age-badge').innerText = "Age: " + current.age;
                 document.getElementById('disp-name').innerText = current.name;
                 document.getElementById('disp-father').innerText = current.father;
                 document.getElementById('disp-course').innerText = current.course;
@@ -566,7 +690,34 @@
                 }
 
                 document.getElementById('disp-sabaq').innerText = current.sabaq;
-                document.getElementById('disp-fee-status').innerText = current.feeStatus;
+                document.getElementById('disp-durood').innerText = current.durood;
+
+                // Format 5 Prayers with Green Tick / Red Cancel
+                let prayersList = [
+                    { name: 'Fajr', val: current.fajr },
+                    { name: 'Zuhur', val: current.zuhur },
+                    { name: 'Asr', val: current.asr },
+                    { name: 'Maghrib', val: current.maghrib },
+                    { name: 'Isha', val: current.isha }
+                ];
+
+                let prayerHtml = "";
+                prayersList.forEach(p => {
+                    if (p.val === "Yes") {
+                        prayerHtml += `<div class="flex justify-between items-center text-slate-700"><span>${p.name}:</span> <span class="text-emerald-600"><i class="fa-solid fa-check text-xs"></i> Yes</span></div>`;
+                    } else {
+                        prayerHtml += `<div class="flex justify-between items-center text-slate-700"><span>${p.name}:</span> <span class="text-red-500"><i class="fa-solid fa-xmark text-xs"></i> No</span></div>`;
+                    }
+                });
+                document.getElementById('disp-prayers-box').innerHTML = prayerHtml;
+
+                // Surahs list
+                let surahsArr = [];
+                if(current.surahYassen) surahsArr.push("Surah Yassen");
+                if(current.surahWaaqia) surahsArr.push("Surah Waaqia");
+                if(current.surahRahman) surahsArr.push("Surah Rahman");
+                document.getElementById('disp-surahs').innerText = surahsArr.length > 0 ? surahsArr.join(", ") : "None";
+
             } else {
                 alert("Student Name ghalat hai! Sahi Naam likhein (misal: " + current.name + ")");
             }
