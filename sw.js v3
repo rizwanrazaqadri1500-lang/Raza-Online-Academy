@@ -28,4 +28,7 @@ generateFeeVoucher("Muhammad Ali", "Hifz-e-Quran", 5000, 2000, "PKR");
   event.respondWith(
     fetch(event.request).catch(() => caches.match(event.request))
   );
+
+// Table row (tbody) ke andar date show karne ke liye JavaScript mein yeh line add karein:
+<td>${row.created_at ? new Date(row.created_at).toLocaleDateString() : 'N/A'}</td>
 });
