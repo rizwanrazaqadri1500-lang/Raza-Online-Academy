@@ -122,7 +122,7 @@ Raza Online Islamic Academy
 </div>
 </div>
 
-<!-- Tab 1: Add Student (Yahan se Skip Days, Weekend aur Timings hata diye gaye hain) -->
+<!-- Tab 1: Add Student -->
 <div id="tab-add-student" class="card">
 <h3>➕ Naya Student Add Karein</h3>
 <div class="grid-2">
@@ -131,7 +131,7 @@ Raza Online Islamic Academy
 </div>
 <div class="grid-2">
 <div><label>Select Course</label><select id="new-course"><option value="Madani Qaida">Madani Qaida</option><option value="Hifz-ul-Quran">Hifz-ul-Quran</option><option value="Nazra Quran">Nazra Quran</option><option value="Islamic Studies">Islamic Studies</option></select></div>
-<div><label>Date of Birth (DOB) *</label><input type="date" id="new-dob" onchange="calculateAgePreview()"></div>
+<div><label>Age / Umr *</label><input type="text" id="new-dob" placeholder="e.g. 10 Years"></div>
 </div>
 <div class="grid-2">
 <div><label>Parent Mobile / WhatsApp</label><input type="text" id="new-mobile" placeholder="+61400123456 / +92..."></div>
@@ -155,8 +155,7 @@ Raza Online Islamic Academy
 <input type="file" id="new-photo-file" accept="image/*" onchange="convertImageToBase64(event)">
 <input type="hidden" id="new-photo-url">
 </div>
-<div style="margin-bottom:15px;font-size:13px;color:#4f46e5;font-weight:bold;">Calculated Age: <span id="preview-age">0 Years</span></div>
-<button onclick="addStudent()" class="btn-success" style="padding:11px 24px;">+ Save Student Profile</button>
+<button onclick="addStudent()" class="btn-success" style="padding:11px 24px;margin-top:10px;">+ Save Student Profile</button>
 </div>
 
 <!-- Tab 2: Students Directory -->
@@ -168,7 +167,7 @@ Raza Online Islamic Academy
 <div id="students-directory-list"><p>Data load ho raha hai...</p></div>
 </div>
 
-<!-- Tab 3: Daily Sabaq & Attendance (Skip Days, Weekend & Timings sirf yahin set aur show honge) -->
+<!-- Tab 3: Daily Sabaq & Attendance -->
 <div id="tab-daily-rec" class="card hidden">
 <h3>📅 Daily Sabaq & Attendance (Skip Days, Timings & Weekends Shamil Hain)</h3>
 <div id="admin-students-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
@@ -226,21 +225,6 @@ document.getElementById('new-photo-url').value = uploadedPhotoBase64;
 reader.readAsDataURL(file);
 }
 
-function calculateAge(dobString){
-if(!dobString) return 'N/A';
-const dob = new Date(dobString);
-const today = new Date();
-let age = today.getFullYear() - dob.getFullYear();
-const m = today.getMonth() - dob.getMonth();
-if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) { age--; }
-return age + ' Years';
-}
-
-window.calculateAgePreview = function(){
-const dob = document.getElementById('new-dob').value;
-document.getElementById('preview-age').innerText = calculateAge(dob);
-}
-
 window.showStudentLogin = function(){
 document.getElementById('choice-section').classList.add('hidden');
 document.getElementById('student-login-section').classList.remove('hidden');
@@ -293,7 +277,7 @@ imgEl.style.display = 'none';
 
 document.getElementById('s-name').innerText=studentData.student_name || '-';
 document.getElementById('s-fname').innerText=studentData.father_name || '-';
-document.getElementById('s-age').innerText=calculateAge(studentData.dob);
+document.getElementById('s-age').innerText=studentData.dob || '-';
 document.getElementById('s-course').innerText=studentData.course || '-';
 document.getElementById('s-country').innerText=studentData.country_currency || 'Pakistan (PKR)';
 
@@ -328,12 +312,12 @@ window.addStudent = async function(){
 const name = document.getElementById('new-student-name').value.trim();
 const fname = document.getElementById('new-father-name').value.trim();
 const course = document.getElementById('new-course').value;
-const dob = document.getElementById('new-dob').value;
+const dob = document.getElementById('new-dob').value.trim();
 const mobile = document.getElementById('new-mobile').value.trim();
 const country = document.getElementById('new-country').value;
 const photo = document.getElementById('new-photo-url').value;
 
-if(!name || !dob){alert('Student Name aur Date of Birth lazmi hain!');return;}
+if(!name){alert('Student Name lazmi hai!');return;}
 const {error} = await supabase.from('students').insert([{
 student_name: name, father_name: fname, course: course, dob: dob, mobile: mobile, 
 country_currency: country, photo_url: photo
@@ -346,7 +330,6 @@ document.getElementById('new-dob').value = '';
 document.getElementById('new-mobile').value = '';
 document.getElementById('new-photo-url').value = '';
 document.getElementById('new-photo-file').value = '';
-document.getElementById('preview-age').innerText = '0 Years';
 }
 
 window.deleteStudent = async function(id){
@@ -380,7 +363,6 @@ const endTime = document.getElementById('end-time-'+studentId)?.value || '';
 
 if(!date){alert('Tareekh lazmi select karein!');return;}
 
-// Students table mein Skip days, weekend aur timings save karna taake attendance section mein barkarar rahein
 await supabase.from('students').update({
 skype_id: skype,
 weekend: weekend,
@@ -458,7 +440,7 @@ html += `
 ${photoTag}
 <div>
 <strong style="font-size:15px;color:#0f172a;">${s.student_name}</strong><br>
-<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age: <strong style="color:#059669;">${calculateAge(s.dob)}</strong></span><br>
+<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age: <strong style="color:#059669;">${s.dob || 'N/A'}</strong></span><br>
 <span style="color:#4f46e5;font-size:11px;">🌍 Country: ${s.country_currency || 'Pakistan'}</span>
 </div>
 </div>
@@ -490,7 +472,6 @@ html += `
 <div style="font-size:12px;color:#059669;font-weight:bold;margin-top:2px;text-align:center;">🌍 ${s.country_currency || 'Pakistan'}</div>
 </td>
 <td style="text-align:left;vertical-align:top;">
-<!-- Skip Days, Weekend aur Timings sirf yahan Attendance section mein set honge -->
 <div style="background:#f8fafc;padding:12px;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:14px;">
 <div class="grid-2">
 <div>
@@ -670,5 +651,4 @@ container.innerHTML = html;
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
 </script>
 </body>
-</html>
 </html>
