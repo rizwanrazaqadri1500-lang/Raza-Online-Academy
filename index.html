@@ -96,7 +96,7 @@ Raza Online Islamic Academy
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f8fafc;padding:15px;border-radius:8px;border:1px solid #e2e8f0;font-size:13px;">
 <p><strong>Father's Name:</strong> <span id="s-fname">-</span></p>
-<p><strong>Age / DOB:</strong> <span id="s-age">-</span></p>
+<p><strong>Age:</strong> <span id="s-age">-</span></p>
 <p><strong>Course:</strong> <span id="s-course">-</span></p>
 <p><strong>Country & Currency:</strong> <span id="s-country">-</span></p>
 </div>
@@ -131,7 +131,7 @@ Raza Online Islamic Academy
 </div>
 <div class="grid-2">
 <div><label>Select Course</label><select id="new-course"><option value="Madani Qaida">Madani Qaida</option><option value="Hifz-ul-Quran">Hifz-ul-Quran</option><option value="Nazra Quran">Nazra Quran</option><option value="Islamic Studies">Islamic Studies</option></select></div>
-<div><label>Age / DOB *</label><input type="text" id="new-dob" placeholder="e.g. 9 Years"></div>
+<div><label>Age *</label><input type="text" id="new-age" placeholder="e.g. 9"></div>
 </div>
 <div class="grid-2">
 <div><label>Parent Mobile / WhatsApp</label><input type="text" id="new-mobile" placeholder="+61400123456 / +92..."></div>
@@ -277,7 +277,7 @@ imgEl.style.display = 'none';
 
 document.getElementById('s-name').innerText=studentData.student_name || '-';
 document.getElementById('s-fname').innerText=studentData.father_name || '-';
-document.getElementById('s-age').innerText=studentData.dob || '-';
+document.getElementById('s-age').innerText=studentData.age || '-';
 document.getElementById('s-course').innerText=studentData.course || '-';
 document.getElementById('s-country').innerText=studentData.country_currency || 'Pakistan (PKR)';
 
@@ -312,21 +312,21 @@ window.addStudent = async function(){
 const name = document.getElementById('new-student-name').value.trim();
 const fname = document.getElementById('new-father-name').value.trim();
 const course = document.getElementById('new-course').value;
-const dob = document.getElementById('new-dob').value.trim();
+const age = document.getElementById('new-age').value.trim();
 const mobile = document.getElementById('new-mobile').value.trim();
 const country = document.getElementById('new-country').value;
 const photo = document.getElementById('new-photo-url').value;
 
 if(!name){alert('Student Name lazmi hai!');return;}
 const {error} = await supabase.from('students').insert([{
-student_name: name, father_name: fname, course: course, dob: dob, mobile: mobile, 
+student_name: name, father_name: fname, course: course, age: age, mobile: mobile, 
 country_currency: country, photo_url: photo
 }]);
 if(error){alert('Error: ' + error.message);return;}
 alert('Student kamyabi se save ho gaya!');
 document.getElementById('new-student-name').value = '';
 document.getElementById('new-father-name').value = '';
-document.getElementById('new-dob').value = '';
+document.getElementById('new-age').value = '';
 document.getElementById('new-mobile').value = '';
 document.getElementById('new-photo-url').value = '';
 document.getElementById('new-photo-file').value = '';
@@ -440,7 +440,7 @@ html += `
 ${photoTag}
 <div>
 <strong style="font-size:15px;color:#0f172a;">${s.student_name}</strong><br>
-<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age/DOB: <strong style="color:#059669;">${s.dob || 'N/A'}</strong></span><br>
+<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age: <strong style="color:#059669;">${s.age || 'N/A'}</strong></span><br>
 <span style="color:#4f46e5;font-size:11px;">🌍 Country: ${s.country_currency || 'Pakistan'}</span>
 </div>
 </div>
@@ -649,6 +649,9 @@ container.innerHTML = html;
 }
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
+</script>
+</body>
+</html>orker' in navigator){navigator.serviceWorker.register('sw.js');}
 </script>
 </body>
 </html>
