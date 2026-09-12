@@ -1,4 +1,4 @@
-        <!DOCTYPE html>
+       <!DOCTYPE html>
 <html lang="ur" dir="ltr">
 <head>
 <meta charset="UTF-8">
@@ -131,7 +131,7 @@ Raza Online Islamic Academy
 </div>
 </div>
 
-<!-- Tab 1: Add Student / Edit Student -->
+<!-- Tab 1: Add Student -->
 <div id="tab-add-student" class="card">
 <h3 id="form-title-text">➕ Naya Student Add Karein</h3>
 <input type="hidden" id="edit-student-id" value="">
@@ -182,27 +182,27 @@ Raza Online Islamic Academy
 
 <!-- Tab 3: Daily Sabaq & Attendance -->
 <div id="tab-daily-rec" class="card hidden">
-<h3>📅 Daily Sabaq & Attendance (Timings & Weekends)</h3>
+<h3>📅 Daily Sabaq & Attendance</h3>
 <div id="admin-students-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
 </div>
 
-<!-- Tab 4: Daily Ibadat & Namaz Tracker -->
+<!-- Tab 4: Daily Ibadat Tracker -->
 <div id="tab-ibadat-tab" class="card hidden">
 <h3>🕌 Daily Ibadat, Namaz, Durood, Surah & 18+ Sadqa Tracker</h3>
-<p style="color:#64748b;margin-bottom:15px;font-size:13px;">Yahan aap har student ki Namaz attendance, Durood-e-Pak, Surah Yassen, Surah Waaqia, Surah Rahman aur 18+ umar ke students ka Daily Sadqa record mehfooz kar sakte hain.</p>
 <div id="admin-ibadat-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
 </div>
 
-<!-- Tab 5: Monthly Exams & Results -->
+<!-- Tab 5: Exams -->
 <div id="tab-exams" class="card hidden">
 <h3>📝 Monthly Exams & Grades</h3>
 <div id="admin-exams-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
 </div>
 
-<!-- Tab 6: Fees & Vouchers (With Country Currency, Zakat, Fitra, Sadaqa & Payment Date) -->
+<!-- Tab 6: Fees & Vouchers (Individual & Combined) -->
 <div id="tab-fees" class="card hidden">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
-<h3 style="border:none;margin:0;">💰 Fee Management & Currency Vouchers (Zakat/Sadaqah Included)</h3>
+<h3 style="border:none;margin:0;">💰 Fee Management & Currency Vouchers</h3>
+<button onclick="generateCombinedFeeVouchers()" class="btn-success" style="padding:10px 16px;font-size:13px;">📑 Print Combined Voucher (All Students)</button>
 </div>
 <div id="admin-fees-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
 </div>
@@ -493,9 +493,55 @@ printSec.innerHTML = `
 <p style="font-size:15px;"><strong>Total Payable Amount:</strong> <span style="color:#dc2626;font-weight:bold;font-size:17px;float:right;">${totalPayable} (${countryCurrency.includes('Pakistan') ? 'PKR' : countryCurrency})</span></p>
 </div>
 <p style="text-align:center;font-size:12px;color:#047857;margin-top:25px;font-weight:bold;">Baraye meherbani waqt par fee aur عطiyat ada karein. Jazakallah!</p>
-<p style="text-align:center;font-size:11px;color:#94a3b8;margin-top:15px;">Raza Online Islamic Academy Management Portal</p>
 </div>
 `;
+window.print();
+setTimeout(() => printSec.classList.add('hidden'), 1000);
+}
+
+window.generateCombinedFeeVouchers = async function(){
+const {data: students} = await supabase.from('students').select('*');
+if(!students || students.length === 0){ alert('Koi student mojood nahi hai!'); return; }
+
+let combinedHTML = `
+<div style="max-width:700px;margin:0 auto;font-family:'Segoe UI',sans-serif;">
+<div style="text-align:center;margin-bottom:20px;border-bottom:2px solid #0b192c;padding-bottom:12px;">
+<h2 style="color:#0b192c;margin-bottom:4px;">Raza Online Islamic Academy</h2>
+<p style="font-size:13px;color:#64748b;">Combined Fee & Contributions Summary Statement (${new Date().toISOString().split('T')[0]})</p>
+</div>
+`;
+
+for(let s of students){
+const safeKey = s.student_name.replace(/\s+/g, '-');
+const total = parseFloat(document.getElementById('fee-total-'+safeKey)?.value) || 5000;
+const advance = parseFloat(document.getElementById('fee-adv-'+safeKey)?.value) || 0;
+const zakatAmt = parseFloat(document.getElementById('fee-zakat-'+safeKey)?.value) || 0;
+const fitraAmt = parseFloat(document.getElementById('fee-fitra-'+safeKey)?.value) || 0;
+const sadaqaAmt = parseFloat(document.getElementById('fee-sadaqa-'+safeKey)?.value) || 0;
+const paymentDate = document.getElementById('fee-date-'+safeKey)?.value || new Date().toISOString().split('T')[0];
+const currencyLabel = s.country_currency || 'Pakistan (PKR)';
+const totalPayable = (total - advance) + zakatAmt + fitraAmt + sadaqaAmt;
+
+combinedHTML += `
+<div style="border:1.5px solid #0b192c;padding:20px;border-radius:8px;margin-bottom:25px;background:#fff;page-break-inside:avoid;">
+<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;border-bottom:1px solid #e2e8f0;padding-bottom:6px;">
+<span><strong>Student:</strong> ${s.student_name} (${s.course || 'Quran'})</span>
+<span><strong>Date:</strong> ${paymentDate}</span>
+<span><strong>Currency:</strong> <span style="color:#059669;font-weight:bold;">${currencyLabel}</span></span>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:13px;background:#f8fafc;padding:10px;border-radius:6px;align-items:center;">
+<span>Fee: ${total} | Adv: -${advance} | Zakat: +${zakatAmt} | Fitra: +${fitraAmt} | Sadaqa: +${sadaqaAmt}</span>
+<span style="color:#dc2626;font-weight:bold;font-size:15px;">Total: ${totalPayable}</span>
+</div>
+</div>
+`;
+}
+
+combinedHTML += `</div>`;
+
+const printSec = document.getElementById('print-section');
+printSec.classList.remove('hidden');
+printSec.innerHTML = combinedHTML;
 window.print();
 setTimeout(() => printSec.classList.add('hidden'), 1000);
 }
