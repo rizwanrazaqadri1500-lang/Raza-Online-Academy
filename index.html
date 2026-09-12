@@ -41,7 +41,7 @@ const supabase=createClient(supabaseUrl,supabaseKey)
 window.fetchStudentData=async function(){
 const email=document.getElementById('student-email').value.trim();
 if(!email){alert('Meherbani karke apna email likhein!');return}
-const {data:studentData,error:studentError}=await supabase.from('students').select('*').eq('email',email).single();
+const {data:studentData,error:studentError}=await supabase.from('students').select('*').ilike('email', email).maybeSingle();
 if(studentError||!studentData){alert('Student nahi mila! Email check karein.');return}
 const {data:recordData}=await supabase.from('daily_records').select('*').eq('student_id',studentData.student_id).order('record_date',{ascending:false}).limit(1);
 document.getElementById('s-name').innerText=studentData.student_name || 'Naam mojood nahi';
@@ -58,10 +58,6 @@ document.getElementById('s-date').innerText='-';
 document.getElementById('login-section').classList.add('hidden');
 document.getElementById('dashboard-section').classList.remove('hidden');
 }
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
-</script>
-</body>
-</html>
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
 </script>
 </body>
