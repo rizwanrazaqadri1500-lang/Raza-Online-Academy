@@ -1,737 +1,557 @@
        <!DOCTYPE html>
-<html lang="ur" dir="ltr">
+<html lang="en" class="h-full bg-slate-100">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raza Online Islamic Academy - Portal</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0b192c">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
-body{background:#f8fafc;color:#1e293b;display:flex;min-height:100vh;}
-.sidebar{width:260px;background:#0b192c;color:white;position:fixed;height:100%;padding:20px 12px;z-index:100;overflow-y:auto;box-shadow:2px 0 10px rgba(0,0,0,0.1);}
-.sidebar-logo{display:flex;align-items:center;background:#f59e0b;color:#0b192c;padding:12px 15px;border-radius:10px;font-weight:bold;font-size:15px;margin-bottom:20px;}
-.sidebar-logo span{font-size:10px;display:block;color:#0b192c;font-weight:normal;}
-.sidebar a{display:block;color:#cbd5e1;padding:12px 15px;text-decoration:none;border-radius:8px;margin-bottom:8px;font-size:13px;cursor:pointer;transition:all 0.2s;}
-.sidebar a:hover, .sidebar a.active{background:#1e3e62;color:#fff;padding-left:18px;}
-.main-content{margin-left:260px;flex:1;padding:25px;width:calc(100% - 260px);}
-.top-header{display:flex;justify-content:space-between;align-items:center;background:#0b192c;color:white;padding:18px 24px;border-radius:10px;margin-bottom:25px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);}
-.top-header h1{font-size:18px;}
-.top-header p{font-size:12px;color:#94a3b8;}
-.badge-active{background:#065f46;color:#34d399;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:bold;}
-.card{background:white;padding:25px;border-radius:12px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);margin-bottom:25px;border:1px solid #e2e8f0;}
-h3{color:#0f172a;margin-bottom:18px;font-size:17px;border-bottom:2px solid #f1f5f9;padding-bottom:10px;font-weight:600;}
-button{background:#4f46e5;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;transition:background 0.2s;}
-button:hover{background:#4338ca;}
-.btn-danger{background:#dc3545;} .btn-danger:hover{background:#bd2130;}
-.btn-success{background:#059669;} .btn-success:hover{background:#047857;}
-.btn-warning{background:#d97706;} .btn-warning:hover{background:#b45309;}
-.btn-primary{background:#2563eb;} .btn-primary:hover{background:#1d4ed8;}
-input, select{width:100%;padding:10px 12px;margin-top:6px;margin-bottom:14px;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;background:#fff;color:#1e293b;}
-input:focus, select:focus{outline:none;border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79, 70, 229, 0.1);}
-.hidden{display:none}
-table{width:100%;border-collapse:collapse;margin-top:10px;}
-th, td{border:1px solid #e2e8f0;padding:12px 10px;text-align:center;font-size:13px;}
-th{background:#f8fafc;color:#334155;font-weight:600;}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.grid-3{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px;}
-.student-card{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #e2e8f0;padding:18px;border-radius:10px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.02);}
-.avatar-img{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #cbd5e1;box-shadow:0 2px 4px rgba(0,0,0,0.1);}
-.book-card{background:#f8fafc;border:1px solid #e2e8f0;padding:18px;border-radius:10px;text-align:center;transition:transform 0.2s;}
-.book-card:hover{transform:translateY(-3px);box-shadow:0 4px 12px rgba(0,0,0,0.08);}
-@media print {
-  body * { visibility: hidden; }
-  #print-section, #print-section * { visibility: visible; }
-  #print-section { position: absolute; left: 0; top: 0; width: 100%; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raza Online Islamic Academy - Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-
-<!-- Sidebar Menu -->
-<div class="sidebar" id="app-sidebar" style="display:none;">
-<div class="sidebar-logo">
-<div>ROA</div>
-<div style="margin-left:12px;line-height:1.2;">
-Raza Online Islamic Academy
-<span>Management Portal</span>
-</div>
-</div>
-<div style="font-size:11px;color:#64748b;margin:15px 0 8px 10px;letter-spacing:0.5px;font-weight:bold;">MAIN MENU</div>
-<a href="#" class="active" onclick="switchTab('add-student', this)">➕ Add Student</a>
-<a href="#" onclick="switchTab('students-dir', this)">👥 Students Directory</a>
-<a href="#" onclick="switchTab('daily-rec', this)">📅 Daily Sabaq & Attendance</a>
-<a href="#" onclick="switchTab('ibadat-tab', this)">🕌 Daily Ibadat & Namaz</a>
-<a href="#" onclick="switchTab('exams', this)">📝 Monthly Exams & Results</a>
-<a href="#" onclick="switchTab('fees', this)">💰 Fees & Vouchers</a>
-<a href="#" onclick="switchTab('zakat-receipt', this)">📜 Zakat Receipt Generator</a>
-<a href="#" onclick="switchTab('library', this)">📚 Islamic Books Library</a>
-<a href="#" onclick="switchTab('logout', this)" style="color:#fca5a5;margin-top:25px;">🚪 Logout Portal</a>
-</div>
-
-<div class="main-content" style="margin-left:0;" id="main-area">
-
-<!-- Choice / Login Screen -->
-<div id="choice-section" class="card" style="max-width:450px;margin:80px auto;text-align:center;padding:40px;">
-<h2 style="color:#0b192c;margin-bottom:8px;">Raza Online Islamic Academy</h2>
-<p style="color:#64748b;margin-bottom:30px;font-size:14px;">Apna Portal muntakhib karein</p>
-<button onclick="showStudentLogin()" style="width:100%;padding:12px;font-size:14px;">Student Portal (Record Dekhein)</button>
-<button onclick="showAdminLogin()" class="btn-success" style="width:100%;padding:12px;font-size:14px;margin-top:14px;">Admin Panel Login (Owner)</button>
-</div>
-
-<!-- Student Login -->
-<div id="student-login-section" class="hidden card" style="max-width:400px;margin:80px auto;padding:35px;">
-<h3>Student Portal Login</h3>
-<label style="font-size:12px;color:#475569;font-weight:bold;">Student Name</label>
-<input type="text" id="student-name-input" placeholder="Apna Poora Naam darj karein">
-<button onclick="fetchStudentData()" style="width:100%;margin-top:10px;padding:11px;">Portal Khulein</button>
-<button onclick="goBack()" style="background:#64748b;width:100%;margin-top:10px;padding:11px;">Wapas Jayein</button>
-</div>
-
-<!-- Admin Login -->
-<div id="admin-login-section" class="hidden card" style="max-width:400px;margin:80px auto;padding:35px;">
-<h3>Admin Panel Login</h3>
-<label style="font-size:12px;color:#475569;font-weight:bold;">Password</label>
-<input type="password" id="admin-pass" placeholder="Admin Password (admin123)">
-<button onclick="verifyAdmin()" class="btn-success" style="width:100%;margin-top:10px;padding:11px;">Login Karein</button>
-<button onclick="goBack()" style="background:#64748b;width:100%;margin-top:10px;padding:11px;">Wapas Jayein</button>
-</div>
-
-<!-- Student Dashboard -->
-<div id="dashboard-section" class="hidden card" style="max-width:600px;margin:30px auto;">
-<div style="text-align:center;margin-bottom:20px;">
-<img id="s-photo" src="" class="avatar-img" style="width:90px;height:90px;display:none;margin:0 auto 12px;" alt="Student Photo">
-<h3 id="s-name" style="border:none;margin:0;font-size:20px;color:#0b192c;">-</h3>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f8fafc;padding:15px;border-radius:8px;border:1px solid #e2e8f0;font-size:13px;">
-<p><strong>Father's Name:</strong> <span id="s-fname">-</span></p>
-<p><strong>Age:</strong> <span id="s-age">-</span></p>
-<p><strong>Course:</strong> <span id="s-course">-</span></p>
-<p><strong>Country & Currency:</strong> <span id="s-country">-</span></p>
-</div>
-<hr style="margin:20px 0;border:0;border-top:1px solid #e2e8f0;">
-<div style="background:#f0fdf4;padding:15px;border-radius:8px;border:1px solid #bbf7d0;font-size:13px;">
-<p><strong>Attendance:</strong> <span id="s-attendance" style="color:#047857;font-weight:bold;">-</span></p>
-<p style="margin-top:8px;"><strong>Sabaq Details:</strong> <span id="s-sabaq">-</span></p>
-<p style="margin-top:8px;"><strong>Fee Status:</strong> <span id="s-fee" style="font-weight:bold;color:#059669;">-</span></p>
-</div>
-<button onclick="goBack()" style="background:#64748b;margin-top:20px;width:100%;">Wapas Jayein</button>
-</div>
-
-<!-- Admin Dashboard Wrapper -->
-<div id="admin-dashboard-section" class="hidden">
-<div class="top-header">
-<div>
-<h1>Raza Online Islamic Academy</h1>
-<p>Admin & Student Management Portal</p>
-</div>
-<div>
-<span class="badge-active">● System Active</span>
-<button onclick="goBack()" style="background:#334155;padding:7px 16px;font-size:12px;margin-left:12px;border-radius:6px;">Switch to Parent View</button>
-</div>
-</div>
-
-<!-- Tab 1: Add Student -->
-<div id="tab-add-student" class="card">
-<h3 id="form-title-text">➕ Naya Student Add Karein</h3>
-<input type="hidden" id="edit-student-id" value="">
-<div class="grid-2">
-<div><label>Student Name *</label><input type="text" id="new-student-name" placeholder="e.g. Muhammad"></div>
-<div><label>Father's Name *</label><input type="text" id="new-father-name" placeholder="e.g. Ali"></div>
-</div>
-<div class="grid-2">
-<div><label>Select Course</label><select id="new-course"><option value="Madani Qaida">Madani Qaida</option><option value="Hifz-ul-Quran">Hifz-ul-Quran</option><option value="Nazra Quran">Nazra Quran</option><option value="Islamic Studies">Islamic Studies</option></select></div>
-<div><label>Age *</label><input type="number" id="new-age" placeholder="e.g. 9"></div>
-</div>
-<div class="grid-2">
-<div><label>Parent Mobile / WhatsApp</label><input type="text" id="new-mobile" placeholder="+61400123456 / +92..."></div>
-<div>
-<label>Select Country & Currency *</label>
-<select id="new-country">
-<option value="Pakistan (PKR)">🇵🇰 Pakistan (PKR)</option>
-<option value="Australia (AUD)">🇦🇺 Australia (AUD)</option>
-<option value="United Kingdom (GBP)">🇬🇧 United Kingdom - UK (GBP)</option>
-<option value="United States (USD)">🇺🇸 United States - USA (USD)</option>
-<option value="Canada (CAD)">🇨🇦 Canada (CAD)</option>
-<option value="Saudi Arabia (SAR)">🇸🇦 Saudi Arabia (SAR)</option>
-<option value="UAE (AED)">🇦🇪 United Arab Emirates - UAE (AED)</option>
-<option value="European Union (EUR)">🇪🇺 European Union - Europe (EUR)</option>
-<option value="Other Country / International">🌍 Deegar Tamam Mumalik / Other Country</option>
-</select>
-</div>
-</div>
-<div>
-<label>Student Photo (Upload / Image)</label>
-<input type="file" id="new-photo-file" accept="image/*" onchange="convertImageToBase64(event)">
-<input type="hidden" id="new-photo-url">
-</div>
-<div style="display:flex;gap:10px;margin-top:10px;">
-<button onclick="saveStudent()" class="btn-success" style="flex:1;padding:11px;" id="save-student-btn">+ Save Student Profile</button>
-<button onclick="resetStudentForm()" id="cancel-edit-btn" class="hidden" style="background:#64748b;padding:11px;">Cancel Edit</button>
-</div>
-</div>
-
-<!-- Tab 2: Students Directory -->
-<div id="tab-students-dir" class="card hidden">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
-<h3 style="border:none;margin:0;">👥 Students Profile Directory & Edit</h3>
-<span id="total-students-badge" style="background:#f1f5f9;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:bold;color:#0f172a;border:1px solid #cbd5e1;">Total Students: 0</span>
-</div>
-<div id="students-directory-list"><p>Data load ho raha hai...</p></div>
-</div>
-
-<!-- Tab 3: Daily Sabaq & Attendance -->
-<div id="tab-daily-rec" class="card hidden">
-<h3>📅 Daily Sabaq & Attendance</h3>
-<div id="admin-students-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
-</div>
-
-<!-- Tab 4: Daily Ibadat Tracker -->
-<div id="tab-ibadat-tab" class="card hidden">
-<h3>🕌 Daily Ibadat, Namaz, Durood, Surah & 18+ Sadqa Tracker</h3>
-<div id="admin-ibadat-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
-</div>
-
-<!-- Tab 5: Exams -->
-<div id="tab-exams" class="card hidden">
-<h3>📝 Monthly Exams & Grades</h3>
-<div id="admin-exams-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
-</div>
-
-<!-- Tab 6: Fees & Vouchers (Individual & Combined) -->
-<div id="tab-fees" class="card hidden">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
-<h3 style="border:none;margin:0;">💰 Fee Management & Currency Vouchers</h3>
-<button onclick="generateCombinedFeeVouchers()" class="btn-success" style="padding:10px 16px;font-size:13px;">📑 Print Combined Voucher (All Students)</button>
-</div>
-<div id="admin-fees-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
-</div>
-
-<!-- Tab 7: Zakat Receipt Generator -->
-<div id="tab-zakat-receipt" class="card hidden">
-<h3>📜 Zakat, Fitra & Sadaqah Receipt Generator</h3>
-<div class="grid-2">
-<div><label>Donor / Contributor Name *</label><input type="text" id="z-donor" placeholder="Donor ka poora naam"></div>
-<div><label>Contribution Amount *</label><input type="number" id="z-amount" placeholder="Raqam darj karein"></div>
-</div>
-<div class="grid-2">
-<div>
-<label>Contribution Type</label>
-<select id="z-type">
-<option value="Zakat">Zakat ( زکوة )</option>
-<option value="Fitra">Fitra ( فطرہ )</option>
-<option value="Sadaqah">Sadaqah ( صدقہ )</option>
-<option value="Nafl Donation">Nafl Donation ( نفل عطیہ )</option>
-</select>
-</div>
-<div><label>Receipt Number</label><input type="text" id="z-receipt-no" value="ROA-ZAKAT-2026-01"></div>
-</div>
-<div><label>Notes / Remarks</label><input type="text" id="z-notes" placeholder="Maslan: Ramadan ul Mubarak Zakat"></div>
-<button onclick="generateZakatReceiptPrint()" class="btn-success" style="width:100%;margin-top:10px;padding:12px;">🖨️ Print Formal Zakat Receipt</button>
-</div>
-
-<!-- Tab 8: Islamic Books Library -->
-<div id="tab-library" class="card hidden">
-<h3>📚 Islamic Books Library & Madani Qutub</h3>
-<div class="grid-3">
-<div class="book-card">
-<div style="font-size:32px;margin-bottom:8px;">📖</div>
-<strong>Madani Qaida</strong>
-<p style="font-size:12px;color:#64748b;margin:6px 0 12px;">Quran e Pak sikhne ki bunyadi kitab</p>
-<a href="https://www.dawateislami.net/bookslibrary/ur/madani-qaida" target="_blank"><button style="width:100%;padding:8px;font-size:12px;">Read / Open</button></a>
-</div>
-<div class="book-card">
-<div style="font-size:32px;margin-bottom:8px;">📗</div>
-<strong>Quran-e-Kareem</strong>
-<p style="font-size:12px;color:#64748b;margin:6px 0 12px;">Kanz-ul-Iman / Tarjuma e Quran</p>
-<a href="https://www.dawateislami.net/bookslibrary/ur/holy-quran" target="_blank"><button style="width:100%;padding:8px;font-size:12px;">Read / Open</button></a>
-</div>
-<div class="book-card">
-<div style="font-size:32px;margin-bottom:8px;">📘</div>
-<strong>Seerat-ul-Jinan</strong>
-<p style="font-size:12px;color:#64748b;margin:6px 0 12px;">Tafseer e Quran</p>
-<a href="https://www.dawateislami.net/bookslibrary/ur/seerat-ul-jinan" target="_blank"><button style="width:100%;padding:8px;font-size:12px;">Read / Open</button></a>
-</div>
-</div>
-</div>
-
-</div>
-
-</div>
-
-<!-- Printable Voucher / Receipt Modal -->
-<div id="print-section" class="hidden" style="padding:30px;background:white;color:black;"></div>
-
-<script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-const supabaseUrl='https://vpdqbwflnvrqcuxzkjof.supabase.co'
-const supabaseKey='sb_publishable_z-u1RJ0Rgw-u9jKoC4a4Kg_vKqaY8c5'
-const supabase=createClient(supabaseUrl,supabaseKey)
-
-let uploadedPhotoBase64 = '';
-window.convertImageToBase64 = function(event){
-const file = event.target.files[0];
-if(!file) return;
-const reader = new FileReader();
-reader.onload = function(e){
-uploadedPhotoBase64 = e.target.result;
-document.getElementById('new-photo-url').value = uploadedPhotoBase64;
-};
-reader.readAsDataURL(file);
-}
-
-window.showStudentLogin = function(){
-document.getElementById('choice-section').classList.add('hidden');
-document.getElementById('student-login-section').classList.remove('hidden');
-}
-
-window.showAdminLogin = function(){
-document.getElementById('choice-section').classList.add('hidden');
-document.getElementById('admin-login-section').classList.remove('hidden');
-}
-
-window.goBack = function(){
-document.querySelectorAll('.card, #admin-dashboard-section, #print-section').forEach(el => el.classList.add('hidden'));
-document.getElementById('choice-section').classList.remove('hidden');
-document.getElementById('app-sidebar').style.display = 'none';
-document.getElementById('main-area').style.marginLeft = '0';
-document.getElementById('student-name-input').value = '';
-document.getElementById('admin-pass').value = '';
-}
-
-window.switchTab = function(tabName, el){
-if(tabName === 'logout'){ goBack(); return; }
-document.querySelectorAll('#admin-dashboard-section > div.card').forEach(c => c.classList.add('hidden'));
-document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-if(el) el.classList.add('active');
-
-if(tabName === 'add-student') document.getElementById('tab-add-student').classList.remove('hidden');
-else if(tabName === 'students-dir'){ document.getElementById('tab-students-dir').classList.remove('hidden'); loadStudentsDirectory(); }
-else if(tabName === 'daily-rec'){ document.getElementById('tab-daily-rec').classList.remove('hidden'); loadAdminPanel(); }
-else if(tabName === 'ibadat-tab'){ document.getElementById('tab-ibadat-tab').classList.remove('hidden'); loadIbadatPanel(); }
-else if(tabName === 'exams'){ document.getElementById('tab-exams').classList.remove('hidden'); loadExamsPanel(); }
-else if(tabName === 'fees'){ document.getElementById('tab-fees').classList.remove('hidden'); loadFeesPanel(); }
-else if(tabName === 'zakat-receipt') document.getElementById('tab-zakat-receipt').classList.remove('hidden');
-else if(tabName === 'library') document.getElementById('tab-library').classList.remove('hidden');
-}
-
-window.fetchStudentData = async function(){
-const nameInput=document.getElementById('student-name-input').value.trim();
-if(!nameInput){alert('Meherbani karke apna naam likhein!');return}
-const {data:studentData,error:studentError}=await supabase.from('students').select('*').ilike('student_name', nameInput).maybeSingle();
-if(studentError||!studentData){alert('Student nahi mila! Naam check karein.');return}
-const {data:recordData}=await supabase.from('daily_records').select('*').eq('student_id',studentData.student_id).order('record_date',{ascending:false}).limit(1);
-
-const imgEl = document.getElementById('s-photo');
-if(studentData.photo_url){
-imgEl.src = studentData.photo_url;
-imgEl.style.display = 'block';
-} else {
-imgEl.style.display = 'none';
-}
-
-document.getElementById('s-name').innerText=studentData.student_name || '-';
-document.getElementById('s-fname').innerText=studentData.father_name || '-';
-document.getElementById('s-age').innerText=studentData.age || '-';
-document.getElementById('s-course').innerText=studentData.course || '-';
-document.getElementById('s-country').innerText=studentData.country_currency || 'Pakistan (PKR)';
-
-if(recordData&&recordData.length>0){
-document.getElementById('s-attendance').innerText=recordData[0].attendance_status;
-document.getElementById('s-sabaq').innerText=recordData[0].sabaq_details||'Koi detail nahi';
-document.getElementById('s-fee').innerText=recordData[0].fee_status || 'Pending';
-}else{
-document.getElementById('s-attendance').innerText='N/A';
-document.getElementById('s-sabaq').innerText='Aaj ka record mojood nahi';
-document.getElementById('s-fee').innerText='Pending';
-}
-
-document.getElementById('student-login-section').classList.add('hidden');
-document.getElementById('dashboard-section').classList.remove('hidden');
-}
-
-window.verifyAdmin = async function(){
-const pass = document.getElementById('admin-pass').value.trim();
-if(pass === 'admin123' || pass === 'rizwan123'){
-document.getElementById('admin-login-section').classList.add('hidden');
-document.getElementById('admin-dashboard-section').classList.remove('hidden');
-document.getElementById('app-sidebar').style.display = 'block';
-document.getElementById('main-area').style.marginLeft = '260px';
-switchTab('add-student', document.querySelector('.sidebar a'));
-}else{
-alert('Ghalat Password! Dobara koshish karein.');
-}
-}
-
-window.saveStudent = async function(){
-const editId = document.getElementById('edit-student-id').value;
-const name = document.getElementById('new-student-name').value.trim();
-const fname = document.getElementById('new-father-name').value.trim();
-const course = document.getElementById('new-course').value;
-const age = document.getElementById('new-age').value.trim();
-const mobile = document.getElementById('new-mobile').value.trim();
-const country = document.getElementById('new-country').value;
-const photo = document.getElementById('new-photo-url').value;
-
-if(!name){alert('Student Name lazmi hai!');return;}
-
-const payload = { student_name: name, father_name: fname, course: course, age: age, mobile: mobile, country_currency: country };
-if(photo) payload.photo_url = photo;
-
-if(editId){
-const {error} = await supabase.from('students').update(payload).eq('student_id', editId);
-if(error){alert('Error: ' + error.message);return;}
-alert('Student profile update ho gayi!');
-resetStudentForm();
-loadStudentsDirectory();
-} else {
-const {error} = await supabase.from('students').insert([payload]);
-if(error){alert('Error: ' + error.message);return;}
-alert('Student kamyabi se save ho gaya!');
-resetStudentForm();
-}
-}
-
-window.editStudent = async function(id){
-const {data: s, error} = await supabase.from('students').select('*').eq('student_id', id).single();
-if(error || !s){ alert('Student data load nahi ho saka'); return; }
-
-document.getElementById('edit-student-id').value = s.student_id;
-document.getElementById('new-student-name').value = s.student_name || '';
-document.getElementById('new-father-name').value = s.father_name || '';
-document.getElementById('new-course').value = s.course || 'Madani Qaida';
-document.getElementById('new-age').value = s.age || '';
-document.getElementById('new-mobile').value = s.mobile || '';
-document.getElementById('new-country').value = s.country_currency || 'Pakistan (PKR)';
-if(s.photo_url) document.getElementById('new-photo-url').value = s.photo_url;
-
-document.getElementById('form-title-text').innerText = '✏️ Edit Student Profile: ' + s.student_name;
-document.getElementById('save-student-btn').innerText = 'Update Student Profile';
-document.getElementById('cancel-edit-btn').classList.remove('hidden');
-
-switchTab('add-student', document.querySelector('.sidebar a'));
-}
-
-window.resetStudentForm = function(){
-document.getElementById('edit-student-id').value = '';
-document.getElementById('new-student-name').value = '';
-document.getElementById('new-father-name').value = '';
-document.getElementById('new-age').value = '';
-document.getElementById('new-mobile').value = '';
-document.getElementById('new-photo-url').value = '';
-document.getElementById('new-photo-file').value = '';
-document.getElementById('form-title-text').innerText = '➕ Naya Student Add Karein';
-document.getElementById('save-student-btn').innerText = '+ Save Student Profile';
-document.getElementById('cancel-edit-btn').classList.add('hidden');
-}
-
-window.deleteStudent = async function(id){
-if(!confirm('Kya aap waqai is student ko delete karna chahte hain?')) return;
-const {error} = await supabase.from('students').delete().eq('student_id', id);
-if(error){alert('Error: ' + error.message);return;}
-alert('Student delete ho gaya.');
-loadStudentsDirectory();
-}
-
-window.saveIbadatRecord = async function(studentId){
-const date = document.getElementById('ib-date-'+studentId).value;
-const namaz = document.getElementById('ib-namaz-'+studentId).value;
-const durood = parseInt(document.getElementById('ib-durood-'+studentId).value) || 0;
-const yassen = document.getElementById('ib-yassen-'+studentId).checked;
-const waaqia = document.getElementById('ib-waaqia-'+studentId).checked;
-const rahman = document.getElementById('ib-rahman-'+studentId).checked;
-const sadqaEl = document.getElementById('ib-sadqa-'+studentId);
-const sadqa = sadqaEl ? sadqaEl.checked : false;
-
-if(!date){alert('Tareekh lazmi select karein!');return;}
-
-const {data: existing} = await supabase.from('daily_ibadat').select('*').eq('student_id', studentId).eq('date', date);
-const payload = { student_id: studentId, date, namaz_attendance: namaz, durood_pak: durood, surah_yassen: yassen, surah_waaqia: waaqia, surah_rahman: rahman, daily_sadqa: sadqa };
-
-if(existing && existing.length > 0){
-await supabase.from('daily_ibadat').update(payload).eq('id', existing[0].id);
-} else {
-await supabase.from('daily_ibadat').insert([payload]);
-}
-alert('Ibadat & Namaz record save ho gaya!');
-loadIbadatPanel();
-}
-
-window.generateFeeVoucherCustom = function(studentName, course, countryCurrency){
-const safeKey = studentName.replace(/\s+/g, '-');
-const total = parseFloat(document.getElementById('fee-total-'+safeKey).value) || 0;
-const advance = parseFloat(document.getElementById('fee-adv-'+safeKey).value) || 0;
-const zakatAmt = parseFloat(document.getElementById('fee-zakat-'+safeKey).value) || 0;
-const fitraAmt = parseFloat(document.getElementById('fee-fitra-'+safeKey).value) || 0;
-const sadaqaAmt = parseFloat(document.getElementById('fee-sadaqa-'+safeKey).value) || 0;
-const paymentDate = document.getElementById('fee-date-'+safeKey).value || new Date().toISOString().split('T')[0];
-
-const totalPayable = (total - advance) + zakatAmt + fitraAmt + sadaqaAmt;
-const printSec = document.getElementById('print-section');
-printSec.classList.remove('hidden');
-
-printSec.innerHTML = `
-<div style="border:2px solid #0b192c;padding:30px;border-radius:12px;max-width:650px;margin:20px auto;font-family:'Segoe UI',sans-serif;">
-<h2 style="text-align:center;color:#0b192c;margin-bottom:5px;">Raza Online Islamic Academy</h2>
-<p style="text-align:center;font-size:13px;color:#64748b;margin-bottom:20px;">Official Fee & Contribution Voucher</p>
-<hr style="border:0;border-top:1px solid #cbd5e1;margin-bottom:20px;">
-<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:12px;">
-<p><strong>Payment Date:</strong> ${paymentDate}</p>
-<p><strong>Country / Currency:</strong> <span style="color:#059669;font-weight:bold;">${countryCurrency}</span></p>
-</div>
-<div style="font-size:14px;margin-bottom:12px;">
-<p><strong>Student Name:</strong> ${studentName}</p>
-<p style="margin-top:6px;"><strong>Course:</strong> ${course}</p>
-</div>
-<div style="background:#f8fafc;padding:18px;border-radius:8px;margin-top:15px;font-size:14px;border:1px solid #e2e8f0;">
-<p style="margin-bottom:6px;"><strong>Monthly Tuition Fee:</strong> <span style="float:right;">${total}</span></p>
-<p style="margin-bottom:6px;color:#0284c7;"><strong>Advance Paid (-):</strong> <span style="float:right;">${advance}</span></p>
-<p style="margin-bottom:6px;color:#d97706;"><strong>Zakat (+):</strong> <span style="float:right;">${zakatAmt}</span></p>
-<p style="margin-bottom:6px;color:#d97706;"><strong>Fitra (+):</strong> <span style="float:right;">${fitraAmt}</span></p>
-<p style="margin-bottom:6px;color:#d97706;"><strong>Sadaqah (+):</strong> <span style="float:right;">${sadaqaAmt}</span></p>
-<hr style="border:0;border-top:1px dashed #cbd5e1;margin:10px 0;">
-<p style="font-size:15px;"><strong>Total Payable Amount:</strong> <span style="color:#dc2626;font-weight:bold;font-size:17px;float:right;">${totalPayable} (${countryCurrency.includes('Pakistan') ? 'PKR' : countryCurrency})</span></p>
-</div>
-<p style="text-align:center;font-size:12px;color:#047857;margin-top:25px;font-weight:bold;">Baraye meherbani waqt par fee aur عطiyat ada karein. Jazakallah!</p>
-</div>
-`;
-window.print();
-setTimeout(() => printSec.classList.add('hidden'), 1000);
-}
-
-window.generateCombinedFeeVouchers = async function(){
-const {data: students} = await supabase.from('students').select('*');
-if(!students || students.length === 0){ alert('Koi student mojood nahi hai!'); return; }
-
-let combinedHTML = `
-<div style="max-width:700px;margin:0 auto;font-family:'Segoe UI',sans-serif;">
-<div style="text-align:center;margin-bottom:20px;border-bottom:2px solid #0b192c;padding-bottom:12px;">
-<h2 style="color:#0b192c;margin-bottom:4px;">Raza Online Islamic Academy</h2>
-<p style="font-size:13px;color:#64748b;">Combined Fee & Contributions Summary Statement (${new Date().toISOString().split('T')[0]})</p>
-</div>
-`;
-
-for(let s of students){
-const safeKey = s.student_name.replace(/\s+/g, '-');
-const total = parseFloat(document.getElementById('fee-total-'+safeKey)?.value) || 5000;
-const advance = parseFloat(document.getElementById('fee-adv-'+safeKey)?.value) || 0;
-const zakatAmt = parseFloat(document.getElementById('fee-zakat-'+safeKey)?.value) || 0;
-const fitraAmt = parseFloat(document.getElementById('fee-fitra-'+safeKey)?.value) || 0;
-const sadaqaAmt = parseFloat(document.getElementById('fee-sadaqa-'+safeKey)?.value) || 0;
-const paymentDate = document.getElementById('fee-date-'+safeKey)?.value || new Date().toISOString().split('T')[0];
-const currencyLabel = s.country_currency || 'Pakistan (PKR)';
-const totalPayable = (total - advance) + zakatAmt + fitraAmt + sadaqaAmt;
-
-combinedHTML += `
-<div style="border:1.5px solid #0b192c;padding:20px;border-radius:8px;margin-bottom:25px;background:#fff;page-break-inside:avoid;">
-<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;border-bottom:1px solid #e2e8f0;padding-bottom:6px;">
-<span><strong>Student:</strong> ${s.student_name} (${s.course || 'Quran'})</span>
-<span><strong>Date:</strong> ${paymentDate}</span>
-<span><strong>Currency:</strong> <span style="color:#059669;font-weight:bold;">${currencyLabel}</span></span>
-</div>
-<div style="display:flex;justify-content:space-between;font-size:13px;background:#f8fafc;padding:10px;border-radius:6px;align-items:center;">
-<span>Fee: ${total} | Adv: -${advance} | Zakat: +${zakatAmt} | Fitra: +${fitraAmt} | Sadaqa: +${sadaqaAmt}</span>
-<span style="color:#dc2626;font-weight:bold;font-size:15px;">Total: ${totalPayable}</span>
-</div>
-</div>
-`;
-}
-
-combinedHTML += `</div>`;
-
-const printSec = document.getElementById('print-section');
-printSec.classList.remove('hidden');
-printSec.innerHTML = combinedHTML;
-window.print();
-setTimeout(() => printSec.classList.add('hidden'), 1000);
-}
-
-window.generateZakatReceiptPrint = function(){
-const donor = document.getElementById('z-donor').value.trim();
-const amount = document.getElementById('z-amount').value.trim();
-const type = document.getElementById('z-type').value;
-const receiptNo = document.getElementById('z-receipt-no').value;
-const notes = document.getElementById('z-notes').value;
-
-if(!donor || !amount){ alert('Donor ka naam aur amount lazmi darj karein!'); return; }
-
-const printSec = document.getElementById('print-section');
-printSec.classList.remove('hidden');
-printSec.innerHTML = `
-<div style="border:2px solid #0b192c;padding:30px;border-radius:12px;max-width:650px;margin:20px auto;font-family:'Segoe UI',sans-serif;">
-<h2 style="text-align:center;color:#0b192c;margin-bottom:5px;">Raza Online Islamic Academy</h2>
-<p style="text-align:center;font-size:13px;color:#64748b;margin-bottom:20px;">Official ${type} & Donation Receipt</p>
-<hr style="border:0;border-top:1px solid #cbd5e1;margin-bottom:20px;">
-<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:12px;">
-<p><strong>Receipt Number:</strong> ${receiptNo}</p>
-<p><strong>Date:</strong> ${new Date().toISOString().split('T')[0]}</p>
-</div>
-<div style="font-size:14px;margin-bottom:12px;">
-<p><strong>Donor / Contributor Name:</strong> ${donor}</p>
-</div>
-<div style="background:#f8fafc;padding:18px;border-radius:8px;margin-top:15px;font-size:14px;border:1px solid #e2e8f0;">
-<p><strong>Contribution Type:</strong> <span style="color:#0b192c;font-weight:bold;">${type}</span></p>
-<p style="margin-top:8px;"><strong>Amount Received:</strong> <span style="color:#059669;font-weight:bold;font-size:18px;">${amount}</span></p>
-<p style="margin-top:8px;"><strong>Remarks:</strong> ${notes || 'N/A'}</p>
-</div>
-<p style="text-align:center;font-size:12px;color:#047857;margin-top:25px;font-weight:bold;">Jazakallah-o-Khairan • Allah Ta'ala aap ka yeh sadqa/zakat qabul farmaye.</p>
-</div>
-`;
-window.print();
-setTimeout(() => printSec.classList.add('hidden'), 1000);
-}
-
-async function loadStudentsDirectory(){
-const container = document.getElementById('students-directory-list');
-container.innerHTML = '<p>Loading...</p>';
-const {data: students, error} = await supabase.from('students').select('*');
-if(error || !students || students.length === 0){
-container.innerHTML = '<p>Koi student mojood nahi hai.</p>';
-document.getElementById('total-students-badge').innerText = 'Total Students: 0';
-return;
-}
-document.getElementById('total-students-badge').innerText = `Total Students: ${students.length}`;
-let html = '';
-for(let s of students){
-const photoTag = s.photo_url ? `<img src="${s.photo_url}" class="avatar-img">` : `<div style="width:50px;height:50px;background:#e0e7ff;color:#4f46e5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;">${s.student_name.charAt(0).toUpperCase()}</div>`;
-html += `
-<div class="student-card">
-<div style="display:flex;align-items:center;gap:15px;">
-${photoTag}
-<div>
-<strong style="font-size:15px;color:#0f172a;">${s.student_name}</strong><br>
-<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age: <strong style="color:#059669;">${s.age || 'N/A'}</strong></span><br>
-<span style="color:#4f46e5;font-size:11px;">🌍 Country: ${s.country_currency || 'Pakistan'}</span>
-</div>
-</div>
-<div style="display:flex;gap:8px;">
-<button onclick="editStudent(${s.student_id})" class="btn-primary" style="padding:7px 14px;font-size:12px;">Edit</button>
-<button onclick="deleteStudent(${s.student_id})" class="btn-danger" style="padding:7px 14px;font-size:12px;">Delete</button>
-</div>
-</div>`;
-}
-container.innerHTML = html;
-}
-
-async function loadIbadatPanel(){
-const container = document.getElementById('admin-ibadat-list');
-container.innerHTML = '<p>Loading...</p>';
-const {data: students} = await supabase.from('students').select('*');
-if(!students || students.length === 0){ container.innerHTML = '<p>Koi student mojood nahi hai.</p>'; return; }
-
-let html = `<table><tr><th>Student Detail & Age</th><th>Daily Ibadat, Namaz, Surah, Durood & 18+ Sadqa</th></tr>`;
-for(let s of students){
-const {data: ibs} = await supabase.from('daily_ibadat').select('*').eq('student_id', s.student_id).order('date', {ascending:false}).limit(1);
-const ib = (ibs && ibs.length > 0) ? ibs[0] : {namaz_attendance: 'All 5 Prayers', durood_pak: 0, surah_yassen: false, surah_waaqia: false, surah_rahman: false, daily_sadqa: false, date: new Date().toISOString().split('T')[0]};
-const ageNum = parseInt(s.age) || 0;
-const isAdult = ageNum >= 18;
-
-html += `
-<tr>
-<td style="text-align:left;width:28%;vertical-align:top;">
-<strong>${s.student_name}</strong><br><span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'}</span><br>
-<span style="color:#059669;font-weight:bold;font-size:12px;">Age: ${s.age || 'N/A'} ${isAdult ? '🟢 (18+ Adult)' : ''}</span>
-</td>
-<td style="text-align:left;vertical-align:top;">
-<div class="grid-2">
-<div>
-<label><strong>Namaz Attendance:</strong></label>
-<select id="ib-namaz-${s.student_id}">
-<option value="All 5 Prayers" ${ib.namaz_attendance==='All 5 Prayers'?'selected':''}>All 5 Prayers</option>
-<option value="Some Prayers" ${ib.namaz_attendance==='Some Prayers'?'selected':''}>Some Prayers</option>
-<option value="Missed" ${ib.namaz_attendance==='Missed'?'selected':''}>Missed</option>
-</select>
-</div>
-<div>
-<label><strong>Durood-e-Pak:</strong></label>
-<input type="number" id="ib-durood-${s.student_id}" value="${ib.durood_pak || 0}">
-</div>
-</div>
-<div style="background:#f8fafc;padding:10px;border-radius:6px;margin:8px 0;font-size:13px;border:1px solid #e2e8f0;">
-<span style="font-weight:bold;margin-right:12px;">Surah Recitation:</span>
-<label style="display:inline-flex;align-items:center;margin-right:12px;cursor:pointer;"><input type="checkbox" id="ib-yassen-${s.student_id}" ${ib.surah_yassen?'checked':''} style="width:auto;margin:0 5px 0 0;"> Surah Yassen</label>
-<label style="display:inline-flex;align-items:center;margin-right:12px;cursor:pointer;"><input type="checkbox" id="ib-waaqia-${s.student_id}" ${ib.surah_waaqia?'checked':''} style="width:auto;margin:0 5px 0 0;"> Surah Waaqia</label>
-<label style="display:inline-flex;align-items:center;cursor:pointer;"><input type="checkbox" id="ib-rahman-${s.student_id}" ${ib.surah_rahman?'checked':''} style="width:auto;margin:0 5px 0 0;"> Surah Rahman</label>
-</div>
-${isAdult ? `<div style="background:#fffbeb;border:1px solid #fde68a;padding:10px;border-radius:6px;margin-bottom:8px;"><label style="display:flex;align-items:center;cursor:pointer;color:#92400e;font-weight:bold;font-size:13px;"><input type="checkbox" id="ib-sadqa-${s.student_id}" ${ib.daily_sadqa?'checked':''} style="width:auto;margin-right:8px;"> Daily Sadqa (18+ Attendance)</label></div>` : ''}
-<div style="display:flex;gap:10px;align-items:center;">
-<div style="flex:1;"><input type="date" id="ib-date-${s.student_id}" value="${ib.date || new Date().toISOString().split('T')[0]}" style="margin-bottom:0;"></div>
-<div style="flex:1;"><button onclick="saveIbadatRecord(${s.student_id})" class="btn-success" style="width:100%;padding:10px;">Save Ibadat Record</button></div>
-</div>
-</td>
-</tr>`;
-}
-html += `</table>`;
-container.innerHTML = html;
-}
-
-async function loadFeesPanel(){
-const container = document.getElementById('admin-fees-list');
-container.innerHTML = '<p>Loading fees...</p>';
-const {data: students} = await supabase.from('students').select('*');
-if(!students || students.length === 0){ container.innerHTML = '<p>Koi student mojood nahi hai.</p>'; return; }
-
-let html = `<table><tr><th>Student & Country / Currency</th><th>Fee & Contributions Setup (Advance, Zakat, Fitra, Sadaqah & Date)</th></tr>`;
-for(let s of students){
-const safeKey = s.student_name.replace(/\s+/g, '-');
-const currencyLabel = s.country_currency || 'Pakistan (PKR)';
-html += `
-<tr>
-<td style="text-align:left;width:30%;">
-<strong>${s.student_name}</strong><br>
-<span style="color:#64748b;font-size:12px;">Course: ${s.course || '-'}</span><br>
-<span style="color:#059669;font-weight:bold;font-size:12px;">🌍 ${currencyLabel}</span>
-</td>
-<td style="text-align:left;">
-<div class="grid-2">
-<div><label>Monthly Fee (${currencyLabel.includes('Pakistan') ? 'PKR' : 'Currency'}):</label><input type="number" id="fee-total-${safeKey}" value="5000"></div>
-<div><label>Advance Paid (-):</label><input type="number" id="fee-adv-${safeKey}" value="0"></div>
-</div>
-<div class="grid-3" style="margin-top:8px;">
-<div><label style="font-size:11px;">Zakat:</label><input type="number" id="fee-zakat-${safeKey}" value="0"></div>
-<div><label style="font-size:11px;">Fitra:</label><input type="number" id="fee-fitra-${safeKey}" value="0"></div>
-<div><label style="font-size:11px;">Sadaqah:</label><input type="number" id="fee-sadaqa-${safeKey}" value="0"></div>
-</div>
-<div style="margin-top:8px;">
-<label>Payment Date:</label>
-<input type="date" id="fee-date-${safeKey}" value="${new Date().toISOString().split('T')[0]}">
-</div>
-<button onclick="generateFeeVoucherCustom('${s.student_name}', '${s.course || 'Quran'}', '${currencyLabel}')" class="btn-warning" style="width:100%;margin-top:8px;padding:10px;">🖨️ Print Fee & Contribution Voucher</button>
-</td>
-</tr>`;
-}
-html += `</table>`;
-container.innerHTML = html;
-}
-
-async function loadAdminPanel(){
-const container = document.getElementById('admin-students-list');
-container.innerHTML = '<p>Loading...</p>';
-const {data: students} = await supabase.from('students').select('*');
-if(!students || students.length === 0){ container.innerHTML = '<p>Koi student mojood nahi hai.</p>'; return; }
-
-let html = `<table><tr><th>Student Detail</th><th>Attendance & Sabaq Details</th></tr>`;
-for(let s of students){
-html += `
-<tr>
-<td style="text-align:left;width:30%;"><strong>${s.student_name}</strong><br><span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'}</span></td>
-<td style="text-align:left;">
-<div class="grid-2">
-<div><label>Attendance:</label><select><option>Present</option><option>Absent</option><option>Leave</option></select></div>
-<div><label>Fee Status:</label><select><option>Paid</option><option>Pending</option></select></div>
-</div>
-<label>Sabaq Details:</label>
-<input type="text" placeholder="Aaj ka sabaq">
-</td>
-</tr>`;
-}
-html += `</table>`;
-container.innerHTML = html;
-}
-
-async function loadExamsPanel(){
-document.getElementById('admin-exams-list').innerHTML = '<p>Monthly Exams & Results panel active.</p>';
-}
+<body class="h-full flex font-sans antialiased text-slate-800 overflow-hidden">
+
+    <!-- SIDEBAR (Admin Navigation) -->
+    <aside id="sidebar" class="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between hidden md:flex z-20 shadow-xl">
+        <div>
+            <div class="p-4 bg-amber-500 text-slate-950 flex items-center space-x-3">
+                <div class="font-black text-lg tracking-wider bg-slate-950 text-amber-400 px-2.5 py-1 rounded-lg">ROA</div>
+                <div>
+                    <h1 class="font-bold text-xs leading-tight">Raza Online Islamic</h1>
+                    <span class="text-[10px] font-semibold text-slate-900 block">Academy Management Portal</span>
+                </div>
+            </div>
+            <nav class="p-3 space-y-1 text-xs font-medium">
+                <button onclick="switchTab('add-student')" id="nav-add-student" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl bg-blue-600 text-white transition shadow-sm">
+                    <i class="fa-solid fa-user-plus w-4"></i><span>Add Student</span>
+                </button>
+                <button onclick="switchTab('directory')" id="nav-directory" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-users w-4"></i><span>Students Directory</span>
+                </button>
+                <button onclick="switchTab('sabaq')" id="nav-sabaq" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-book-open w-4"></i><span>Daily Sabaq & Attendance</span>
+                </button>
+                <button onclick="switchTab('ibadat')" id="nav-ibadat" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-mosque w-4"></i><span>Daily Ibadat & Namaz</span>
+                </button>
+                <button onclick="switchTab('exams')" id="nav-exams" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-award w-4"></i><span>Monthly Exams & Results</span>
+                </button>
+                <button onclick="switchTab('fees')" id="nav-fees" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-file-invoice-dollar w-4"></i><span>Fees & Vouchers</span>
+                </button>
+                <button onclick="switchTab('zakat')" id="nav-zakat" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-hand-holding-dollar w-4"></i><span>Zakat Receipt Generator</span>
+                </button>
+                <button onclick="switchTab('library')" id="nav-library" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-book-bookmark w-4"></i><span>Islamic Books Library</span>
+                </button>
+            </nav>
+        </div>
+        <div class="p-3 border-t border-slate-800">
+            <button onclick="logoutAdmin()" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-red-400 hover:bg-red-500/10 transition text-xs font-medium">
+                <i class="fa-solid fa-right-from-bracket w-4"></i><span>Logout Portal</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        
+        <!-- Top Header -->
+        <header class="bg-slate-900 text-white shadow-md h-16 flex items-center justify-between px-6 z-10">
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-300 hover:text-white text-xl">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div>
+                    <h2 class="font-bold text-base leading-tight">Raza Online Islamic Academy</h2>
+                    <span id="top-subtitle" class="text-[11px] text-slate-400">Admin & Student Management Portal</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs px-3 py-1 rounded-full font-medium flex items-center">
+                    <i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> System Active
+                </span>
+                <button onclick="toggleMainView()" id="view-switch-btn" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-xs px-4 py-2 rounded-lg font-semibold transition shadow">
+                    Switch to Parent View
+                </button>
+            </div>
+        </header>
+
+        <!-- Scrollable Content Area -->
+        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+            
+            <!-- ADMIN VIEW CONTAINER -->
+            <div id="admin-container" class="max-w-5xl mx-auto space-y-6">
+                
+                <!-- Tab 1: Add Student -->
+                <div id="tab-add-student" class="admin-tab space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-slate-100">
+                            <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-user-plus"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900">Naya Student Add Karein</h3>
+                                <p class="text-xs text-slate-500">Student ki tafseelat darj karein taake portal aur ID generate ho sake.</p>
+                            </div>
+                        </div>
+
+                        <form onsubmit="handleSaveStudent(event)" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Student Name *</label>
+                                    <input type="text" id="input-name" placeholder="e.g. Muhammad" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-sm outline-none transition">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Father's Name *</label>
+                                    <input type="text" id="input-father" placeholder="e.g. Ali" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-sm outline-none transition">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Select Course *</label>
+                                    <select id="input-course" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-sm outline-none font-medium">
+                                        <option>Hifz-ul-Quran</option>
+                                        <option>Nazrah Quran Pak</option>
+                                        <option>Madani Qaida</option>
+                                        <option>Tajweed & Qirat Masterclass</option>
+                                        <option>Dars-e-Nizami Core Studies</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Age *</label>
+                                    <input type="number" id="input-age" placeholder="e.g. 9" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-sm outline-none transition">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Parent Mobile / WhatsApp</label>
+                                    <input type="text" id="input-mobile" placeholder="+61400123456 / +92..." class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-sm outline-none transition">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Select Country & Currency *</label>
+                                    <select id="input-currency" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-sm outline-none font-medium">
+                                        <option>AU Australia (AUD)</option>
+                                        <option>PK Pakistan (PKR)</option>
+                                        <option>US United States (USD)</option>
+                                        <option>GB United Kingdom (GBP)</option>
+                                        <option>CA Canada (CAD)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex justify-end pt-4 border-t border-slate-100">
+                                <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm transition shadow-lg shadow-emerald-600/20 flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-user-plus"></i><span>+ Save Student Profile</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Students Directory -->
+                <div id="tab-directory" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">Students Directory</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-sm">
+                                <thead>
+                                    <tr class="bg-slate-50 border-b border-slate-200 text-slate-600">
+                                        <th class="p-3">Student Name</th>
+                                        <th class="p-3">Father's Name</th>
+                                        <th class="p-3">Course</th>
+                                        <th class="p-3">Age</th>
+                                        <th class="p-3">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="directory-table-body">
+                                    <tr class="border-b border-slate-100">
+                                        <td class="p-3 font-semibold text-blue-600" id="dir-name">Muhammad</td>
+                                        <td class="p-3" id="dir-father">Ali</td>
+                                        <td class="p-3" id="dir-course">Hifz-ul-Quran</td>
+                                        <td class="p-3" id="dir-age">9</td>
+                                        <td class="p-3"><span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-medium">Active</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Sabaq & Attendance (Updated as per user requirement) -->
+                <div id="tab-sabaq" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Daily Sabaq & Attendance Tracker</h3>
+                        <p class="text-xs text-slate-500 mb-6">Rozana ki attendance, date, weekend skip option aur sabaq details yahan update karein.</p>
+                        
+                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <!-- Attendance Dropdown -->
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Attendance:</label>
+                                    <select id="admin-att-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium">
+                                        <option>Present</option>
+                                        <option>Absent</option>
+                                        <option>Leave</option>
+                                        <option>Weekend (Skipped)</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- Fee Status -->
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Fee Status:</label>
+                                    <select id="admin-fee-status" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium">
+                                        <option>Paid</option>
+                                        <option>Pending</option>
+                                    </select>
+                                </div>
+
+                                <!-- Date Field -->
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Select Date:</label>
+                                    <input type="date" id="admin-att-date" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                <!-- Sabaq Details Input -->
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Sabaq Details:</label>
+                                    <input type="text" id="admin-sabaq-text" placeholder="Aaj ka sabaq" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm">
+                                </div>
+
+                                <!-- Skip Weekends Quick Button -->
+                                <div class="flex items-end">
+                                    <button type="button" onclick="autoSkipWeekend()" class="w-full py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-sm transition shadow-sm">
+                                        <i class="fa-solid fa-calendar-xmark mr-1"></i> Skip Weekend (Sat/Sun)
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 border-t border-slate-200 flex justify-end">
+                                <button onclick="saveSabaqAttendance()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition shadow">Update Daily Record</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Daily Ibadat -->
+                <div id="tab-ibadat" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Daily Ibadat & Namaz Tracker</h3>
+                        <p class="text-xs text-slate-500 mb-6">Student ki panj waqta namaz aur quran tilawat ka record.</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+                            <div class="p-4 bg-slate-50 rounded-xl border text-center"><span class="block text-xs font-bold text-slate-500">FAJR</span><span class="text-emerald-600 font-bold">Adaa</span></div>
+                            <div class="p-4 bg-slate-50 rounded-xl border text-center"><span class="block text-xs font-bold text-slate-500">ZUHUR</span><span class="text-emerald-600 font-bold">Adaa</span></div>
+                            <div class="p-4 bg-slate-50 rounded-xl border text-center"><span class="block text-xs font-bold text-slate-500">ASR</span><span class="text-emerald-600 font-bold">Adaa</span></div>
+                            <div class="p-4 bg-slate-50 rounded-xl border text-center"><span class="block text-xs font-bold text-slate-500">MAGHRIB</span><span class="text-emerald-600 font-bold">Adaa</span></div>
+                            <div class="p-4 bg-slate-50 rounded-xl border text-center"><span class="block text-xs font-bold text-slate-500">ISHA</span><span class="text-emerald-600 font-bold">Adaa</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 5: Exams -->
+                <div id="tab-exams" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Monthly Exams & Results</h3>
+                        <p class="text-xs text-slate-500 mb-4">Mahana imtihaan ke marks yahan darj karein.</p>
+                        <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex justify-between items-center">
+                            <div>
+                                <h4 class="font-bold text-emerald-900">Monthly Assessment</h4>
+                                <p class="text-xs text-emerald-700">Grade: A+ (95 Marks)</p>
+                            </div>
+                            <span class="bg-emerald-700 text-white text-xs px-3 py-1.5 rounded-lg font-bold">Passed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 6: Fees -->
+                <div id="tab-fees" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Fees & Vouchers Management</h3>
+                        <p class="text-xs text-slate-500 mb-4">Mahana fees status aur vouchers ki tafseel.</p>
+                        <div class="p-4 bg-slate-50 border rounded-xl flex justify-between items-center">
+                            <div>
+                                <h4 class="font-bold text-slate-800">Fee Voucher Status</h4>
+                                <p class="text-xs text-slate-500">Status: Paid Online / Verified</p>
+                            </div>
+                            <span class="bg-emerald-600 text-white text-xs px-3 py-1.5 rounded-lg font-semibold" id="disp-fee-box">Paid</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 7: Zakat -->
+                <div id="tab-zakat" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Zakat Receipt Generator</h3>
+                        <p class="text-xs text-slate-500 mb-4">Zakat ya donations ke liye official receipt generate karein.</p>
+                        <button onclick="alert('Zakat receipt generated successfully!')" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-bold text-sm shadow">Generate Receipt</button>
+                    </div>
+                </div>
+
+                <!-- Tab 8: Library -->
+                <div id="tab-library" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Islamic Books Library</h3>
+                        <p class="text-xs text-slate-500 mb-4">Students ke liye Islamic books aur notes upload karein.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 border rounded-xl bg-slate-50 flex items-center justify-between">
+                                <div><h4 class="font-bold text-sm">Noorul Itqan (Tajweed Book)</h4><span class="text-xs text-slate-500">PDF Document</span></div>
+                                <i class="fa-solid fa-book text-amber-500 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- PARENT / STUDENT VIEW CONTAINER -->
+            <div id="student-container" class="max-w-4xl mx-auto space-y-6 hidden">
+                
+                <!-- Login Box -->
+                <div id="student-login-box" class="max-w-md mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center space-y-6 mt-10">
+                    <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mx-auto font-bold shadow-inner">
+                        <i class="fa-solid fa-user-lock"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Parent / Student Portal Login</h3>
+                        <p class="text-xs text-slate-500 mt-1">Apna Student Name darj karein</p>
+                    </div>
+                    <div class="space-y-4 text-left">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Student Name</label>
+                            <input type="text" id="login-input-id" placeholder="e.g. Muhammad" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-600 focus:bg-white text-sm outline-none font-semibold text-blue-700">
+                        </div>
+                        <button onclick="handleStudentLogin()" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition shadow-lg shadow-blue-600/20">
+                            Portal Khulein
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dashboard -->
+                <div id="student-dashboard" class="hidden space-y-6">
+                    <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl shadow-md p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20 text-3xl font-bold text-amber-400">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                            <div>
+                                <span class="bg-amber-500 text-slate-950 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider" id="disp-currency">AUSTRALIA (AUD)</span>
+                                <h2 class="text-2xl font-bold mt-2" id="disp-name">Muhammad</h2>
+                                <p class="text-slate-300 text-sm">Father's Name: <span id="disp-father" class="font-medium">Ali</span></p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end gap-3">
+                            <div class="bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-xl border border-white/10 text-right">
+                                <span class="text-[10px] text-amber-400 block uppercase tracking-wider font-semibold">Enrolled Course</span>
+                                <span class="text-sm font-bold text-white" id="disp-course">Hifz-ul-Quran</span>
+                            </div>
+                            <button onclick="logoutStudent()" class="text-xs text-red-300 hover:text-white underline font-medium">
+                                <i class="fa-solid fa-right-from-bracket mr-1"> Logout Portal</i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="flex items-center space-x-3 text-blue-600 mb-2">
+                                <i class="fa-solid fa-calendar-check text-xl"></i>
+                                <h4 class="font-bold text-slate-700 text-sm">Attendance & Date</h4>
+                            </div>
+                            <p class="text-lg font-bold text-emerald-600" id="disp-attendance">Present</p>
+                            <span class="text-xs text-slate-400 block mt-1" id="disp-date">Date: --</span>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="flex items-center space-x-3 text-blue-600 mb-2">
+                                <i class="fa-solid fa-book-open text-xl"></i>
+                                <h4 class="font-bold text-slate-700 text-sm">Sabaq Details</h4>
+                            </div>
+                            <p class="text-sm font-bold text-slate-900" id="disp-sabaq">Aaj ka sabaq</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="flex items-center space-x-3 text-blue-600 mb-2">
+                                <i class="fa-solid fa-file-invoice-dollar text-xl"></i>
+                                <h4 class="font-bold text-slate-700 text-sm">Fee Status</h4>
+                            </div>
+                            <p class="text-lg font-bold text-blue-600" id="disp-fee-status">Paid</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+        let defaultStudent = {
+            name: "Muhammad",
+            father: "Ali",
+            course: "Hifz-ul-Quran",
+            age: "9",
+            mobile: "+61400123456",
+            currency: "AU Australia (AUD)",
+            attendance: "Present",
+            feeStatus: "Paid",
+            date: new Date().toISOString().split('T')[0],
+            sabaq: "Aaj ka sabaq"
+        };
+
+        function getStudentData() {
+            let saved = localStorage.getItem('raza_academy_unified_portal_v2');
+            return saved ? JSON.parse(saved) : defaultStudent;
+        }
+
+        let studentData = getStudentData();
+        let isStudentView = false;
+
+        window.onload = function() {
+            populateAdminForm();
+            // Set today's date by default if not set
+            if(!document.getElementById('admin-att-date').value) {
+                document.getElementById('admin-att-date').value = new Date().toISOString().split('T')[0];
+            }
+        };
+
+        function populateAdminForm() {
+            document.getElementById('input-name').value = studentData.name;
+            document.getElementById('input-father').value = studentData.father;
+            document.getElementById('input-course').value = studentData.course;
+            document.getElementById('input-age').value = studentData.age;
+            document.getElementById('input-mobile').value = studentData.mobile;
+            document.getElementById('input-currency').value = studentData.currency;
+            
+            // Attendance inputs
+            document.getElementById('admin-att-status').value = studentData.attendance || "Present";
+            document.getElementById('admin-fee-status').value = studentData.feeStatus || "Paid";
+            document.getElementById('admin-att-date').value = studentData.date || new Date().toISOString().split('T')[0];
+            document.getElementById('admin-sabaq-text').value = studentData.sabaq || "Aaj ka sabaq";
+
+            // Directory update
+            document.getElementById('dir-name').innerText = studentData.name;
+            document.getElementById('dir-father').innerText = studentData.father;
+            document.getElementById('dir-course').innerText = studentData.course;
+            document.getElementById('dir-age').innerText = studentData.age;
+        }
+
+        function switchTab(tabId) {
+            const tabs = ['add-student', 'directory', 'sabaq', 'ibadat', 'exams', 'fees', 'zakat', 'library'];
+            tabs.forEach(t => {
+                document.getElementById('tab-' + t).classList.add('hidden');
+                document.getElementById('nav-' + t).classList.remove('bg-blue-600', 'text-white');
+                document.getElementById('nav-' + t).classList.add('hover:bg-slate-800');
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            document.getElementById('nav-' + tabId).classList.add('bg-blue-600', 'text-white');
+            document.getElementById('nav-' + tabId).classList.remove('hover:bg-slate-800');
+        }
+
+        function handleSaveStudent(e) {
+            e.preventDefault();
+            studentData.name = document.getElementById('input-name').value.trim();
+            studentData.father = document.getElementById('input-father').value.trim();
+            studentData.course = document.getElementById('input-course').value;
+            studentData.age = document.getElementById('input-age').value.trim();
+            studentData.mobile = document.getElementById('input-mobile').value.trim();
+            studentData.currency = document.getElementById('input-currency').value;
+
+            localStorage.setItem('raza_academy_unified_portal_v2', JSON.stringify(studentData));
+            populateAdminForm();
+            alert("Student profile successfully saved!");
+        }
+
+        function saveSabaqAttendance() {
+            studentData.attendance = document.getElementById('admin-att-status').value;
+            studentData.feeStatus = document.getElementById('admin-fee-status').value;
+            studentData.date = document.getElementById('admin-att-date').value;
+            studentData.sabaq = document.getElementById('admin-sabaq-text').value;
+
+            localStorage.setItem('raza_academy_unified_portal_v2', JSON.stringify(studentData));
+            alert("Daily Attendance & Sabaq updated successfully!");
+        }
+
+        // Skip Weekend Auto Function (Checks selected date, if Sat/Sun, marks Weekend Skipped)
+        function autoSkipWeekend() {
+            let dateVal = document.getElementById('admin-att-date').value;
+            if(!dateVal) {
+                alert("Pehle date select karein!");
+                return;
+            }
+            let d = new Date(dateVal);
+            let day = d.getDay(); // 0 is Sunday, 6 is Saturday
+            
+            if(day === 0 || day === 6) {
+                document.getElementById('admin-att-status').value = "Weekend (Skipped)";
+                document.getElementById('admin-sabaq-text').value = "Weekend - Academy Closed";
+                alert("Selected date is a Weekend! Status automatically set to Weekend (Skipped).");
+            } else {
+                alert("Selected date weekend (Sat/Sun) nahi hai. Yeh ek working day hai.");
+            }
+        }
+
+        function toggleMainView() {
+            isStudentView = !isStudentView;
+            const adminContainer = document.getElementById('admin-container');
+            const studentContainer = document.getElementById('student-container');
+            const switchBtn = document.getElementById('view-switch-btn');
+            const sidebar = document.getElementById('sidebar');
+
+            if (isStudentView) {
+                adminContainer.classList.add('hidden');
+                studentContainer.classList.remove('hidden');
+                sidebar.classList.add('md:hidden');
+                switchBtn.innerText = "Switch to Admin Panel";
+                switchBtn.className = "bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded-lg font-semibold transition shadow";
+                
+                document.getElementById('student-dashboard').classList.add('hidden');
+                document.getElementById('student-login-box').classList.remove('hidden');
+                document.getElementById('login-input-id').value = "";
+            } else {
+                studentContainer.classList.add('hidden');
+                adminContainer.classList.remove('hidden');
+                sidebar.classList.remove('md:hidden');
+                switchBtn.innerText = "Switch to Parent View";
+                switchBtn.className = "bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-xs px-4 py-2 rounded-lg font-semibold transition shadow";
+            }
+        }
+
+        function handleStudentLogin() {
+            let inputName = document.getElementById('login-input-id').value.trim().toLowerCase();
+            let current = getStudentData();
+
+            if (inputName === current.name.trim().toLowerCase()) {
+                document.getElementById('student-login-box').classList.add('hidden');
+                document.getElementById('student-dashboard').classList.remove('hidden');
+
+                document.getElementById('disp-currency').innerText = current.currency;
+                document.getElementById('disp-name').innerText = current.name;
+                document.getElementById('disp-father').innerText = current.father;
+                document.getElementById('disp-course').innerText = current.course;
+                document.getElementById('disp-attendance').innerText = current.attendance;
+                document.getElementById('disp-date').innerText = "Date: " + (current.date || "N/A");
+                document.getElementById('disp-sabaq').innerText = current.sabaq;
+                document.getElementById('disp-fee-status').innerText = current.feeStatus;
+            } else {
+                alert("Student Name ghalat hai! Sahi Naam likhein (misal: " + current.name + ")");
+            }
+        }
+
+        function logoutStudent() {
+            document.getElementById('student-dashboard').classList.add('hidden');
+            document.getElementById('student-login-box').classList.remove('hidden');
+            document.getElementById('login-input-id').value = "";
+        }
+
+        function logoutAdmin() {
+            if(confirm("Kya aap portal se logout karna chahte hain?")) {
+                alert("Logged out successfully.");
+            }
+        }
+
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
 </script>
