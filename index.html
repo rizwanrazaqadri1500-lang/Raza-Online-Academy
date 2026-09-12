@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ur" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raza Online Academy</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+<style>
+body{font-family:Arial,sans-serif;background:#f4f7f6;margin:0;padding:20px;color:#333}
+.container{max-width:600px;margin:auto;background:white;padding:20px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.1)}
+h2{color:#007bff;text-align:center}.card{background:#e9ecef;padding:15px;margin-top:15px;border-radius:8px}
+button{background:#007bff;color:white;border:none;padding:10px 15px;border-radius:5px;cursor:pointer;width:100%;font-size:16px;margin-top:10px}
+button:hover{background:#0056b3}.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Raza Online Academy</h2>
+<p style="text-align:center;">Ghar baith kar apna Sabaq aur Attendance dekhein</p>
+<div id="login-section">
+<h3>Student Portal Login</h3>
+<input type="email" id="student-email" placeholder="Apna Email darj karein" style="width:100%;padding:10px;margin-top:5px;box-sizing:border-box;border:1px solid #ccc;border-radius:5px;">
+<button onclick="fetchStudentData()">Portal Khulein</button>
+</div>
+<div id="dashboard-section" class="hidden">
+<div class="card"><h3>Student Profile</h3>
+<p><strong>Naam:</strong> <span id="s-name">-</span></p>
+<p><strong>Assigned Teacher:</strong> <span id="t-name">-</span></p></div>
+<div class="card"><h3>Daily Sabaq & Attendance</h3>
+<p><strong>Attendance:</strong> <span id="s-attendance">-</span></p>
+<p><strong>Sabaq Details:</strong> <span id="s-sabaq">-</span></p>
+<p><strong>Date:</strong> <span id="s-date">-</span></p></div>
+<button onclick="location.reload()" style="background:#6c757d;">Wapas Jayein</button>
+</div></div>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+const supabaseUrl='https://vpdqbwflnvrqcuxzkjof.supabase.co'
+const supabaseKey='sb_publishable_z-u1RJ0Rgw-u9jKoC4a4Kg_vKqaY8c5'
+const supabase=createClient(supabaseUrl,supabaseKey)
+window.fetchStudentData=async function(){
+const email=document.getElementById('student-email').value.trim();
+if(!email){alert('Meherbani karke apna email likhein!');return}
+const {data:studentData,error:studentError}=await supabase.from('students').select('*, teachers(full_name)').eq('email',email).single();
+if(studentError||!studentData){alert('Student nahi mila! Email check karein.');return}
+const {data:recordData}=await supabase.from('daily_records').select('*').eq('student_id',studentData.student_id).order('record_date',{ascending:false}).limit(1);
+document.getElementById('s-name').innerText=studentData.student_name;
+document.getElementById('t-name').innerText=studentData.teachers?studentData.teachers.full_name:'Koi teacher assigned nahi';
+if(recordData&&recordData.length>0){
+document.getElementById('s-attendance').innerText=recordData[0].attendance_status;
+document.getElementById('s-sabaq').innerText=recordData[0].sabaq_details||'Koi detail nahi';
+document.getElementById('s-date').innerText=recordData[0].record_date;
+}else{
+document.getElementById('s-attendance').innerText='N/A';
+document.getElementById('s-sabaq').innerText='Aaj ka record mojood nahi';
+document.getElementById('s-date').innerText='-';
+}
+document.getElementById('login-section').classList.add('hidden');
+document.getElementById('dashboard-section').classList.remove('hidden');
+}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
+</script>
+</body>
+</html>
