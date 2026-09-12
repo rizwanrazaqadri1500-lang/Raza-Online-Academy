@@ -122,7 +122,7 @@ Raza Online Islamic Academy
 </div>
 </div>
 
-<!-- Tab 1: Add Student -->
+<!-- Tab 1: Add Student (Yahan se Skip Days, Weekend aur Timings hata diye gaye hain) -->
 <div id="tab-add-student" class="card">
 <h3>➕ Naya Student Add Karein</h3>
 <div class="grid-2">
@@ -135,9 +135,6 @@ Raza Online Islamic Academy
 </div>
 <div class="grid-2">
 <div><label>Parent Mobile / WhatsApp</label><input type="text" id="new-mobile" placeholder="+61400123456 / +92..."></div>
-<div><label>Skip Days (Chhutti ke Din)</label><input type="text" id="new-skype" placeholder="e.g. Saturday & Sunday"></div>
-</div>
-<div class="grid-2">
 <div>
 <label>Select Country & Currency *</label>
 <select id="new-country">
@@ -152,20 +149,6 @@ Raza Online Islamic Academy
 <option value="Other Country / International">🌍 Deegar Tamam Mumalik / Other Country</option>
 </select>
 </div>
-<div>
-<label>Select Weekend Days</label>
-<select id="new-weekend">
-<option value="Saturday & Sunday">Saturday & Sunday</option>
-<option value="Friday & Saturday">Friday & Saturday</option>
-<option value="Sunday Only">Sunday Only</option>
-<option value="Friday Only">Friday Only</option>
-<option value="Custom / None">Custom / None</option>
-</select>
-</div>
-</div>
-<div class="grid-2">
-<div><label>Class Start Time</label><input type="time" id="new-start-time"></div>
-<div><label>Class End Time</label><input type="time" id="new-end-time"></div>
 </div>
 <div>
 <label>Student Photo (Upload / Image)</label>
@@ -185,7 +168,7 @@ Raza Online Islamic Academy
 <div id="students-directory-list"><p>Data load ho raha hai...</p></div>
 </div>
 
-<!-- Tab 3: Daily Sabaq & Attendance -->
+<!-- Tab 3: Daily Sabaq & Attendance (Skip Days, Weekend & Timings sirf yahin set aur show honge) -->
 <div id="tab-daily-rec" class="card hidden">
 <h3>📅 Daily Sabaq & Attendance (Skip Days, Timings & Weekends Shamil Hain)</h3>
 <div id="admin-students-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
@@ -347,18 +330,13 @@ const fname = document.getElementById('new-father-name').value.trim();
 const course = document.getElementById('new-course').value;
 const dob = document.getElementById('new-dob').value;
 const mobile = document.getElementById('new-mobile').value.trim();
-const skype = document.getElementById('new-skype').value.trim();
 const country = document.getElementById('new-country').value;
-const weekend = document.getElementById('new-weekend').value;
-const startTime = document.getElementById('new-start-time').value;
-const endTime = document.getElementById('new-end-time').value;
 const photo = document.getElementById('new-photo-url').value;
 
 if(!name || !dob){alert('Student Name aur Date of Birth lazmi hain!');return;}
 const {error} = await supabase.from('students').insert([{
 student_name: name, father_name: fname, course: course, dob: dob, mobile: mobile, 
-skype_id: skype, country_currency: country, weekend: weekend, 
-class_start_time: startTime, class_end_time: endTime, photo_url: photo
+country_currency: country, photo_url: photo
 }]);
 if(error){alert('Error: ' + error.message);return;}
 alert('Student kamyabi se save ho gaya!');
@@ -366,9 +344,6 @@ document.getElementById('new-student-name').value = '';
 document.getElementById('new-father-name').value = '';
 document.getElementById('new-dob').value = '';
 document.getElementById('new-mobile').value = '';
-document.getElementById('new-skype').value = '';
-document.getElementById('new-start-time').value = '';
-document.getElementById('new-end-time').value = '';
 document.getElementById('new-photo-url').value = '';
 document.getElementById('new-photo-file').value = '';
 document.getElementById('preview-age').innerText = '0 Years';
@@ -398,7 +373,20 @@ const att = document.getElementById('att-'+studentId).value;
 const sabaq = (att === 'Present') ? (document.getElementById('sabaq-'+studentId)?.value || '') : `(${att} - Class Nahi Huwi)`;
 const fee = document.getElementById('fee-'+studentId).value;
 const date = document.getElementById('date-'+studentId).value;
+const skype = document.getElementById('skype-'+studentId)?.value || '';
+const weekend = document.getElementById('weekend-'+studentId)?.value || '';
+const startTime = document.getElementById('start-time-'+studentId)?.value || '';
+const endTime = document.getElementById('end-time-'+studentId)?.value || '';
+
 if(!date){alert('Tareekh lazmi select karein!');return;}
+
+// Students table mein Skip days, weekend aur timings save karna taake attendance section mein barkarar rahein
+await supabase.from('students').update({
+skype_id: skype,
+weekend: weekend,
+class_start_time: startTime,
+class_end_time: endTime
+}).eq('student_id', studentId);
 
 const {data: existing} = await supabase.from('daily_records').select('*').eq('student_id', studentId).eq('record_date', date);
 if(existing && existing.length > 0){
@@ -406,7 +394,7 @@ await supabase.from('daily_records').update({attendance_status: att, sabaq_detai
 } else {
 await supabase.from('daily_records').insert([{student_id: studentId, attendance_status: att, sabaq_details: sabaq, fee_status: fee, record_date: date}]);
 }
-alert('Record update ho gaya!');
+alert('Record aur Attendance details update ho gayi!');
 loadAdminPanel();
 }
 
@@ -486,7 +474,7 @@ container.innerHTML = '<p>Loading...</p>';
 const {data: students, error} = await supabase.from('students').select('*');
 if(error || !students || students.length === 0){ container.innerHTML = '<p>Koi student mojood nahi hai.</p>'; return; }
 
-let html = `<table><tr><th>Student Detail</th><th>Attendance, Skip Days, Timings, Weekend & Sabaq</th></tr>`;
+let html = `<table><tr><th>Student Detail</th><th>Skip Days, Timings, Weekends, Attendance & Sabaq</th></tr>`;
 for(let s of students){
 const {data: recs} = await supabase.from('daily_records').select('*').eq('student_id', s.student_id).order('record_date', {ascending:false}).limit(1);
 const lastRec = (recs && recs.length > 0) ? recs[0] : {attendance_status: 'Present', sabaq_details: '', fee_status: 'Pending', record_date: new Date().toISOString().split('T')[0]};
@@ -502,13 +490,34 @@ html += `
 <div style="font-size:12px;color:#059669;font-weight:bold;margin-top:2px;text-align:center;">🌍 ${s.country_currency || 'Pakistan'}</div>
 </td>
 <td style="text-align:left;vertical-align:top;">
-<!-- Skip Days, Weekend & Class Timings sirf Attendance section mein show honge -->
-<div style="background:#f8fafc;padding:10px 12px;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:12px;font-size:12px;">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;">
-<div>⏳ <strong>Skip Days:</strong> <span style="color:#0284c7;font-weight:bold;">${s.skype_id || 'N/A'}</span></div>
-<div>🗓️ <strong>Weekend:</strong> <span style="color:#7c3aed;font-weight:bold;">${s.weekend || 'N/A'}</span></div>
+<!-- Skip Days, Weekend aur Timings sirf yahan Attendance section mein set honge -->
+<div style="background:#f8fafc;padding:12px;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:14px;">
+<div class="grid-2">
+<div>
+<label style="font-size:12px;"><strong>Skip Days (Chhutti ke Din):</strong></label>
+<input type="text" id="skype-${s.student_id}" value="${s.skype_id || ''}" placeholder="e.g. Saturday & Sunday" style="margin-bottom:8px;">
 </div>
-<div>⏰ <strong>Class Timings:</strong> <span style="color:#0f172a;font-weight:bold;">${(s.class_start_time && s.class_end_time) ? (`${s.class_start_time} to ${s.class_end_time}`) : 'N/A'}</span></div>
+<div>
+<label style="font-size:12px;"><strong>Select Weekend Days:</strong></label>
+<select id="weekend-${s.student_id}" style="margin-bottom:8px;">
+<option value="Saturday & Sunday" ${s.weekend==='Saturday & Sunday'?'selected':''}>Saturday & Sunday</option>
+<option value="Friday & Saturday" ${s.weekend==='Friday & Saturday'?'selected':''}>Friday & Saturday</option>
+<option value="Sunday Only" ${s.weekend==='Sunday Only'?'selected':''}>Sunday Only</option>
+<option value="Friday Only" ${s.weekend==='Friday Only'?'selected':''}>Friday Only</option>
+<option value="Custom / None" ${s.weekend==='Custom / None'?'selected':''}>Custom / None</option>
+</select>
+</div>
+</div>
+<div class="grid-2">
+<div>
+<label style="font-size:12px;"><strong>Class Start Time:</strong></label>
+<input type="time" id="start-time-${s.student_id}" value="${s.class_start_time || ''}" style="margin-bottom:0;">
+</div>
+<div>
+<label style="font-size:12px;"><strong>Class End Time:</strong></label>
+<input type="time" id="end-time-${s.student_id}" value="${s.class_end_time || ''}" style="margin-bottom:0;">
+</div>
+</div>
 </div>
 
 <div class="grid-2">
@@ -534,7 +543,7 @@ html += `
 
 <div style="display:flex;gap:10px;align-items:center;margin-top:5px;">
 <div style="flex:1;"><label><strong>Date:</strong></label><input type="date" id="date-${s.student_id}" value="${lastRec.record_date || new Date().toISOString().split('T')[0]}" style="margin-bottom:0;"></div>
-<div style="flex:1;padding-top:18px;"><button onclick="saveRecord(${s.student_id})" class="btn-success" style="width:100%;padding:10px;">Update Record</button></div>
+<div style="flex:1;padding-top:18px;"><button onclick="saveRecord(${s.student_id})" class="btn-success" style="width:100%;padding:10px;">Update Record & Details</button></div>
 </div>
 </td>
 </tr>`;
@@ -661,7 +670,5 @@ container.innerHTML = html;
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
 </script>
 </body>
-</html>r.serviceWorker.register('sw.js');}
-</script>
-</body>
+</html>
 </html>
