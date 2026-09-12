@@ -99,9 +99,6 @@ Raza Online Islamic Academy
 <p><strong>Age:</strong> <span id="s-age">-</span></p>
 <p><strong>Course:</strong> <span id="s-course">-</span></p>
 <p><strong>Country & Currency:</strong> <span id="s-country">-</span></p>
-<p><strong>Skip Days:</strong> <span id="s-skype">-</span></p>
-<p><strong>Class Timing:</strong> <span id="s-timing">-</span></p>
-<p><strong>Weekend Days:</strong> <span id="s-weekend">-</span></p>
 </div>
 <hr style="margin:20px 0;border:0;border-top:1px solid #e2e8f0;">
 <div style="background:#f0fdf4;padding:15px;border-radius:8px;border:1px solid #bbf7d0;font-size:13px;">
@@ -127,7 +124,7 @@ Raza Online Islamic Academy
 
 <!-- Tab 1: Add Student -->
 <div id="tab-add-student" class="card">
-<h3>➕ Naya Student Add Karein (Photo, Skip Days, Class Timings & Weekends)</h3>
+<h3>➕ Naya Student Add Karein</h3>
 <div class="grid-2">
 <div><label>Student Name *</label><input type="text" id="new-student-name" placeholder="e.g. Muhammad"></div>
 <div><label>Father's Name *</label><input type="text" id="new-father-name" placeholder="e.g. Ali"></div>
@@ -190,7 +187,7 @@ Raza Online Islamic Academy
 
 <!-- Tab 3: Daily Sabaq & Attendance -->
 <div id="tab-daily-rec" class="card hidden">
-<h3>📅 Daily Sabaq & Attendance Management (Smart Conditional View)</h3>
+<h3>📅 Daily Sabaq & Attendance (Skip Days, Timings & Weekends Shamil Hain)</h3>
 <div id="admin-students-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
 </div>
 
@@ -316,9 +313,6 @@ document.getElementById('s-fname').innerText=studentData.father_name || '-';
 document.getElementById('s-age').innerText=calculateAge(studentData.dob);
 document.getElementById('s-course').innerText=studentData.course || '-';
 document.getElementById('s-country').innerText=studentData.country_currency || 'Pakistan (PKR)';
-document.getElementById('s-skype').innerText=studentData.skype_id || '-';
-document.getElementById('s-timing').innerText=(studentData.class_start_time && studentData.class_end_time)?(`${studentData.class_start_time} to ${studentData.class_end_time}`):'-';
-document.getElementById('s-weekend').innerText=studentData.weekend || '-';
 
 if(recordData&&recordData.length>0){
 document.getElementById('s-attendance').innerText=recordData[0].attendance_status;
@@ -391,14 +385,11 @@ loadStudentsDirectory();
 window.handleAttendanceChange = function(studentId){
 const attVal = document.getElementById('att-'+studentId).value;
 const sabaqBox = document.getElementById('sabaq-box-'+studentId);
-const timeBox = document.getElementById('timing-box-'+studentId);
 
 if(attVal === 'Present'){
 sabaqBox.style.display = 'block';
-timeBox.style.display = 'block';
 } else {
 sabaqBox.style.display = 'none';
-timeBox.style.display = 'none';
 }
 }
 
@@ -479,8 +470,8 @@ html += `
 ${photoTag}
 <div>
 <strong style="font-size:15px;color:#0f172a;">${s.student_name}</strong><br>
-<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age: <strong style="color:#059669;">${calculateAge(s.dob)}</strong> | Skip Days: <strong style="color:#0284c7;">${s.skype_id || 'N/A'}</strong></span><br>
-<span style="color:#4f46e5;font-size:11px;">🌍 Country: ${s.country_currency || 'Pakistan'} | ⏰ Timing: ${(s.class_start_time && s.class_end_time)?(s.class_start_time+' - '+s.class_end_time):'N/A'} | Weekend: ${s.weekend || 'N/A'}</span>
+<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age: <strong style="color:#059669;">${calculateAge(s.dob)}</strong></span><br>
+<span style="color:#4f46e5;font-size:11px;">🌍 Country: ${s.country_currency || 'Pakistan'}</span>
 </div>
 </div>
 <div><button onclick="deleteStudent(${s.student_id})" class="btn-danger" style="padding:7px 14px;font-size:12px;">Delete</button></div>
@@ -495,7 +486,7 @@ container.innerHTML = '<p>Loading...</p>';
 const {data: students, error} = await supabase.from('students').select('*');
 if(error || !students || students.length === 0){ container.innerHTML = '<p>Koi student mojood nahi hai.</p>'; return; }
 
-let html = `<table><tr><th>Student Detail</th><th>Attendance, Skip Days, Timing & Sabaq</th></tr>`;
+let html = `<table><tr><th>Student Detail</th><th>Attendance, Skip Days, Timings, Weekend & Sabaq</th></tr>`;
 for(let s of students){
 const {data: recs} = await supabase.from('daily_records').select('*').eq('student_id', s.student_id).order('record_date', {ascending:false}).limit(1);
 const lastRec = (recs && recs.length > 0) ? recs[0] : {attendance_status: 'Present', sabaq_details: '', fee_status: 'Pending', record_date: new Date().toISOString().split('T')[0]};
@@ -504,13 +495,22 @@ const photoTag = s.photo_url ? `<img src="${s.photo_url}" style="width:45px;heig
 
 html += `
 <tr>
-<td style="text-align:left;width:32%;vertical-align:top;">
+<td style="text-align:left;width:30%;vertical-align:top;">
 <div style="text-align:center;margin-bottom:8px;">${photoTag}</div>
 <strong style="font-size:14px;color:#0f172a;display:block;text-align:center;">${s.student_name}</strong>
-<div style="font-size:12px;color:#64748b;margin-top:4px;">S/O: ${s.father_name || '-'}</div>
-<div style="font-size:12px;color:#059669;font-weight:bold;margin-top:2px;">🌍 ${s.country_currency || 'Pakistan'}</div>
+<div style="font-size:12px;color:#64748b;margin-top:4px;text-align:center;">S/O: ${s.father_name || '-'}</div>
+<div style="font-size:12px;color:#059669;font-weight:bold;margin-top:2px;text-align:center;">🌍 ${s.country_currency || 'Pakistan'}</div>
 </td>
 <td style="text-align:left;vertical-align:top;">
+<!-- Skip Days, Weekend & Class Timings sirf Attendance section mein show honge -->
+<div style="background:#f8fafc;padding:10px 12px;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:12px;font-size:12px;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;">
+<div>⏳ <strong>Skip Days:</strong> <span style="color:#0284c7;font-weight:bold;">${s.skype_id || 'N/A'}</span></div>
+<div>🗓️ <strong>Weekend:</strong> <span style="color:#7c3aed;font-weight:bold;">${s.weekend || 'N/A'}</span></div>
+</div>
+<div>⏰ <strong>Class Timings:</strong> <span style="color:#0f172a;font-weight:bold;">${(s.class_start_time && s.class_end_time) ? (`${s.class_start_time} to ${s.class_end_time}`) : 'N/A'}</span></div>
+</div>
+
 <div class="grid-2">
 <div>
 <label><strong>Attendance:</strong></label>
@@ -525,11 +525,6 @@ html += `
 <label><strong>Fee Status:</strong></label>
 <select id="fee-${s.student_id}"><option value="Paid" ${lastRec.fee_status==='Paid'?'selected':''}>Paid</option><option value="Pending" ${lastRec.fee_status==='Pending'?'selected':''}>Pending</option></select>
 </div>
-</div>
-
-<div id="timing-box-${s.student_id}" style="margin-top:8px;background:#f8fafc;padding:8px 10px;border-radius:6px;border:1px solid #e2e8f0;font-size:12px;display:${isPresent?'block':'none'};">
-⏳ <strong>Skip Days:</strong> <span style="color:#0284c7;font-weight:bold;">${s.skype_id || 'N/A'}</span><br>
-⏰ <strong>Class Timing:</strong> ${(s.class_start_time && s.class_end_time) ? (`${s.class_start_time} to ${s.class_end_time}`) : 'N/A'} | <strong>Weekend:</strong> ${s.weekend || 'N/A'}
 </div>
 
 <div id="sabaq-box-${s.student_id}" style="margin-top:8px;display:${isPresent?'block':'none'};">
@@ -664,6 +659,9 @@ container.innerHTML = html;
 }
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
+</script>
+</body>
+</html>r.serviceWorker.register('sw.js');}
 </script>
 </body>
 </html>
