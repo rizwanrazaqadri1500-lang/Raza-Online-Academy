@@ -9,7 +9,7 @@
 </head>
 <body class="h-full flex font-sans antialiased text-slate-800 overflow-hidden">
 
-    <!-- SIDEBAR (Matching 2nd Image Design) -->
+    <!-- SIDEBAR -->
     <aside id="sidebar" class="w-64 bg-[#0B132B] text-slate-300 flex flex-col justify-between hidden md:flex z-20 shadow-xl border-r border-slate-800">
         <div>
             <!-- Top Yellow Branding Header -->
@@ -209,7 +209,7 @@
                             </div>
                         </div>
 
-                        <!-- Nisabi Exam Form (As per your exact criteria) -->
+                        <!-- Nisabi Exam Form -->
                         <div class="p-4 bg-slate-50 border rounded-2xl space-y-3">
                             <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-2 text-emerald-700">
                                 <i class="fa-solid fa-list-check"></i> <span>2. Nisabi Exam Form (Total: 100 Marks)</span>
@@ -317,7 +317,7 @@
                         </div>
                     </div>
 
-                    <!-- 2. Nisabi Report Card (With your grading criteria) -->
+                    <!-- 2. Nisabi Report Card -->
                     <div class="p-5 bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-2xl space-y-4 shadow-lg">
                         <div class="flex justify-between items-center border-b border-white/10 pb-3">
                             <div>
@@ -359,7 +359,7 @@
         };
 
         function loadData() {
-            let saved = localStorage.getItem('raza_academy_v2');
+            let saved = localStorage.getItem('raza_academy_v4');
             return saved ? JSON.parse(saved) : db;
         }
 
@@ -376,9 +376,12 @@
             document.getElementById('input-age').value = currentData.age;
             document.getElementById('input-course').value = currentData.course;
             
-            document.getElementById('dir-name').innerText = currentData.name;
-            document.getElementById('dir-id').innerText = currentData.id;
-            document.getElementById('dir-age').innerText = currentData.age;
+            let dirName = document.getElementById('dir-name');
+            let dirId = document.getElementById('dir-id');
+            let dirAge = document.getElementById('dir-age');
+            if(dirName) dirName.innerText = currentData.name;
+            if(dirId) dirId.innerText = currentData.id;
+            if(dirAge) dirAge.innerText = currentData.age;
 
             document.getElementById('admin-sabaq-finished').value = currentData.sabaqFinished;
             document.getElementById('admin-mujaddaha').value = currentData.mujaddaha;
@@ -401,6 +404,18 @@
         }
 
         function switchTab(tabId) {
+            // Ensure Admin panel is visible when clicking any sidebar tab
+            let admin = document.getElementById('admin-container');
+            let student = document.getElementById('student-container');
+            let viewBtn = document.getElementById('view-switch-btn');
+            
+            if(admin && admin.classList.contains('hidden')) {
+                admin.classList.remove('hidden');
+                student.classList.add('hidden');
+                if(viewBtn) viewBtn.innerText = "Switch to Parent View";
+            }
+
+            // Hide all tabs and reset navigation buttons style
             ['add-student', 'directory', 'sabaq', 'ibadat', 'exams', 'fees', 'library'].forEach(t => {
                 let el = document.getElementById('tab-' + t);
                 let nav = document.getElementById('nav-' + t);
@@ -410,6 +425,8 @@
                     nav.classList.add('hover:bg-slate-800/80', 'text-slate-300');
                 }
             });
+
+            // Show target tab and highlight corresponding nav button
             let targetTab = document.getElementById('tab-' + tabId);
             let targetNav = document.getElementById('nav-' + tabId);
             if(targetTab) targetTab.classList.remove('hidden');
@@ -425,7 +442,7 @@
             currentData.name = document.getElementById('input-name').value;
             currentData.age = document.getElementById('input-age').value;
             currentData.course = document.getElementById('input-course').value;
-            localStorage.setItem('raza_academy_v2', JSON.stringify(currentData));
+            localStorage.setItem('raza_academy_v4', JSON.stringify(currentData));
             populateAdmin();
             alert("Student Profile Saved Successfully!");
         }
@@ -433,12 +450,11 @@
         function saveSabaqProgress() {
             currentData.sabaqFinished = document.getElementById('admin-sabaq-finished').value;
             currentData.mujaddaha = document.getElementById('admin-mujaddaha').value;
-            localStorage.setItem('raza_academy_v2', JSON.stringify(currentData));
+            localStorage.setItem('raza_academy_v4', JSON.stringify(currentData));
             alert("Sabaq Progress Updated!");
         }
 
         function getStatusTitle(score) {
-            if (score > 85) return "Mumtaz-e-Maashraf";
             if (score >= 85) return "Mumtaz";
             if (score >= 70) return "Behtar";
             if (score >= 60) return "Munasib";
@@ -459,7 +475,7 @@
             currentData.n.miswak = parseInt(document.getElementById('n-miswak').value) || 0;
             currentData.n.sunnah = parseInt(document.getElementById('n-sunnah').value) || 0;
 
-            localStorage.setItem('raza_academy_v2', JSON.stringify(currentData));
+            localStorage.setItem('raza_academy_v4', JSON.stringify(currentData));
             updateReportCards();
             alert("Exams Saved & Report Cards Automatically Updated!");
         }
