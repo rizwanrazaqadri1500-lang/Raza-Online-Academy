@@ -1,4 +1,4 @@
-         <!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="ur" dir="ltr">
 <head>
 <meta charset="UTF-8">
@@ -199,10 +199,10 @@ Raza Online Islamic Academy
 <div id="admin-exams-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
 </div>
 
-<!-- Tab 6: Fees & Vouchers (With Dates, Advance & Due Payment) -->
+<!-- Tab 6: Fees & Vouchers (With Country Currency, Zakat, Fitra, Sadaqa & Payment Date) -->
 <div id="tab-fees" class="card hidden">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
-<h3 style="border:none;margin:0;">💰 Fee Management & Advance/Due Vouchers</h3>
+<h3 style="border:none;margin:0;">💰 Fee Management & Currency Vouchers (Zakat/Sadaqah Included)</h3>
 </div>
 <div id="admin-fees-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
 </div>
@@ -458,34 +458,41 @@ loadIbadatPanel();
 }
 
 window.generateFeeVoucherCustom = function(studentName, course, countryCurrency){
-const total = parseFloat(document.getElementById('fee-total-'+studentName.replace(/\s+/g, '-')).value) || 0;
-const advance = parseFloat(document.getElementById('fee-adv-'+studentName.replace(/\s+/g, '-')).value) || 0;
-const duePayment = total - advance;
+const safeKey = studentName.replace(/\s+/g, '-');
+const total = parseFloat(document.getElementById('fee-total-'+safeKey).value) || 0;
+const advance = parseFloat(document.getElementById('fee-adv-'+safeKey).value) || 0;
+const zakatAmt = parseFloat(document.getElementById('fee-zakat-'+safeKey).value) || 0;
+const fitraAmt = parseFloat(document.getElementById('fee-fitra-'+safeKey).value) || 0;
+const sadaqaAmt = parseFloat(document.getElementById('fee-sadaqa-'+safeKey).value) || 0;
+const paymentDate = document.getElementById('fee-date-'+safeKey).value || new Date().toISOString().split('T')[0];
+
+const totalPayable = (total - advance) + zakatAmt + fitraAmt + sadaqaAmt;
 const printSec = document.getElementById('print-section');
 printSec.classList.remove('hidden');
-const currentDate = new Date().toISOString().split('T')[0];
 
 printSec.innerHTML = `
 <div style="border:2px solid #0b192c;padding:30px;border-radius:12px;max-width:650px;margin:20px auto;font-family:'Segoe UI',sans-serif;">
 <h2 style="text-align:center;color:#0b192c;margin-bottom:5px;">Raza Online Islamic Academy</h2>
-<p style="text-align:center;font-size:13px;color:#64748b;margin-bottom:20px;">Official Fee Voucher</p>
+<p style="text-align:center;font-size:13px;color:#64748b;margin-bottom:20px;">Official Fee & Contribution Voucher</p>
 <hr style="border:0;border-top:1px solid #cbd5e1;margin-bottom:20px;">
 <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:12px;">
-<p><strong>Voucher Date:</strong> ${currentDate}</p>
-<p><strong>Due Date:</strong> ${currentDate}</p>
+<p><strong>Payment Date:</strong> ${paymentDate}</p>
+<p><strong>Country / Currency:</strong> <span style="color:#059669;font-weight:bold;">${countryCurrency}</span></p>
 </div>
 <div style="font-size:14px;margin-bottom:12px;">
 <p><strong>Student Name:</strong> ${studentName}</p>
 <p style="margin-top:6px;"><strong>Course:</strong> ${course}</p>
-<p style="margin-top:6px;"><strong>Country / Currency:</strong> ${countryCurrency || 'Pakistan (PKR)'}</p>
 </div>
 <div style="background:#f8fafc;padding:18px;border-radius:8px;margin-top:15px;font-size:14px;border:1px solid #e2e8f0;">
-<p style="margin-bottom:8px;"><strong>Total Fee:</strong> <span style="float:right;font-weight:bold;">${total}</span></p>
-<p style="margin-bottom:8px;color:#0284c7;"><strong>Advance Paid:</strong> <span style="float:right;font-weight:bold;">${advance}</span></p>
+<p style="margin-bottom:6px;"><strong>Monthly Tuition Fee:</strong> <span style="float:right;">${total}</span></p>
+<p style="margin-bottom:6px;color:#0284c7;"><strong>Advance Paid (-):</strong> <span style="float:right;">${advance}</span></p>
+<p style="margin-bottom:6px;color:#d97706;"><strong>Zakat (+):</strong> <span style="float:right;">${zakatAmt}</span></p>
+<p style="margin-bottom:6px;color:#d97706;"><strong>Fitra (+):</strong> <span style="float:right;">${fitraAmt}</span></p>
+<p style="margin-bottom:6px;color:#d97706;"><strong>Sadaqah (+):</strong> <span style="float:right;">${sadaqaAmt}</span></p>
 <hr style="border:0;border-top:1px dashed #cbd5e1;margin:10px 0;">
-<p><strong>Due Payment (Remaining):</strong> <span style="color:#dc2626;font-weight:bold;font-size:16px;float:right;">${duePayment}</span></p>
+<p style="font-size:15px;"><strong>Total Payable Amount:</strong> <span style="color:#dc2626;font-weight:bold;font-size:17px;float:right;">${totalPayable} (${countryCurrency.includes('Pakistan') ? 'PKR' : countryCurrency})</span></p>
 </div>
-<p style="text-align:center;font-size:12px;color:#047857;margin-top:25px;font-weight:bold;">Baraye meherbani waqt par fee ada karein.</p>
+<p style="text-align:center;font-size:12px;color:#047857;margin-top:25px;font-weight:bold;">Baraye meherbani waqt par fee aur عطiyat ada karein. Jazakallah!</p>
 <p style="text-align:center;font-size:11px;color:#94a3b8;margin-top:15px;">Raza Online Islamic Academy Management Portal</p>
 </div>
 `;
@@ -618,18 +625,32 @@ container.innerHTML = '<p>Loading fees...</p>';
 const {data: students} = await supabase.from('students').select('*');
 if(!students || students.length === 0){ container.innerHTML = '<p>Koi student mojood nahi hai.</p>'; return; }
 
-let html = `<table><tr><th>Student Detail</th><th>Fee Voucher Setup (Total, Advance & Due Date)</th></tr>`;
+let html = `<table><tr><th>Student & Country / Currency</th><th>Fee & Contributions Setup (Advance, Zakat, Fitra, Sadaqah & Date)</th></tr>`;
 for(let s of students){
 const safeKey = s.student_name.replace(/\s+/g, '-');
+const currencyLabel = s.country_currency || 'Pakistan (PKR)';
 html += `
 <tr>
-<td style="text-align:left;width:30%;"><strong>${s.student_name}</strong><br><span style="color:#64748b;font-size:12px;">Course: ${s.course || '-'}</span><br><span style="color:#059669;font-size:11px;">🌍 ${s.country_currency || 'Pakistan'}</span></td>
+<td style="text-align:left;width:30%;">
+<strong>${s.student_name}</strong><br>
+<span style="color:#64748b;font-size:12px;">Course: ${s.course || '-'}</span><br>
+<span style="color:#059669;font-weight:bold;font-size:12px;">🌍 ${currencyLabel}</span>
+</td>
 <td style="text-align:left;">
 <div class="grid-2">
-<div><label>Total Fee Amount:</label><input type="number" id="fee-total-${safeKey}" placeholder="e.g. 5000" value="5000"></div>
-<div><label>Advance Paid:</label><input type="number" id="fee-adv-${safeKey}" placeholder="e.g. 2000" value="0"></div>
+<div><label>Monthly Fee (${currencyLabel.includes('Pakistan') ? 'PKR' : 'Currency'}):</label><input type="number" id="fee-total-${safeKey}" value="5000"></div>
+<div><label>Advance Paid (-):</label><input type="number" id="fee-adv-${safeKey}" value="0"></div>
 </div>
-<button onclick="generateFeeVoucherCustom('${s.student_name}', '${s.course || 'Quran'}', '${s.country_currency || 'Pakistan (PKR)'}')" class="btn-warning" style="width:100%;margin-top:6px;padding:10px;">🖨️ Print Fee Voucher (with Date & Due Amount)</button>
+<div class="grid-3" style="margin-top:8px;">
+<div><label style="font-size:11px;">Zakat:</label><input type="number" id="fee-zakat-${safeKey}" value="0"></div>
+<div><label style="font-size:11px;">Fitra:</label><input type="number" id="fee-fitra-${safeKey}" value="0"></div>
+<div><label style="font-size:11px;">Sadaqah:</label><input type="number" id="fee-sadaqa-${safeKey}" value="0"></div>
+</div>
+<div style="margin-top:8px;">
+<label>Payment Date:</label>
+<input type="date" id="fee-date-${safeKey}" value="${new Date().toISOString().split('T')[0]}">
+</div>
+<button onclick="generateFeeVoucherCustom('${s.student_name}', '${s.course || 'Quran'}', '${currencyLabel}')" class="btn-warning" style="width:100%;margin-top:8px;padding:10px;">🖨️ Print Fee & Contribution Voucher</button>
 </td>
 </tr>`;
 }
