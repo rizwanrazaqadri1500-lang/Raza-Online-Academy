@@ -17,8 +17,8 @@
             padding: 20px;
         }
         .container {
-            max-width: 500px;
-            margin: 40px auto;
+            max-width: 550px;
+            margin: 30px auto;
             background: #ffffff;
             padding: 24px;
             border-radius: 16px;
@@ -47,7 +47,7 @@
             color: #475569;
             margin-bottom: 6px;
         }
-        input {
+        select, input {
             width: 100%;
             padding: 10px 12px;
             background-color: #f8fafc;
@@ -58,10 +58,19 @@
             outline: none;
             transition: all 0.2s;
         }
-        input:focus {
+        select:focus, input:focus {
             border-color: #2563eb;
             background-color: #ffffff;
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        /* Dynamic Box for Date & Time */
+        #time-settings-box {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 16px;
+            display: none; /* Default hidden */
         }
         .btn {
             width: 100%;
@@ -74,7 +83,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: background 0.2s;
-            margin-top: 10px;
+            margin-top: 20px;
         }
         .btn:hover {
             background-color: #1d4ed8;
@@ -84,26 +93,68 @@
 <body>
 
     <div class="container">
-        <h2>Class Date & Time Settings</h2>
-        <p>Set the schedule details for the student class below.</p>
+        <h2>Daily Attendance & Class Schedule</h2>
+        <p>Select attendance status. Date and time settings will appear only if Present.</p>
 
+        <!-- Attendance Status Dropdown -->
         <div class="form-group">
-            <label for="admin-class-date">Select Date:</label>
-            <input type="date" id="admin-class-date">
+            <label for="admin-att-status">Attendance Status:</label>
+            <select id="admin-att-status" onchange="toggleTimeSettings()">
+                <option value="Present">Present</option>
+                <option value="Absent">Absent</option>
+                <option value="Leave">Leave</option>
+                <option value="Weekend - Sunday (Off)">Weekend - Sunday (Off)</option>
+                <option value="Skipped / Other Off">Skipped / Other Off</option>
+            </select>
         </div>
 
-        <div class="form-group">
-            <label for="admin-start-time">Class Start Time:</label>
-            <input type="text" id="admin-start-time" value="04:00 PM">
+        <!-- Date & Time Box (Visible ONLY when Present) -->
+        <div id="time-settings-box">
+            <div style="font-size: 12px; font-weight: bold; color: #1e40af; margin-bottom: 12px;">
+                🕒 Class Date & Time Details:
+            </div>
+
+            <div class="form-group">
+                <label for="admin-class-date">Select Date:</label>
+                <input type="date" id="admin-class-date">
+            </div>
+
+            <div class="form-group">
+                <label for="admin-start-time">Class Start Time:</label>
+                <input type="text" id="admin-start-time" value="04:00 PM">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="admin-end-time">Class End Time:</label>
+                <input type="text" id="admin-end-time" value="05:00 PM">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="admin-end-time">Class End Time:</label>
-            <input type="text" id="admin-end-time" value="05:00 PM">
+        <div class="form-group" style="margin-top: 16px;">
+            <label for="admin-sabaq-text">Sabaq / Notes:</label>
+            <input type="text" id="admin-sabaq-text" placeholder="Aaj ka sabaq...">
         </div>
 
-        <button class="btn" onclick="alert('Class schedule saved successfully!')">Save Schedule</button>
+        <button class="btn" onclick="alert('Attendance and schedule saved successfully!')">Save Daily Record</button>
     </div>
+
+    <script>
+        function toggleTimeSettings() {
+            let status = document.getElementById('admin-att-status').value;
+            let timeBox = document.getElementById('time-settings-box');
+
+            if (status === "Present") {
+                timeBox.style.display = "block"; // Show when present
+            } else {
+                timeBox.style.display = "none";  // Hide for absent, leave, off, etc.
+            }
+        }
+
+        // Run on page load to check initial state
+        window.onload = function() {
+            toggleTimeSettings();
+        };
+    </script>
 
 </body>
 </html>
