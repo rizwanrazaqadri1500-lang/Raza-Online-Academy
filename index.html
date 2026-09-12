@@ -26,7 +26,7 @@ button:hover{background:#0056b3}.hidden{display:none}
 <div id="dashboard-section" class="hidden">
 <div class="card"><h3>Student Profile</h3>
 <p><strong>Naam:</strong> <span id="s-name">-</span></p>
-<p><strong>Assigned Teacher:</strong> <span id="t-name">-</span></p></div>
+<p><strong>Email:</strong> <span id="s-email-disp">-</span></p></div>
 <div class="card"><h3>Daily Sabaq & Attendance</h3>
 <p><strong>Attendance:</strong> <span id="s-attendance">-</span></p>
 <p><strong>Sabaq Details:</strong> <span id="s-sabaq">-</span></p>
@@ -41,11 +41,11 @@ const supabase=createClient(supabaseUrl,supabaseKey)
 window.fetchStudentData=async function(){
 const email=document.getElementById('student-email').value.trim();
 if(!email){alert('Meherbani karke apna email likhein!');return}
-const {data:studentData,error:studentError}=await supabase.from('students').select('*, teachers(full_name)').eq('email',email).single();
+const {data:studentData,error:studentError}=await supabase.from('students').select('*').eq('email',email).single();
 if(studentError||!studentData){alert('Student nahi mila! Email check karein.');return}
 const {data:recordData}=await supabase.from('daily_records').select('*').eq('student_id',studentData.student_id).order('record_date',{ascending:false}).limit(1);
-document.getElementById('s-name').innerText=studentData.student_name;
-document.getElementById('t-name').innerText=studentData.teachers?studentData.teachers.full_name:'Koi teacher assigned nahi';
+document.getElementById('s-name').innerText=studentData.student_name || 'Naam mojood nahi';
+document.getElementById('s-email-disp').innerText=studentData.email;
 if(recordData&&recordData.length>0){
 document.getElementById('s-attendance').innerText=recordData[0].attendance_status;
 document.getElementById('s-sabaq').innerText=recordData[0].sabaq_details||'Koi detail nahi';
@@ -62,7 +62,6 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
 </script>
 </body>
 </html>
-}
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
 </script>
 </body>
