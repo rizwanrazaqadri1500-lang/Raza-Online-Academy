@@ -411,3 +411,442 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raza Online Islamic Academy - Complete Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="h-full flex font-sans antialiased text-slate-800 overflow-hidden">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between hidden md:flex z-20 shadow-xl">
+        <div>
+            <div class="p-4 bg-amber-500 text-slate-950 flex items-center space-x-3">
+                <div class="font-black text-base tracking-wider bg-slate-950 text-amber-400 px-2 py-0.5 rounded-lg">ROA</div>
+                <div>
+                    <h1 class="font-bold text-xs leading-tight">Raza Online Islamic</h1>
+                    <span class="text-[10px] font-semibold text-slate-900 block">Academy Management Portal</span>
+                </div>
+            </div>
+            <nav class="p-3 space-y-1 text-xs font-medium">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl bg-blue-600 text-white transition shadow-sm">
+                    <i class="fa-solid fa-chart-pie w-4"></i><span>Dashboard Overview</span>
+                </button>
+                <button onclick="switchTab('add-student')" id="nav-add-student" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-user-plus w-4"></i><span>Student Registration</span>
+                </button>
+                <button onclick="switchTab('sabaq')" id="nav-sabaq" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-book-open w-4"></i><span>Daily Sabaq & Progress</span>
+                </button>
+                <button onclick="switchTab('exams')" id="nav-exams" class="w-full flex items-center space-x-3 px-3 py-2 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-award w-4"></i><span>Taleemi & Nisabi Exams</span>
+                </button>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-slate-800 text-[11px] text-slate-500">
+            Admin Panel v3.5
+        </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden">
+        
+        <header class="bg-slate-900 text-white shadow-md h-14 flex items-center justify-between px-6 z-10">
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-300 hover:text-white"><i class="fa-solid fa-bars"></i></button>
+                <h2 class="font-bold text-sm leading-tight">Raza Online Islamic Academy Portal</h2>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleMainView()" id="view-switch-btn" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-[11px] px-3 py-1.5 rounded-lg font-semibold transition shadow">
+                    Switch to Student View
+                </button>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-4 lg:p-6">
+            
+            <!-- ADMIN CONTAINER -->
+            <div id="admin-container" class="max-w-4xl mx-auto space-y-6">
+                
+                <!-- 1. Dashboard Overview Tab -->
+                <div id="tab-dashboard" class="admin-tab space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                            <span class="text-slate-400 text-[11px] font-bold uppercase tracking-wider">Total Students</span>
+                            <h3 class="text-2xl font-black text-slate-900 mt-1">1</h3>
+                            <span class="text-emerald-600 text-xs font-semibold"><i class="fa-solid fa-arrow-up"></i> Active Enrolled</span>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                            <span class="text-slate-400 text-[11px] font-bold uppercase tracking-wider">Exams Status</span>
+                            <h3 class="text-2xl font-black text-slate-900 mt-1">Dual System</h3>
+                            <span class="text-blue-600 text-xs font-semibold">Taleemi & Nisabi Active</span>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                            <span class="text-slate-400 text-[11px] font-bold uppercase tracking-wider">Academy Status</span>
+                            <h3 class="text-2xl font-black text-emerald-600 mt-1">Online</h3>
+                            <span class="text-slate-500 text-xs font-semibold">Fully Synced</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Add Student Tab -->
+                <div id="tab-add-student" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <h3 class="text-base font-bold text-slate-900 mb-4">Student Registration & Profile</h3>
+                        <form onsubmit="handleSaveStudent(event)" class="space-y-4 text-xs">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Student ID *</label>
+                                    <input type="text" id="input-id" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Student Name *</label>
+                                    <input type="text" id="input-name" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Age *</label>
+                                    <input type="number" id="input-age" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Course *</label>
+                                    <input type="text" id="input-course" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
+                                </div>
+                            </div>
+                            <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition shadow-md">Save Profile</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 3. Daily Sabaq Tab -->
+                <div id="tab-sabaq" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs space-y-4">
+                        <h3 class="text-base font-bold text-slate-900">Daily Sabaq Progress Update</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Total Sabaq Finished / Completed:</label>
+                                <input type="text" id="admin-sabaq-finished" class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Aaj ka Mujaddaha / Sabaq:</label>
+                                <input type="text" id="admin-mujaddaha" class="w-full px-3 py-2 bg-slate-50 border rounded-xl outline-none font-semibold">
+                            </div>
+                        </div>
+                        <button onclick="saveSabaqProgress()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition">Update Progress</button>
+                    </div>
+                </div>
+
+                <!-- 4. Dual Exams Tab -->
+                <div id="tab-exams" class="admin-tab hidden space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6 text-xs">
+                        <div class="border-b pb-3">
+                            <h3 class="text-base font-bold text-slate-900">Exam Forms & Marks Entry</h3>
+                            <p class="text-slate-500 text-[11px]">Student ID: <span id="form-disp-id" class="font-bold text-blue-600"></span> | Name: <span id="form-disp-name" class="font-bold text-blue-600"></span></p>
+                        </div>
+
+                        <!-- Taleemi Exam Form -->
+                        <div class="p-4 bg-slate-50 border rounded-2xl space-y-3">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-2 text-indigo-700">
+                                <i class="fa-solid fa-book-bookmark"></i> <span>1. Taleemi Exam Form (Total: 100 Marks)</span>
+                            </h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Makharij (Max 30):</label>
+                                    <input type="number" id="t-makharij" max="30" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Adaigi (Max 20):</label>
+                                    <input type="number" id="t-adaigi" max="20" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Rawah (Max 30):</label>
+                                    <input type="number" id="t-rawah" max="30" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Hifz (Max 10):</label>
+                                    <input type="number" id="t-hifz" max="10" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Q. Malumaat (Max 05):</label>
+                                    <input type="number" id="t-malumaat" max="5" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Q. Pehchan (Max 05):</label>
+                                    <input type="number" id="t-pehchan" max="5" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nisabi Exam Form -->
+                        <div class="p-4 bg-slate-50 border rounded-2xl space-y-3">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-2 text-emerald-700">
+                                <i class="fa-solid fa-list-check"></i> <span>2. Nisabi Exam Form (Total: 100 Marks)</span>
+                            </h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">5 Qaid Questions (Max 50):</label>
+                                    <input type="number" id="n-qaid" max="50" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Kalimah (Max 10):</label>
+                                    <input type="number" id="n-kalimah" max="10" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Dua (Max 20):</label>
+                                    <input type="number" id="n-dua" max="20" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Miswak Practice (Max 10):</label>
+                                    <input type="number" id="n-miswak" max="10" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">Sunnah at Home (Max 10):</label>
+                                    <input type="number" id="n-sunnah" max="10" class="w-full p-2 bg-white border rounded-lg font-bold">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button onclick="saveDualExams()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md">
+                                Save Exams & Generate Automatic Report Cards
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- STUDENT / PARENT VIEW CONTAINER -->
+            <div id="student-container" class="max-w-3xl mx-auto space-y-6 hidden">
+                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 space-y-6">
+                    
+                    <!-- Header Info with ID & Age -->
+                    <div class="flex justify-between items-center border-b pb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900" id="card-disp-name"></h3>
+                                <p class="text-xs text-slate-500">ID: <span id="card-disp-id" class="font-semibold text-blue-600"></span> | Age: <span id="card-disp-age" class="font-semibold text-emerald-600"></span></p>
+                            </div>
+                        </div>
+                        <button onclick="toggleMainView()" class="text-xs text-blue-600 hover:underline font-bold">Back to Admin</button>
+                    </div>
+
+                    <!-- Sabaq Progress Box -->
+                    <div class="p-4 bg-slate-50 border rounded-xl grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <span class="text-slate-500 block font-semibold">Total Sabaq Finished:</span>
+                            <span class="font-bold text-slate-900 text-sm" id="card-disp-finished"></span>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 block font-semibold">Current Mujaddaha / Sabaq:</span>
+                            <span class="font-bold text-blue-700 text-sm" id="card-disp-mujaddaha"></span>
+                        </div>
+                    </div>
+
+                    <!-- 1. Taleemi Report Card -->
+                    <div class="p-5 bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl space-y-4 shadow-lg">
+                        <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                            <div>
+                                <span class="text-[10px] text-amber-400 font-bold uppercase tracking-wider">Official Assessment Report</span>
+                                <h4 class="text-lg font-bold">Taleemi Exam Result Card</h4>
+                            </div>
+                            <span id="t-badge-status" class="px-3 py-1 bg-emerald-500 text-slate-950 text-xs font-bold rounded-full">Passed</span>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Makharij:</span><span id="res-t-mak" class="font-bold"></span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Adaigi:</span><span id="res-t-ada" class="font-bold"></span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Rawah:</span><span id="res-t-raw" class="font-bold"></span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Hifz:</span><span id="res-t-hif" class="font-bold"></span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Malumaat:</span><span id="res-t-mal" class="font-bold"></span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Pehchan:</span><span id="res-t-peh" class="font-bold"></span></div>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
+                            <div>Total: <span id="res-t-total" class="font-black text-amber-400 text-base"></span></div>
+                            <div>Performance: <span id="res-t-grade" class="font-black text-amber-400 text-base"></span></div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Nisabi Report Card -->
+                    <div class="p-5 bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-2xl space-y-4 shadow-lg">
+                        <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                            <div>
+                                <span class="text-[10px] text-amber-400 font-bold uppercase tracking-wider">Official Assessment Report</span>
+                                <h4 class="text-lg font-bold">Nisabi Exam Result Card</h4>
+                            </div>
+                            <span id="n-badge-status" class="px-3 py-1 bg-emerald-500 text-slate-950 text-xs font-bold rounded-full">Passed</span>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>5 Qaid Qs:</span><span id="res-n-qaid" class="font-bold"></span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Kalimah:</span><span id="res-n-kal" class="font-bold"></span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Dua:</span><span id="res-n-dua" class="font-bold"></span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Miswak:</span><span id="res-n-mis" class="font-bold"></span></div>
+                            <div class="bg-white/10 p-2.5 rounded-lg flex justify-between"><span>Sunnah Home:</span><span id="res-n-sun" class="font-bold"></span></div>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-white/10 text-xs">
+                            <div>Total: <span id="res-n-total" class="font-black text-amber-400 text-base"></span></div>
+                            <div>Performance: <span id="res-n-grade" class="font-black text-amber-400 text-base"></span></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+        let db = {
+            id: "ROA-1092",
+            name: "Abdul Rehman",
+            age: 6,
+            course: "Hifz-ul-Quran",
+            sabaqFinished: "Para 3 (Surah Al-Imran Ayat 50 Completed)",
+            mujaddaha: "Para 3 - Ruku 4",
+            t: { makharij: 28, adaigi: 18, rawah: 27, hifz: 10, malumaat: 5, pehchan: 5 },
+            n: { qaid: 45, kalimah: 10, dua: 18, miswak: 10, sunnah: 9 }
+        };
+
+        function loadData() {
+            let saved = localStorage.getItem('raza_academy_complete_v1');
+            return saved ? JSON.parse(saved) : db;
+        }
+
+        let currentData = loadData();
+
+        window.onload = function() {
+            populateAdmin();
+            updateReportCards();
+        };
+
+        function populateAdmin() {
+            document.getElementById('input-id').value = currentData.id;
+            document.getElementById('input-name').value = currentData.name;
+            document.getElementById('input-age').value = currentData.age;
+            document.getElementById('input-course').value = currentData.course;
+            document.getElementById('admin-sabaq-finished').value = currentData.sabaqFinished;
+            document.getElementById('admin-mujaddaha').value = currentData.mujaddaha;
+
+            document.getElementById('form-disp-id').innerText = currentData.id;
+            document.getElementById('form-disp-name').innerText = currentData.name;
+
+            document.getElementById('t-makharij').value = currentData.t.makharij;
+            document.getElementById('t-adaigi').value = currentData.t.adaigi;
+            document.getElementById('t-rawah').value = currentData.t.rawah;
+            document.getElementById('t-hifz').value = currentData.t.hifz;
+            document.getElementById('t-malumaat').value = currentData.t.malumaat;
+            document.getElementById('t-pehchan').value = currentData.t.pehchan;
+
+            document.getElementById('n-qaid').value = currentData.n.qaid;
+            document.getElementById('n-kalimah').value = currentData.n.kalimah;
+            document.getElementById('n-dua').value = currentData.n.dua;
+            document.getElementById('n-miswak').value = currentData.n.miswak;
+            document.getElementById('n-sunnah').value = currentData.n.sunnah;
+        }
+
+        function switchTab(tabId) {
+            ['dashboard', 'add-student', 'sabaq', 'exams'].forEach(t => {
+                document.getElementById('tab-' + t).classList.add('hidden');
+                document.getElementById('nav-' + t).classList.remove('bg-blue-600', 'text-white');
+                document.getElementById('nav-' + t).classList.add('hover:bg-slate-800');
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            document.getElementById('nav-' + tabId).classList.add('bg-blue-600', 'text-white');
+            document.getElementById('nav-' + tabId).classList.remove('hover:bg-slate-800');
+        }
+
+        function handleSaveStudent(e) {
+            e.preventDefault();
+            currentData.id = document.getElementById('input-id').value;
+            currentData.name = document.getElementById('input-name').value;
+            currentData.age = document.getElementById('input-age').value;
+            currentData.course = document.getElementById('input-course').value;
+            localStorage.setItem('raza_academy_complete_v1', JSON.stringify(currentData));
+            populateAdmin();
+            alert("Student Profile Saved Successfully!");
+        }
+
+        function saveSabaqProgress() {
+            currentData.sabaqFinished = document.getElementById('admin-sabaq-finished').value;
+            currentData.mujaddaha = document.getElementById('admin-mujaddaha').value;
+            localStorage.setItem('raza_academy_complete_v1', JSON.stringify(currentData));
+            alert("Sabaq Progress Updated!");
+        }
+
+        function getStatusTitle(score) {
+            if (score >= 85) return "Mumtaz";
+            if (score >= 70) return "Behtar";
+            if (score >= 60) return "Munasib";
+            return "Needs Improvement";
+        }
+
+        function saveDualExams() {
+            currentData.t.makharij = parseInt(document.getElementById('t-makharij').value) || 0;
+            currentData.t.adaigi = parseInt(document.getElementById('t-adaigi').value) || 0;
+            currentData.t.rawah = parseInt(document.getElementById('t-rawah').value) || 0;
+            currentData.t.hifz = parseInt(document.getElementById('t-hifz').value) || 0;
+            currentData.t.malumaat = parseInt(document.getElementById('t-malumaat').value) || 0;
+            currentData.t.pehchan = parseInt(document.getElementById('t-pehchan').value) || 0;
+
+            currentData.n.qaid = parseInt(document.getElementById('n-qaid').value) || 0;
+            currentData.n.kalimah = parseInt(document.getElementById('n-kalimah').value) || 0;
+            currentData.n.dua = parseInt(document.getElementById('n-dua').value) || 0;
+            currentData.n.miswak = parseInt(document.getElementById('n-miswak').value) || 0;
+            currentData.n.sunnah = parseInt(document.getElementById('n-sunnah').value) || 0;
+
+            localStorage.setItem('raza_academy_complete_v1', JSON.stringify(currentData));
+            updateReportCards();
+            alert("Exams Saved & Report Cards Automatically Updated!");
+        }
+
+        function updateReportCards() {
+            document.getElementById('card-disp-name').innerText = currentData.name;
+            document.getElementById('card-disp-id').innerText = currentData.id;
+            document.getElementById('card-disp-age').innerText = currentData.age;
+            document.getElementById('card-disp-finished').innerText = currentData.sabaqFinished;
+            document.getElementById('card-disp-mujaddaha').innerText = currentData.mujaddaha;
+
+            let tTotal = currentData.t.makharij + currentData.t.adaigi + currentData.t.rawah + currentData.t.hifz + currentData.t.malumaat + currentData.t.pehchan;
+            document.getElementById('res-t-mak').innerText = currentData.t.makharij + "/30";
+            document.getElementById('res-t-ada').innerText = currentData.t.adaigi + "/20";
+            document.getElementById('res-t-raw').innerText = currentData.t.rawah + "/30";
+            document.getElementById('res-t-hif').innerText = currentData.t.hifz + "/10";
+            document.getElementById('res-t-mal').innerText = currentData.t.malumaat + "/05";
+            document.getElementById('res-t-peh').innerText = currentData.t.pehchan + "/05";
+            document.getElementById('res-t-total').innerText = tTotal + "/100";
+            document.getElementById('res-t-grade').innerText = getStatusTitle(tTotal);
+
+            let nTotal = currentData.n.qaid + currentData.n.kalimah + currentData.n.dua + currentData.n.miswak + currentData.n.sunnah;
+            document.getElementById('res-n-qaid').innerText = currentData.n.qaid + "/50";
+            document.getElementById('res-n-kal').innerText = currentData.n.kalimah + "/10";
+            document.getElementById('res-n-dua').innerText = currentData.n.dua + "/20";
+            document.getElementById('res-n-mis').innerText = currentData.n.miswak + "/10";
+            document.getElementById('res-n-sun').innerText = currentData.n.sunnah + "/10";
+            document.getElementById('res-n-total').innerText = nTotal + "/100";
+            document.getElementById('res-n-grade').innerText = getStatusTitle(nTotal);
+        }
+
+        function toggleMainView() {
+            let admin = document.getElementById('admin-container');
+            let student = document.getElementById('student-container');
+            let btn = document.getElementById('view-switch-btn');
+            if(admin.classList.contains('hidden')) {
+                admin.classList.remove('hidden');
+                student.classList.add('hidden');
+                btn.innerText = "Switch to Student View";
+            } else {
+                admin.classList.add('hidden');
+                student.classList.remove('hidden');
+                btn.innerText = "Switch to Admin Panel";
+                updateReportCards();
+            }
+        }
+    </script>
+</body>
+</html>
