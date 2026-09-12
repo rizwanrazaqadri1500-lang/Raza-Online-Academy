@@ -31,7 +31,7 @@ table{width:100%;border-collapse:collapse;margin-top:10px;}
 th, td{border:1px solid #e2e8f0;padding:8px;text-align:center;font-size:12px;}
 th{background:#f8fafc;color:#475569;}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
-.grid-5{display:grid;grid-template-columns:repeat(5, 1fr);gap:8px;}
+.grid-3{display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;}
 .student-card{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #e2e8f0;padding:15px;border-radius:8px;margin-bottom:10px;}
 </style>
 </head>
@@ -51,8 +51,9 @@ Raza Online Islamic Academy
 <a href="#" onclick="switchTab('students-dir', this)">👥 Students Directory</a>
 <a href="#" onclick="switchTab('daily-rec', this)">📅 Daily Sabaq & Attendance</a>
 <a href="#" onclick="switchTab('exams', this)">📝 Monthly Exams & Results</a>
+<a href="#" onclick="switchTab('fees', this)">💰 Fees & Country Currency</a>
+<a href="#" onclick="switchTab('donation', this)">🤲 Zakat, Fitra & Donations</a>
 <a href="#" onclick="switchTab('ibadat', this)">🕌 Ibadat Tracker</a>
-<a href="#" onclick="switchTab('fees', this)">💰 Fees & Vouchers</a>
 <a href="#" onclick="switchTab('library', this)">📚 Islamic Books Library</a>
 <a href="#" onclick="switchTab('logout', this)" style="color:#fca5a5;margin-top:20px;">🚪 Logout Portal</a>
 </div>
@@ -90,28 +91,11 @@ Raza Online Islamic Academy
 <p><strong>Father's Name:</strong> <span id="s-fname">-</span></p>
 <p><strong>Age:</strong> <span id="s-age">-</span></p>
 <p><strong>Course:</strong> <span id="s-course">-</span></p>
+<p><strong>Country & Currency:</strong> <span id="s-country">-</span></p>
 <hr style="margin:15px 0;">
 <p><strong>Attendance:</strong> <span id="s-attendance">-</span></p>
 <p><strong>Sabaq Details:</strong> <span id="s-sabaq">-</span></p>
 <p><strong>Fee Status:</strong> <span id="s-fee" style="font-weight:bold;color:green;">-</span></p>
-
-<!-- Result Card View -->
-<div id="s-result-box" style="margin-top:20px;background:#f8fafc;padding:20px;border-radius:8px;border:2px solid #4f46e5;">
-<h4 style="color:#4f46e5;margin-bottom:12px;text-align:center;font-size:16px;">🌟 Madani Qaida / Quran Monthly Result Card 🌟</h4>
-<p><strong>Exam Title:</strong> <span id="s-exam-title">-</span></p>
-<hr style="margin:10px 0;border:0;border-top:1px solid #cbd5e1;">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;margin-bottom:10px;">
-<div>• Makharij (Max 20): <strong id="res-makharij">-</strong></div>
-<div>• Adaigi (Max 20): <strong id="res-adaigi">-</strong></div>
-<div>• Rawani (Max 30): <strong id="res-rawani">-</strong></div>
-<div>• Qawaid & Pehchan (Max 10): <strong id="res-qawaid">-</strong></div>
-<div>• Hijje (Max 20): <strong id="res-hijje">-</strong></div>
-</div>
-<hr style="margin:10px 0;border:0;border-top:1px solid #cbd5e1;">
-<p><strong>Total Obtained Marks:</strong> <span id="s-exam-marks" style="color:#059669;font-weight:bold;">-</span> / 100</p>
-<p><strong>Percentage:</strong> <span id="s-exam-percentage">-</span></p>
-<p><strong>Grade & Status:</strong> <span id="s-exam-status" style="font-weight:bold;">-</span></p>
-</div>
 <button onclick="goBack()" style="background:#6c757d;margin-top:15px;">Wapas Jayein</button>
 </div>
 
@@ -130,7 +114,7 @@ Raza Online Islamic Academy
 
 <!-- Tab 1: Add Student -->
 <div id="tab-add-student" class="card">
-<h3>➕ Naya Student Add Karein (Auto Currency & Age Detection)</h3>
+<h3>➕ Naya Student Add Karein (Australia & Deegar Tamam Mumalik)</h3>
 <div class="grid-2">
 <div><label>Student Name *</label><input type="text" id="new-student-name" placeholder="e.g. Muhammad"></div>
 <div><label>Father's Name *</label><input type="text" id="new-father-name" placeholder="e.g. Ali"></div>
@@ -140,8 +124,21 @@ Raza Online Islamic Academy
 <div><label>Date of Birth (DOB) *</label><input type="date" id="new-dob" onchange="calculateAgePreview()"></div>
 </div>
 <div class="grid-2">
-<div><label>Parent Mobile / WhatsApp</label><input type="text" id="new-mobile" placeholder="+923001234567"></div>
-<div><label>Detected Country & Currency</label><input type="text" id="new-currency" value="Pakistan (PKR)" readonly style="background:#f8fafc;"></div>
+<div><label>Parent Mobile / WhatsApp</label><input type="text" id="new-mobile" placeholder="+61400123456 / +92..."></div>
+<div>
+<label>Select Country & Currency *</label>
+<select id="new-country">
+<option value="Pakistan (PKR)">🇵🇰 Pakistan (PKR)</option>
+<option value="Australia (AUD)">🇦🇺 Australia (AUD)</option>
+<option value="United Kingdom (GBP)">🇬🇧 United Kingdom - UK (GBP)</option>
+<option value="United States (USD)">🇺🇸 United States - USA (USD)</option>
+<option value="Canada (CAD)">🇨🇦 Canada (CAD)</option>
+<option value="Saudi Arabia (SAR)">🇸🇦 Saudi Arabia (SAR)</option>
+<option value="UAE (AED)">🇦🇪 United Arab Emirates - UAE (AED)</option>
+<option value="European Union (EUR)">🇪🇺 European Union - Europe (EUR)</option>
+<option value="Other Country / International">🌍 Deegar Tamam Mumalik / Other Country</option>
+</select>
+</div>
 </div>
 <div style="margin-bottom:15px;font-size:13px;color:#4f46e5;font-weight:bold;">Calculated Age: <span id="preview-age">0 Years</span></div>
 <button onclick="addStudent()" class="btn-success">+ Save Student Profile</button>
@@ -168,19 +165,27 @@ Raza Online Islamic Academy
 <div id="admin-exams-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
 </div>
 
-<!-- Tab 5: Ibadat Tracker -->
+<!-- Tab 5: Fees & Country Currency -->
+<div id="tab-fees" class="card hidden">
+<h3>💰 Fees & Country-Wise Currency Management (PKR vs Australia vs Deegar Mumalik)</h3>
+<p style="color:#64748b;margin-bottom:15px;font-size:13px;">Yahan Pakistan (PKR) ki fees alag aur Australia (AUD), UK (GBP), USA (USD) aur deegar international mumalik ki fees aur Zakat/Fitra/Sadaqah/Nafl/Wajibah ka hisaab alag manage hota hai.</p>
+<div id="admin-fees-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
+</div>
+
+<!-- Tab 6: Zakat, Fitra & Donations -->
+<div id="tab-donation" class="card hidden">
+<h3>🤲 Zakat, Fitra, Sadaqah, Nafl & Wajibah Donation Portal</h3>
+<p style="color:#64748b;margin-bottom:15px;font-size:13px;">Academy mein Australia aur baqi tamam mumalik se موصول hone wali Zakat, Fitra, Sadaqah, Nafl aur Wajibah ki tamam donations ka alag record.</p>
+<div id="admin-donation-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
+</div>
+
+<!-- Tab 7: Ibadat Tracker -->
 <div id="tab-ibadat" class="card hidden">
 <h3>🕌 Ibadat Tracker & Namaz Record</h3>
 <div id="ibadat-students-list" style="overflow-x:auto;"><p>Data load ho raha hai...</p></div>
 </div>
 
-<!-- Tab 6: Fees & Vouchers -->
-<div id="tab-fees" class="card hidden">
-<h3>💰 Fees & Vouchers Management</h3>
-<p style="color:#64748b;">Yahan fee invoices aur monthly vouchers generate kiye jayenge.</p>
-</div>
-
-<!-- Tab 7: Islamic Books Library -->
+<!-- Tab 8: Islamic Books Library -->
 <div id="tab-library" class="card hidden">
 <h3>📚 Islamic Books Library</h3>
 <p style="color:#64748b;">Quran, Hadith aur Deeni kutub ki PDF library yahan available hogi.</p>
@@ -240,8 +245,9 @@ if(tabName === 'add-student') document.getElementById('tab-add-student').classLi
 else if(tabName === 'students-dir'){ document.getElementById('tab-students-dir').classList.remove('hidden'); loadStudentsDirectory(); }
 else if(tabName === 'daily-rec'){ document.getElementById('tab-daily-rec').classList.remove('hidden'); loadAdminPanel(); }
 else if(tabName === 'exams'){ document.getElementById('tab-exams').classList.remove('hidden'); loadExamsPanel(); }
+else if(tabName === 'fees'){ document.getElementById('tab-fees').classList.remove('hidden'); loadFeesPanel(); }
+else if(tabName === 'donation'){ document.getElementById('tab-donation').classList.remove('hidden'); loadDonationPanel(); }
 else if(tabName === 'ibadat'){ document.getElementById('tab-ibadat').classList.remove('hidden'); loadIbadatPanel(); }
-else if(tabName === 'fees') document.getElementById('tab-fees').classList.remove('hidden');
 else if(tabName === 'library') document.getElementById('tab-library').classList.remove('hidden');
 }
 
@@ -251,12 +257,12 @@ if(!nameInput){alert('Meherbani karke apna naam likhein!');return}
 const {data:studentData,error:studentError}=await supabase.from('students').select('*').ilike('student_name', nameInput).maybeSingle();
 if(studentError||!studentData){alert('Student nahi mila! Naam check karein.');return}
 const {data:recordData}=await supabase.from('daily_records').select('*').eq('student_id',studentData.student_id).order('record_date',{ascending:false}).limit(1);
-const {data:examData}=await supabase.from('student_exams').select('*').eq('student_id',studentData.student_id).order('exam_date',{ascending:false}).limit(1);
 
 document.getElementById('s-name').innerText=studentData.student_name || '-';
 document.getElementById('s-fname').innerText=studentData.father_name || '-';
 document.getElementById('s-age').innerText=calculateAge(studentData.dob);
 document.getElementById('s-course').innerText=studentData.course || '-';
+document.getElementById('s-country').innerText=studentData.country_currency || 'Pakistan (PKR)';
 
 if(recordData&&recordData.length>0){
 document.getElementById('s-attendance').innerText=recordData[0].attendance_status;
@@ -266,39 +272,6 @@ document.getElementById('s-fee').innerText=recordData[0].fee_status || 'Pending'
 document.getElementById('s-attendance').innerText='N/A';
 document.getElementById('s-sabaq').innerText='Aaj ka record mojood nahi';
 document.getElementById('s-fee').innerText='Pending';
-}
-
-if(examData && examData.length > 0){
-const ex = examData[0];
-const totalObtained = (ex.makharij||0) + (ex.adaigi||0) + (ex.rawani||0) + (ex.qawaid||0) + (ex.hijje||0);
-const perc = totalObtained.toFixed(1);
-let grade = 'Fail';
-if(perc >= 85) grade = 'A+ (Mumtaz)';
-else if(perc >= 70) grade = 'A (Behtareen)';
-else if(perc >= 60) grade = 'B (Acha)';
-else if(perc >= 50) grade = 'C (Pass)';
-
-document.getElementById('s-exam-title').innerText = ex.exam_title || 'Monthly Test';
-document.getElementById('res-makharij').innerText = (ex.makharij || 0) + ' / 20';
-document.getElementById('res-adaigi').innerText = (ex.adaigi || 0) + ' / 20';
-document.getElementById('res-rawani').innerText = (ex.rawani || 0) + ' / 30';
-document.getElementById('res-qawaid').innerText = (ex.qawaid || 0) + ' / 10';
-document.getElementById('res-hijje').innerText = (ex.hijje || 0) + ' / 20';
-
-document.getElementById('s-exam-marks').innerText = totalObtained;
-document.getElementById('s-exam-percentage').innerText = perc + '%';
-document.getElementById('s-exam-status').innerText = grade;
-document.getElementById('s-exam-status').style.color = perc >= 50 ? '#059669' : '#dc3545';
-}else{
-document.getElementById('s-exam-title').innerText = 'Abhi koi exam record nahi hai';
-document.getElementById('res-makharij').innerText = '-';
-document.getElementById('res-adaigi').innerText = '-';
-document.getElementById('res-rawani').innerText = '-';
-document.getElementById('res-qawaid').innerText = '-';
-document.getElementById('res-hijje').innerText = '-';
-document.getElementById('s-exam-marks').innerText = '-';
-document.getElementById('s-exam-percentage').innerText = '-';
-document.getElementById('s-exam-status').innerText = '-';
 }
 
 document.getElementById('student-login-section').classList.add('hidden');
@@ -324,9 +297,10 @@ const fname = document.getElementById('new-father-name').value.trim();
 const course = document.getElementById('new-course').value;
 const dob = document.getElementById('new-dob').value;
 const mobile = document.getElementById('new-mobile').value.trim();
+const country = document.getElementById('new-country').value;
 
 if(!name || !dob){alert('Student Name aur Date of Birth lazmi hain!');return;}
-const {error} = await supabase.from('students').insert([{student_name: name, father_name: fname, course: course, dob: dob, mobile: mobile}]);
+const {error} = await supabase.from('students').insert([{student_name: name, father_name: fname, course: course, dob: dob, mobile: mobile, country_currency: country}]);
 if(error){alert('Error: ' + error.message);return;}
 alert('Student kamyabi se save ho gaya!');
 document.getElementById('new-student-name').value = '';
@@ -361,27 +335,45 @@ alert('Record update ho gaya!');
 loadAdminPanel();
 }
 
-window.saveExamResult = async function(studentId){
-const title = document.getElementById('exam-title-'+studentId).value.trim();
-const makharij = parseFloat(document.getElementById('ex-makharij-'+studentId).value) || 0;
-const adaigi = parseFloat(document.getElementById('ex-adaigi-'+studentId).value) || 0;
-const rawani = parseFloat(document.getElementById('ex-rawani-'+studentId).value) || 0;
-const qawaid = parseFloat(document.getElementById('ex-qawaid-'+studentId).value) || 0;
-const hijje = parseFloat(document.getElementById('ex-hijje-'+studentId).value) || 0;
-const date = document.getElementById('exam-date-'+studentId).value;
+window.saveStudentFee = async function(studentId){
+const amount = parseFloat(document.getElementById('fee-amt-'+studentId).value) || 0;
+const status = document.getElementById('fee-stat-'+studentId).value;
+const zakat = parseFloat(document.getElementById('fee-zakat-'+studentId).value) || 0;
+const fitra = parseFloat(document.getElementById('fee-fitra-'+studentId).value) || 0;
+const sadaqah = parseFloat(document.getElementById('fee-sadaqah-'+studentId).value) || 0;
+const nafl = parseFloat(document.getElementById('fee-nafl-'+studentId).value) || 0;
+const wajibah = parseFloat(document.getElementById('fee-wajibah-'+studentId).value) || 0;
 
-if(!title || !date){alert('Exam Title aur Date lazmi hain!');return;}
-
-const {data: existing} = await supabase.from('student_exams').select('*').eq('student_id', studentId).eq('exam_date', date);
-const examPayload = { student_id: studentId, exam_title: title, makharij, adaigi, rawani, qawaid, hijje, total_marks: 100, obtained_marks: (makharij+adaigi+rawani+qawaid+hijje), exam_date: date };
+const {data: existing} = await supabase.from('student_fees').select('*').eq('student_id', studentId);
+const payload = { student_id: studentId, fee_amount: amount, fee_status: status, zakat, fitra, sadaqah, nafl, wajibah };
 
 if(existing && existing.length > 0){
-await supabase.from('student_exams').update(examPayload).eq('exam_id', existing[0].exam_id);
+await supabase.from('student_fees').update(payload).eq('fee_id', existing[0].fee_id);
 } else {
-await supabase.from('student_exams').insert([examPayload]);
+await supabase.from('student_fees').insert([payload]);
 }
-alert('Automatic Result Card generate aur save ho gaya!');
-loadExamsPanel();
+alert('Fee aur Zakat/Sadaqah record update ho gaya!');
+loadFeesPanel();
+}
+
+window.saveDonation = async function(studentId){
+const donorName = document.getElementById('don-name-'+studentId).value.trim();
+const zakat = parseFloat(document.getElementById('don-zakat-'+studentId).value) || 0;
+const fitra = parseFloat(document.getElementById('don-fitra-'+studentId).value) || 0;
+const sadaqah = parseFloat(document.getElementById('don-sadaqah-'+studentId).value) || 0;
+const nafl = parseFloat(document.getElementById('don-nafl-'+studentId).value) || 0;
+const wajibah = parseFloat(document.getElementById('don-wajibah-'+studentId).value) || 0;
+
+const {data: existing} = await supabase.from('donations').select('*').eq('student_id', studentId);
+const payload = { student_id: studentId, donor_name: donorName, zakat, fitra, sadaqah, nafl, wajibah };
+
+if(existing && existing.length > 0){
+await supabase.from('donations').update(payload).eq('donation_id', existing[0].donation_id);
+} else {
+await supabase.from('donations').insert([payload]);
+}
+alert('Donation record kamyabi se save ho gaya!');
+loadDonationPanel();
 }
 
 async function loadStudentsDirectory(){
@@ -402,7 +394,7 @@ html += `
 <div style="width:45px;height:45px;background:#e0e7ff;color:#4f46e5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;">${s.student_name.charAt(0).toUpperCase()}</div>
 <div>
 <strong>${s.student_name}</strong><br>
-<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age: <strong style="color:#059669;">${calculateAge(s.dob)}</strong> | Course: <strong style="color:#4f46e5;">${s.course || '-'}</strong></span>
+<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age: <strong style="color:#059669;">${calculateAge(s.dob)}</strong> | Country/Currency: <strong style="color:#4f46e5;">${s.country_currency || 'Pakistan (PKR)'}</strong></span>
 </div>
 </div>
 <div><button onclick="deleteStudent(${s.student_id})" class="btn-danger" style="padding:6px 12px;font-size:12px;">Delete</button></div>
@@ -417,7 +409,7 @@ container.innerHTML = '<p>Loading...</p>';
 const {data: students, error} = await supabase.from('students').select('*');
 if(error || !students || students.length === 0){ container.innerHTML = '<p>Koi student mojood nahi hai.</p>'; return; }
 
-let html = `<table><tr><th>Student Detail</th><th>Daily Sabaq, Attendance & Fee</th></tr>`;
+let html = `<table><tr><th>Student Detail</th><th>Daily Sabaq, Attendance & Fee Status</th></tr>`;
 for(let s of students){
 const {data: recs} = await supabase.from('daily_records').select('*').eq('student_id', s.student_id).order('record_date', {ascending:false}).limit(1);
 const lastRec = (recs && recs.length > 0) ? recs[0] : {attendance_status: 'Present', sabaq_details: '', fee_status: 'Pending', record_date: new Date().toISOString().split('T')[0]};
@@ -425,7 +417,7 @@ const lastRec = (recs && recs.length > 0) ? recs[0] : {attendance_status: 'Prese
 html += `
 <tr>
 <td style="text-align:left;width:30%;">
-<strong>${s.student_name}</strong><br><span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'}</span><br><span style="color:#059669;font-weight:bold;font-size:12px;">Age: ${calculateAge(s.dob)}</span>
+<strong>${s.student_name}</strong><br><span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'}</span><br><span style="color:#059669;font-weight:bold;font-size:12px;">Country: ${s.country_currency || 'Pakistan (PKR)'}</span>
 </td>
 <td style="text-align:left;">
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -435,6 +427,88 @@ html += `
 <label style="margin-top:5px;display:block;"><strong>Sabaq Details:</strong></label><input type="text" id="sabaq-${s.student_id}" value="${lastRec.sabaq_details || ''}" placeholder="Sabaq ki tafseel">
 <label style="margin-top:5px;display:block;"><strong>Date:</strong></label><input type="date" id="date-${s.student_id}" value="${lastRec.record_date || new Date().toISOString().split('T')[0]}">
 <button onclick="saveRecord(${s.student_id})" class="btn-success" style="margin-top:5px;width:100%;">Update Record</button>
+</td>
+</tr>`;
+}
+html += `</table>`;
+container.innerHTML = html;
+}
+
+async function loadFeesPanel(){
+const container = document.getElementById('admin-fees-list');
+container.innerHTML = '<p>Loading...</p>';
+const {data: students, error} = await supabase.from('students').select('*');
+if(error || !students || students.length === 0){ container.innerHTML = '<p>Koi student mojood nahi hai.</p>'; return; }
+
+let html = `<table><tr><th>Student & Country Currency</th><th>Fee Amount & Contributions (Zakat, Fitra, Sadaqah, Nafl, Wajibah)</th></tr>`;
+for(let s of students){
+const {data: fees} = await supabase.from('student_fees').select('*').eq('student_id', s.student_id);
+const f = (fees && fees.length > 0) ? fees[0] : {fee_amount: 0, fee_status: 'Pending', zakat: 0, fitra: 0, sadaqah: 0, nafl: 0, wajibah: 0};
+const isPKR = (s.country_currency && s.country_currency.includes('Pakistan'));
+
+html += `
+<tr>
+<td style="text-align:left;width:30%;">
+<strong>${s.student_name}</strong><br>
+<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'}</span><br>
+<span style="color:#059669;font-weight:bold;font-size:13px;">🌍 ${s.country_currency || 'Pakistan (PKR)'}</span>
+<div style="margin-top:5px;font-size:11px;color:${isPKR?'#047857':'#1d4ed8'};background:${isPKR?'#d1fae5':'#dbeafe'};padding:4px;border-radius:4px;">
+${isPKR ? 'Local Currency: PKR (Pakistan)' : 'International Currency / Overseas Student'}
+</div>
+</td>
+<td style="text-align:left;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+<div><label><strong>Fee Amount:</strong></label><input type="number" id="fee-amt-${s.student_id}" value="${f.fee_amount || 0}"></div>
+<div><label><strong>Fee Status:</strong></label><select id="fee-stat-${s.student_id}"><option value="Paid" ${f.fee_status==='Paid'?'selected':''}>Paid</option><option value="Pending" ${f.fee_status==='Pending'?'selected':''}>Pending</option></select></div>
+</div>
+<div class="grid-3" style="margin-top:5px;">
+<div><label style="font-size:11px;">Zakat</label><input type="number" id="fee-zakat-${s.student_id}" value="${f.zakat || 0}"></div>
+<div><label style="font-size:11px;">Fitra</label><input type="number" id="fee-fitra-${s.student_id}" value="${f.fitra || 0}"></div>
+<div><label style="font-size:11px;">Sadaqah</label><input type="number" id="fee-sadaqah-${s.student_id}" value="${f.sadaqah || 0}"></div>
+</div>
+<div class="grid-2" style="margin-top:5px;">
+<div><label style="font-size:11px;">Nafl</label><input type="number" id="fee-nafl-${s.student_id}" value="${f.nafl || 0}"></div>
+<div><label style="font-size:11px;">Wajibah</label><input type="number" id="fee-wajibah-${s.student_id}" value="${f.wajibah || 0}"></div>
+</div>
+<button onclick="saveStudentFee(${s.student_id})" class="btn-success" style="width:100%;margin-top:8px;">Save Fee & Contributions</button>
+</td>
+</tr>`;
+}
+html += `</table>`;
+container.innerHTML = html;
+}
+
+async function loadDonationPanel(){
+const container = document.getElementById('admin-donation-list');
+container.innerHTML = '<p>Loading...</p>';
+const {data: students, error} = await supabase.from('students').select('*');
+if(error || !students || students.length === 0){ container.innerHTML = '<p>Koi student mojood nahi hai.</p>'; return; }
+
+let html = `<table><tr><th>Student / Donor Detail</th><th>Dedicated Donation Panel (Zakat, Fitra, Sadaqah, Nafl, Wajibah)</th></tr>`;
+for(let s of students){
+const {data: dons} = await supabase.from('donations').select('*').eq('student_id', s.student_id);
+const d = (dons && dons.length > 0) ? dons[0] : {donor_name: s.student_name, zakat: 0, fitra: 0, sadaqah: 0, nafl: 0, wajibah: 0};
+
+html += `
+<tr>
+<td style="text-align:left;width:30%;">
+<strong>${s.student_name}</strong><br>
+<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'}</span><br>
+<span style="color:#4f46e5;font-weight:bold;font-size:12px;">Country: ${s.country_currency || 'Pakistan (PKR)'}</span>
+</td>
+<td style="text-align:left;">
+<label><strong>Donor / Contributor Name:</strong></label>
+<input type="text" id="don-name-${s.student_id}" value="${d.donor_name || s.student_name}">
+<div class="grid-3" style="margin-top:5px;">
+<div><label style="font-size:11px;">Zakat</label><input type="number" id="don-zakat-${s.student_id}" value="${d.zakat || 0}"></div>
+<div><label style="font-size:11px;">Fitra</label><input type="number" id="don-fitra-${s.student_id}" value="${d.fitra || 0}"></div>
+<div><label style="font-size:11px;">Sadaqah</label><input type="number" id="don-sadaqah-${s.student_id}" value="${d.sadaqah || 0}"></div>
+</div>
+<div class="grid-2" style="margin-top:5px;">
+<div><label style="font-size:11px;">Nafl</label><input type="number" id="don-nafl-${s.student_id}" value="${d.nafl || 0}"></div>
+<div><label style="font-size:11px;">Wajibah</label><input type="number" id="don-wajibah-${s.student_id}" value="${d.wajibah || 0}"></div>
+</div>
+<button onclick="saveDonation(${s.student_id})" class="btn-success" style="width:100%;margin-top:8px;">Save Donation Record</button>
 </td>
 </tr>`;
 }
@@ -462,18 +536,19 @@ html += `
 <td style="text-align:left;">
 <label><strong>Exam Title / Month:</strong></label>
 <input type="text" id="exam-title-${s.student_id}" value="${ex.exam_title || ''}" placeholder="e.g. September Monthly Exam">
-<div class="grid-5" style="margin-top:8px;">
+<div class="grid-3" style="margin-top:8px;">
 <div><label style="font-size:11px;">Makharij (20)</label><input type="number" id="ex-makharij-${s.student_id}" value="${ex.makharij ?? 20}" max="20" min="0"></div>
 <div><label style="font-size:11px;">Adaigi (20)</label><input type="number" id="ex-adaigi-${s.student_id}" value="${ex.adaigi ?? 20}" max="20" min="0"></div>
 <div><label style="font-size:11px;">Rawani (30)</label><input type="number" id="ex-rawani-${s.student_id}" value="${ex.rawani ?? 30}" max="30" min="0"></div>
-<div><label style="font-size:11px;">Qawaid (10)</label><input type="number" id="ex-qawaid-${s.student_id}" value="${ex.qawaid ?? 10}" max="10" min="0"></div>
+</div>
+<div class="grid-2" style="margin-top:5px;">
+<div><label style="font-size:11px;">Qawaid (10)</label><input type="number" id="ex-qawaid-${s.student_id}" value="${ex.ex_qawaid ?? 10}" max="10" min="0"></div>
 <div><label style="font-size:11px;">Hijje (20)</label><input type="number" id="ex-hijje-${s.student_id}" value="${ex.hijje ?? 20}" max="20" min="0"></div>
 </div>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-top:5px;">
-<div style="width:50%;"><label style="font-size:11px;">Exam Date</label><input type="date" id="exam-date-${s.student_id}" value="${ex.exam_date || new Date().toISOString().split('T')[0]}"></div>
-<div style="text-align:right;width:48%;background:#f8fafc;padding:8px;border-radius:6px;border:1px solid #cbd5e1;font-size:12px;">Total: <strong style="color:#059669;" id="live-total-${s.student_id}">${totalSum}</strong> / 100</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+<div style="width:48%;"><label style="font-size:11px;">Exam Date</label><input type="date" id="exam-date-${s.student_id}" value="${ex.exam_date || new Date().toISOString().split('T')[0]}"></div>
+<div style="text-align:right;width:48%;background:#f8fafc;padding:8px;border-radius:6px;border:1px solid #cbd5e1;font-size:12px;">Total: <strong style="color:#059669;">${totalSum}</strong> / 100</div>
 </div>
-<button onclick="saveExamResult(${s.student_id})" class="btn-success" style="width:100%;margin-top:5px;">Generate & Save Result Card</button>
 </td>
 </tr>`;
 }
@@ -491,9 +566,7 @@ let html = `<table><tr><th>Student Detail</th><th>Ibadat & Namaz Tracker</th></t
 for(let s of students){
 html += `
 <tr>
-<td style="text-align:left;width:30%;">
-<strong>${s.student_name}</strong><br><span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'}</span>
-</td>
+<td style="text-align:left;width:30%;"><strong>${s.student_name}</strong><br><span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'}</span></td>
 <td style="text-align:left;"><p style="color:#475569;font-size:13px;">Namaz aur Azkaar ka record is student ke liye yahan update hoga.</p></td>
 </tr>`;
 }
