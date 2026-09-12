@@ -3,87 +3,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raza Online Academy - Complete Portal</title>
+<title>Raza Online Academy - Pro Management Dashboard</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#0b192c">
 <style>
-body{font-family:Arial,sans-serif;background:#f4f7f6;margin:0;padding:20px;color:#333}
-.container{max-width:750px;margin:auto;background:white;padding:20px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.1)}
-h2{color:#007bff;text-align:center}.card{background:#e9ecef;padding:15px;margin-top:15px;border-radius:8px}
-button{background:#007bff;color:white;border:none;padding:10px 15px;border-radius:5px;cursor:pointer;width:100%;font-size:16px;margin-top:10px}
-button:hover{background:#0056b3}.hidden{display:none}
-input, select, textarea{width:100%;padding:10px;margin-top:5px;box-sizing:border-box;border:1px solid #ccc;border-radius:5px;font-family:Arial;}
-table{width:100%;border-collapse:collapse;margin-top:10px;}
-th, td{border:1px solid #ddd;padding:8px;text-align:center;font-size:13px;}
-th{background:#007bff;color:white;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
+body{background:#f0f2f5;color:#333;display:flex;min-height:100vh;}
+.sidebar{width:240px;background:#0b192c;color:white;position:fixed;height:100%;padding:20px 10px;z-index:100;}
+.sidebar h2{font-size:18px;text-align:center;margin-bottom:20px;color:#fff;}
+.sidebar a{display:block;color:#cbd5e1;padding:10px 15px;text-decoration:none;border-radius:5px;margin-bottom:5px;font-size:14px;}
+.sidebar a:hover, .sidebar a.active{background:#1e3e62;color:#fff;}
+.main-content{margin-left:240px;flex:1;padding:20px;}
+.top-navbar{display:flex;justify-content:space-between;align-items:center;background:white;padding:15px 20px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,.05);margin-bottom:20px;}
+.stats-container{display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:15px;margin-bottom:20px;}
+.stat-card{background:white;padding:15px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,.05);border-left:4px solid #007bff;}
+.stat-card h4{font-size:13px;color:#64748b;}
+.stat-card p{font-size:20px;font-weight:bold;margin-top:5px;color:#0f172a;}
+.card{background:white;padding:20px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,.05);margin-bottom:20px;}
+h3{color:#0f172a;margin-bottom:15px;font-size:16px;border-bottom:2px solid #f1f5f9;padding-bottom:8px;}
+button{background:#007bff;color:white;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;font-size:14px;}
+button:hover{background:#0056b3;}
 .btn-danger{background:#dc3545;} .btn-danger:hover{background:#bd2130;}
 .btn-success{background:#28a745;} .btn-success:hover{background:#218838;}
-.btn-warning{background:#ffc107;color:#333;} .btn-warning:hover{background:#e0a800;}
+input, select{width:100%;padding:8px;margin-top:5px;margin-bottom:10px;border:1px solid #cbd5e1;border-radius:4px;}
+.hidden{display:none}
+table{width:100%;border-collapse:collapse;margin-top:10px;}
+th, td{border:1px solid #e2e8f0;padding:10px;text-align:center;font-size:13px;}
+th{background:#f8fafc;color:#475569;}
 </style>
 </head>
 <body>
-<div class="container">
-<h2>Raza Online Academy</h2>
-<p style="text-align:center;">Mukammal Student & Admin Management Portal</p>
 
-<!-- Choice Section -->
-<div id="choice-section">
-<button onclick="showStudentLogin()">Student Portal (Record Dekhein)</button>
-<button onclick="showAdminLogin()" class="btn-success" style="margin-top:15px;">Admin Panel (Owner Control)</button>
+<!-- Sidebar for Admin -->
+<div class="sidebar" id="admin-sidebar" style="display:none;">
+<h2>Raza Academy</h2>
+<a href="#" class="active"> Dashboard</a>
+<a href="#" onclick="logoutAdmin()"> Logout</a>
+</div>
+
+<div class="main-content" style="margin-left:0;" id="main-area">
+
+<!-- Choice / Login Screen -->
+<div id="choice-section" class="card" style="max-width:500px;margin:50px auto;text-align:center;">
+<h2>Raza Online Academy Portal</h2>
+<p style="color:#64748b;margin:10px 0 20px;">Apna Portal muntakhib karein</p>
+<button onclick="showStudentLogin()">Student Portal Login</button>
+<button onclick="showAdminLogin()" class="btn-success" style="margin-top:10px;">Admin Pro Panel (Owner)</button>
 </div>
 
 <!-- Student Login -->
-<div id="student-login-section" class="hidden">
-<h3>Student Login</h3>
+<div id="student-login-section" class="hidden card" style="max-width:400px;margin:50px auto;">
+<h3>Student Portal Login</h3>
 <input type="email" id="student-email" placeholder="Apna Email darj karein">
 <button onclick="fetchStudentData()">Portal Khulein</button>
-<button onclick="goBack()" style="background:#6c757d;">Wapas Jayein</button>
+<button onclick="goBack()" style="background:#6c757d;margin-top:10px;">Wapas Jayein</button>
 </div>
 
 <!-- Admin Login -->
-<div id="admin-login-section" class="hidden">
-<h3>Admin Login</h3>
-<input type="password" id="admin-pass" placeholder="Admin Password darj karein">
+<div id="admin-login-section" class="hidden card" style="max-width:400px;margin:50px auto;">
+<h3>Admin Pro Login</h3>
+<input type="password" id="admin-pass" placeholder="Admin Password (admin123)">
 <button onclick="verifyAdmin()" class="btn-success">Login Karein</button>
-<button onclick="goBack()" style="background:#6c757d;">Wapas Jayein</button>
+<button onclick="goBack()" style="background:#6c757d;margin-top:10px;">Wapas Jayein</button>
 </div>
 
 <!-- Student Dashboard -->
-<div id="dashboard-section" class="hidden">
-<div class="card"><h3>Student Profile</h3>
+<div id="dashboard-section" class="hidden card">
+<h3>Student Profile & Daily Overview</h3>
 <p><strong>Naam:</strong> <span id="s-name">-</span></p>
-<p><strong>Email:</strong> <span id="s-email-disp">-</span></p></div>
-<div class="card"><h3>Daily Sabaq & Attendance</h3>
+<p><strong>Email:</strong> <span id="s-email-disp">-</span></p>
+<hr style="margin:15px 0;">
+<h3>Sabaq, Attendance & Fee Status</h3>
 <p><strong>Attendance:</strong> <span id="s-attendance">-</span></p>
 <p><strong>Sabaq Details:</strong> <span id="s-sabaq">-</span></p>
-<p><strong>Date:</strong> <span id="s-date">-</span></p></div>
-<button onclick="goBack()" style="background:#6c757d;">Wapas Jayein</button>
+<p><strong>Fee Status:</strong> <span id="s-fee" style="font-weight:bold;color:green;">-</span></p>
+<p><strong>Date:</strong> <span id="s-date">-</span></p>
+<button onclick="goBack()" style="background:#6c757d;margin-top:15px;">Wapas Jayein</button>
 </div>
 
-<!-- Admin Dashboard -->
+<!-- Admin Pro Dashboard -->
 <div id="admin-dashboard-section" class="hidden">
-<div class="card" style="background:#e2f0d9;">
-<h3>Admin Control Panel</h3>
-<p>Yahan se aap naye students add kar sakte hain, unka data tabdeel ya delete kar sakte hain, aur daily sabaq/attendance manage kar sakte hain.</p>
+<div class="top-navbar">
+<h3>Admin Overview Dashboard</h3>
+<span>Khush Amdeed, Rizwan Raza (Owner)</span>
 </div>
 
-<!-- Add New Student Form -->
+<!-- Stats Cards -->
+<div class="stats-container">
+<div class="stat-card">
+<h4>Total Students</h4>
+<p id="stat-total-students">0</p>
+</div>
+<div class="stat-card" style="border-left-color:#28a745;">
+<h4>Fee Status Overview</h4>
+<p id="stat-fee-collected">0 Paid</p>
+</div>
+</div>
+
+<!-- Add New Student -->
 <div class="card">
-<h3>Naya Student Add Karein</h3>
+<h3>Naya Student Register Karein</h3>
 <input type="text" id="new-student-name" placeholder="Student ka Naam">
 <input type="email" id="new-student-email" placeholder="Student ka Email">
-<button onclick="addStudent()" class="btn-success">Student Register Karein</button>
+<button onclick="addStudent()" class="btn-success">Student Add Karein</button>
 </div>
 
-<!-- Students Management List -->
+<!-- Students & Records Management Table -->
 <div class="card">
-<h3>Tamam Students aur Daily Records Management</h3>
+<h3>Students Management, Attendance, Sabaq & Fee Control</h3>
 <div id="admin-students-list" style="overflow-x:auto;">
 <p>Data load ho raha hai...</p>
 </div>
 </div>
-
-<button onclick="goBack()" style="background:#6c757d;margin-top:20px;">Logout / Wapas Jayein</button>
 </div>
 
 </div>
@@ -105,13 +136,19 @@ document.getElementById('admin-login-section').classList.remove('hidden');
 }
 
 window.goBack = function(){
-document.querySelectorAll('.container > div').forEach(el => el.classList.add('hidden'));
+document.querySelectorAll('.card, #admin-dashboard-section').forEach(el => el.classList.add('hidden'));
 document.getElementById('choice-section').classList.remove('hidden');
+document.getElementById('admin-sidebar').style.display = 'none';
+document.getElementById('main-area').style.marginLeft = '0';
 document.getElementById('student-email').value = '';
 document.getElementById('admin-pass').value = '';
 }
 
-window.fetchStudentData=async function(){
+window.logoutAdmin = function(){
+goBack();
+}
+
+window.fetchStudentData = async function(){
 const email=document.getElementById('student-email').value.trim();
 if(!email){alert('Meherbani karke apna email likhein!');return}
 const {data:studentData,error:studentError}=await supabase.from('students').select('*').ilike('email', email).maybeSingle();
@@ -123,10 +160,12 @@ document.getElementById('s-email-disp').innerText=studentData.email;
 if(recordData&&recordData.length>0){
 document.getElementById('s-attendance').innerText=recordData[0].attendance_status;
 document.getElementById('s-sabaq').innerText=recordData[0].sabaq_details||'Koi detail nahi';
+document.getElementById('s-fee').innerText=recordData[0].fee_status || 'Pending';
 document.getElementById('s-date').innerText=recordData[0].record_date;
 }else{
 document.getElementById('s-attendance').innerText='N/A';
 document.getElementById('s-sabaq').innerText='Aaj ka record mojood nahi';
+document.getElementById('s-fee').innerText='Pending';
 document.getElementById('s-date').innerText='-';
 }
 document.getElementById('student-login-section').classList.add('hidden');
@@ -138,6 +177,8 @@ const pass = document.getElementById('admin-pass').value.trim();
 if(pass === 'admin123' || pass === 'rizwan123'){
 document.getElementById('admin-login-section').classList.add('hidden');
 document.getElementById('admin-dashboard-section').classList.remove('hidden');
+document.getElementById('admin-sidebar').style.display = 'block';
+document.getElementById('main-area').style.marginLeft = '240px';
 loadAdminPanel();
 }else{
 alert('Ghalat Password! Dobara koshish karein.');
@@ -167,22 +208,20 @@ loadAdminPanel();
 window.saveRecord = async function(studentId){
 const att = document.getElementById('att-'+studentId).value;
 const sabaq = document.getElementById('sabaq-'+studentId).value;
+const fee = document.getElementById('fee-'+studentId).value;
 const date = document.getElementById('date-'+studentId).value;
-if(!date){alert('Tareekh (Date) lazmi select karein!');return;}
+if(!date){alert('Tareekh lazmi select karein!');return;}
 
-// Check if record already exists for this date and student
 const {data: existing} = await supabase.from('daily_records').select('*').eq('student_id', studentId).eq('record_date', date);
 
 if(existing && existing.length > 0){
-// Update
-const {error} = await supabase.from('daily_records').update({attendance_status: att, sabaq_details: sabaq}).eq('record_id', existing[0].record_id);
+const {error} = await supabase.from('daily_records').update({attendance_status: att, sabaq_details: sabaq, fee_status: fee}).eq('record_id', existing[0].record_id);
 if(error){alert('Error: '+error.message);return;}
 } else {
-// Insert
-const {error} = await supabase.from('daily_records').insert([{student_id: studentId, attendance_status: att, sabaq_details: sabaq, record_date: date}]);
+const {error} = await supabase.from('daily_records').insert([{student_id: studentId, attendance_status: att, sabaq_details: sabaq, fee_status: fee, record_date: date}]);
 if(error){alert('Error: '+error.message);return;}
 }
-alert('Record save/update ho gaya!');
+alert('Record aur Fee update ho gayi!');
 loadAdminPanel();
 }
 
@@ -191,36 +230,58 @@ const container = document.getElementById('admin-students-list');
 container.innerHTML = '<p>Loading...</p>';
 const {data: students, error} = await supabase.from('students').select('*');
 if(error || !students || students.length === 0){
-container.innerHTML = '<p>Koi student mojood nahi hai. Upar form se add karein.</p>';
+container.innerHTML = '<p>Koi student mojood nahi hai.</p>';
+document.getElementById('stat-total-students').innerText = '0';
+document.getElementById('stat-fee-collected').innerText = '0 Paid';
 return;
 }
 
-let html = '';
+document.getElementById('stat-total-students').innerText = students.length;
+let feeCount = 0;
+
+let html = `<table><tr><th>Naam & Email</th><th>Control & Details (Sabaq, Attendance, Fee)</th></tr>`;
 for(let s of students){
-// Fetch latest record for this student
 const {data: recs} = await supabase.from('daily_records').select('*').eq('student_id', s.student_id).order('record_date', {ascending:false}).limit(1);
-const lastRec = (recs && recs.length > 0) ? recs[0] : {attendance_status: 'Present', sabaq_details: '', record_date: new Date().toISOString().split('T')[0]};
+const lastRec = (recs && recs.length > 0) ? recs[0] : {attendance_status: 'Present', sabaq_details: '', fee_status: 'Pending', record_date: new Date().toISOString().split('T')[0]};
+
+if(lastRec.fee_status === 'Paid') feeCount++;
 
 html += `
-<div style="background:#fff;padding:10px;margin-bottom:10px;border-radius:5px;border:1px solid #ccc;">
-<p><strong>Naam:</strong> ${s.student_name} | <strong>Email:</strong> ${s.email}</p>
-<button onclick="deleteStudent(${s.student_id})" class="btn-danger" style="width:auto;padding:5px 10px;font-size:12px;">Student Delete Karein</button>
-<div style="margin-top:8px;background:#f9f9f9;padding:8px;border-radius:4px;">
-<label>Attendance:</label>
+<tr>
+<td style="text-align:left;width:30%;">
+<strong>${s.student_name}</strong><br>
+<span style="color:#64748b;font-size:12px;">${s.email}</span><br><br>
+<button onclick="deleteStudent(${s.student_id})" class="btn-danger" style="padding:4px 8px;font-size:11px;">Delete Student</button>
+</td>
+<td style="text-align:left;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+<div>
+<label><strong>Attendance:</strong></label>
 <select id="att-${s.student_id}">
-<option value="Present" ${lastRec.attendance_status==='Present'?'selected':''}>Present (Hazir)</option>
-<option value="Absent" ${lastRec.attendance_status==='Absent'?'selected':''}>Absent (Ghair Hazir)</option>
-<option value="Leave" ${lastRec.attendance_status==='Leave'?'selected':''}>Leave (Chutti)</option>
+<option value="Present" ${lastRec.attendance_status==='Present'?'selected':''}>Present</option>
+<option value="Absent" ${lastRec.attendance_status==='Absent'?'selected':''}>Absent</option>
+<option value="Leave" ${lastRec.attendance_status==='Leave'?'selected':''}>Leave</option>
 </select>
-<label style="margin-top:5px;display:block;">Sabaq Details:</label>
-<input type="text" id="sabaq-${s.student_id}" value="${lastRec.sabaq_details || ''}" placeholder="Sabaq ki tafseel likhein">
-<label style="margin-top:5px;display:block;">Date:</label>
-<input type="date" id="date-${s.student_id}" value="${lastRec.record_date || new Date().toISOString().split('T')[0]}">
-<button onclick="saveRecord(${s.student_id})" class="btn-success" style="margin-top:8px;">Record Save / Update Karein</button>
 </div>
-</div>`;
+<div>
+<label><strong>Fee Status:</strong></label>
+<select id="fee-${s.student_id}">
+<option value="Paid" ${lastRec.fee_status==='Paid'?'selected':''}>Paid (Ada Shuda)</option>
+<option value="Pending" ${lastRec.fee_status==='Pending'?'selected':''}>Pending (Baqi)</option>
+</select>
+</div>
+</div>
+<label style="margin-top:5px;display:block;"><strong>Sabaq Details:</strong></label>
+<input type="text" id="sabaq-${s.student_id}" value="${lastRec.sabaq_details || ''}" placeholder="Sabaq ki tafseel likhein">
+<label style="margin-top:5px;display:block;"><strong>Date:</strong></label>
+<input type="date" id="date-${s.student_id}" value="${lastRec.record_date || new Date().toISOString().split('T')[0]}">
+<button onclick="saveRecord(${s.student_id})" class="btn-success" style="margin-top:5px;width:100%;">Record & Fee Update Karein</button>
+</td>
+</tr>`;
 }
+html += `</table>`;
 container.innerHTML = html;
+document.getElementById('stat-fee-collected').innerText = `${feeCount} Students Paid`;
 }
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
