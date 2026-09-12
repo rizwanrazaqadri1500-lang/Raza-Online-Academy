@@ -2,57 +2,66 @@
 <html lang="ur" dir="ltr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-<!DOCTYPE html>
+<html lang="ur" dir="ltr">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raza Online Academy - Pro Management Dashboard</title>
+<title>Raza Online Islamic Academy - Portal</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0b192c">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 body{background:#f0f2f5;color:#333;display:flex;min-height:100vh;}
-.sidebar{width:240px;background:#0b192c;color:white;position:fixed;height:100%;padding:20px 10px;z-index:100;}
-.sidebar h2{font-size:18px;text-align:center;margin-bottom:20px;color:#fff;}
-.sidebar a{display:block;color:#cbd5e1;padding:10px 15px;text-decoration:none;border-radius:5px;margin-bottom:5px;font-size:14px;}
+.sidebar{width:260px;background:#0b192c;color:white;position:fixed;height:100%;padding:20px 10px;z-index:100;}
+.sidebar h2{font-size:15px;text-align:center;color:#fff;margin-bottom:5px;}
+.sidebar p{font-size:11px;text-align:center;color:#94a3b8;margin-bottom:20px;}
+.sidebar a{display:block;color:#cbd5e1;padding:12px 15px;text-decoration:none;border-radius:6px;margin-bottom:5px;font-size:13px;cursor:pointer;}
 .sidebar a:hover, .sidebar a.active{background:#1e3e62;color:#fff;}
-.main-content{margin-left:240px;flex:1;padding:20px;}
+.main-content{margin-left:260px;flex:1;padding:20px;}
 .top-navbar{display:flex;justify-content:space-between;align-items:center;background:white;padding:15px 20px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,.05);margin-bottom:20px;}
-.stats-container{display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:15px;margin-bottom:20px;}
-.stat-card{background:white;padding:15px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,.05);border-left:4px solid #007bff;}
-.stat-card h4{font-size:13px;color:#64748b;}
-.stat-card p{font-size:20px;font-weight:bold;margin-top:5px;color:#0f172a;}
+.badge{background:#dcfce7;color:#166534;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:bold;}
 .card{background:white;padding:20px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,.05);margin-bottom:20px;}
 h3{color:#0f172a;margin-bottom:15px;font-size:16px;border-bottom:2px solid #f1f5f9;padding-bottom:8px;}
-button{background:#007bff;color:white;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;font-size:14px;}
-button:hover{background:#0056b3;}
+button{background:#4f46e5;color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:14px;}
+button:hover{background:#4338ca;}
 .btn-danger{background:#dc3545;} .btn-danger:hover{background:#bd2130;}
 .btn-success{background:#28a745;} .btn-success:hover{background:#218838;}
-input, select{width:100%;padding:8px;margin-top:5px;margin-bottom:10px;border:1px solid #cbd5e1;border-radius:4px;}
+input, select{width:100%;padding:10px;margin-top:5px;margin-bottom:15px;border:1px solid #cbd5e1;border-radius:6px;}
 .hidden{display:none}
 table{width:100%;border-collapse:collapse;margin-top:10px;}
 th, td{border:1px solid #e2e8f0;padding:10px;text-align:center;font-size:13px;}
 th{background:#f8fafc;color:#475569;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
 </style>
 </head>
 <body>
 
-<!-- Sidebar for Admin -->
-<div class="sidebar" id="admin-sidebar" style="display:none;">
-<h2>Raza Academy</h2>
-<a href="#" class="active"> Dashboard</a>
-<a href="#" onclick="logoutAdmin()"> Logout</a>
+<!-- Sidebar Menu (Jaise image mein hai) -->
+<div class="sidebar" id="app-sidebar" style="display:none;">
+<h2>Raza Online Islamic Academy</h2>
+<p>Admin & Student Management Portal</p>
+<a href="#" class="active" onclick="switchTab('add-student', this)">➕ Add Student</a>
+<a href="#" onclick="switchTab('students-dir', this)">👥 Students Directory</a>
+<a href="#" onclick="switchTab('daily-rec', this)">📅 Daily Sabaq & Attendance</a>
+<a href="#" onclick="switchTab('ibadat', this)">🕌 Ibadat Tracker</a>
+<a href="#" onclick="switchTab('fees', this)">💰 Fees & Vouchers</a>
+<a href="#" onclick="switchTab('library', this)">📚 Islamic Books Library</a>
+<a href="#" onclick="switchTab('logout', this)" style="color:#fca5a5;">🚪 Logout Portal</a>
 </div>
 
 <div class="main-content" style="margin-left:0;" id="main-area">
 
 <!-- Choice / Login Screen -->
-<div id="choice-section" class="card" style="max-width:500px;margin:50px auto;text-align:center;">
-<h2>Raza Online Academy Portal</h2>
-<p style="color:#64748b;margin:10px 0 20px;">Apna Portal muntakhib karein</p>
-<button onclick="showStudentLogin()">Student Portal Login</button>
-<button onclick="showAdminLogin()" class="btn-success" style="margin-top:10px;">Admin Pro Panel (Owner)</button>
+<div id="choice-section" class="card" style="max-width:450px;margin:80px auto;text-align:center;">
+<h2>Raza Online Islamic Academy</h2>
+<p style="color:#64748b;margin:15px 0 25px;">Apna Portal muntakhib karein</p>
+<button onclick="showStudentLogin()">Student Portal (Record Dekhein)</button>
+<button onclick="showAdminLogin()" class="btn-success" style="margin-top:12px;">Admin Panel Login (Owner)</button>
 </div>
 
 <!-- Student Login -->
-<div id="student-login-section" class="hidden card" style="max-width:400px;margin:50px auto;">
+<div id="student-login-section" class="hidden card" style="max-width:400px;margin:80px auto;">
 <h3>Student Portal Login</h3>
 <input type="email" id="student-email" placeholder="Apna Email darj karein">
 <button onclick="fetchStudentData()">Portal Khulein</button>
@@ -60,8 +69,8 @@ th{background:#f8fafc;color:#475569;}
 </div>
 
 <!-- Admin Login -->
-<div id="admin-login-section" class="hidden card" style="max-width:400px;margin:50px auto;">
-<h3>Admin Pro Login</h3>
+<div id="admin-login-section" class="hidden card" style="max-width:400px;margin:80px auto;">
+<h3>Admin Panel Login</h3>
 <input type="password" id="admin-pass" placeholder="Admin Password (admin123)">
 <button onclick="verifyAdmin()" class="btn-success">Login Karein</button>
 <button onclick="goBack()" style="background:#6c757d;margin-top:10px;">Wapas Jayein</button>
@@ -71,50 +80,101 @@ th{background:#f8fafc;color:#475569;}
 <div id="dashboard-section" class="hidden card">
 <h3>Student Profile & Daily Overview</h3>
 <p><strong>Naam:</strong> <span id="s-name">-</span></p>
-<p><strong>Email:</strong> <span id="s-email-disp">-</span></p>
+<p><strong>Father's Name:</strong> <span id="s-fname">-</span></p>
+<p><strong>Course:</strong> <span id="s-course">-</span></p>
+<p><strong>Email / Mobile:</strong> <span id="s-email-disp">-</span></p>
 <hr style="margin:15px 0;">
-<h3>Sabaq, Attendance & Fee Status</h3>
 <p><strong>Attendance:</strong> <span id="s-attendance">-</span></p>
 <p><strong>Sabaq Details:</strong> <span id="s-sabaq">-</span></p>
 <p><strong>Fee Status:</strong> <span id="s-fee" style="font-weight:bold;color:green;">-</span></p>
-<p><strong>Date:</strong> <span id="s-date">-</span></p>
 <button onclick="goBack()" style="background:#6c757d;margin-top:15px;">Wapas Jayein</button>
 </div>
 
-<!-- Admin Pro Dashboard -->
+<!-- Admin Dashboard Wrapper -->
 <div id="admin-dashboard-section" class="hidden">
 <div class="top-navbar">
-<h3>Admin Overview Dashboard</h3>
-<span>Khush Amdeed, Rizwan Raza (Owner)</span>
-</div>
-
-<!-- Stats Cards -->
-<div class="stats-container">
-<div class="stat-card">
-<h4>Total Students</h4>
-<p id="stat-total-students">0</p>
-</div>
-<div class="stat-card" style="border-left-color:#28a745;">
-<h4>Fee Status Overview</h4>
-<p id="stat-fee-collected">0 Paid</p>
+<h3 id="panel-title" style="border:none;margin:0;">Naya Student Add Karein</h3>
+<div>
+<span class="badge">● System Active</span>
+<button onclick="goBack()" style="background:#334155;padding:6px 12px;font-size:12px;margin-left:10px;">Switch to Parent View</button>
 </div>
 </div>
 
-<!-- Add New Student -->
-<div class="card">
-<h3>Naya Student Register Karein</h3>
-<input type="text" id="new-student-name" placeholder="Student ka Naam">
-<input type="email" id="new-student-email" placeholder="Student ka Email">
-<button onclick="addStudent()" class="btn-success">Student Add Karein</button>
+<!-- Tab 1: Add Student -->
+<div id="tab-add-student" class="card">
+<h3>➕ Naya Student Add Karein (Auto Currency Detection)</h3>
+<div class="grid-2">
+<div>
+<label>Student Name *</label>
+<input type="text" id="new-student-name" placeholder="e.g. Muhammad Affan">
+</div>
+<div>
+<label>Father's Name *</label>
+<input type="text" id="new-father-name" placeholder="e.g. Tariq Mahmood">
+</div>
+</div>
+<div class="grid-2">
+<div>
+<label>Select Course</label>
+<select id="new-course">
+<option value="Madani Qaida">Madani Qaida</option>
+<option value="Hifz-ul-Quran">Hifz-ul-Quran</option>
+<option value="Nazra Quran">Nazra Quran</option>
+<option value="Islamic Studies">Islamic Studies</option>
+</select>
+</div>
+<div>
+<label>Student Email *</label>
+<input type="email" id="new-student-email" placeholder="student@gmail.com">
+</div>
+</div>
+<div class="grid-2">
+<div>
+<label>Parent Mobile / WhatsApp (Auto Country)</label>
+<input type="text" id="new-mobile" placeholder="+923001234567">
+</div>
+<div>
+<label>Detected Country & Currency</label>
+<input type="text" id="new-currency" value="Pakistan (PKR)" readonly style="background:#f8fafc;">
+</div>
+</div>
+<button onclick="addStudent()" class="btn-success" style="margin-top:10px;">+ Save Student Profile</button>
 </div>
 
-<!-- Students & Records Management Table -->
-<div class="card">
-<h3>Students Management, Attendance, Sabaq & Fee Control</h3>
+<!-- Tab 2: Students Directory -->
+<div id="tab-students-dir" class="card hidden">
+<h3>👥 Students Profile Directory</h3>
+<div id="students-directory-list" style="overflow-x:auto;">
+<p>Data load ho raha hai...</p>
+</div>
+</div>
+
+<!-- Tab 3: Daily Sabaq & Attendance -->
+<div id="tab-daily-rec" class="card hidden">
+<h3>📅 Daily Sabaq & Attendance Management</h3>
 <div id="admin-students-list" style="overflow-x:auto;">
 <p>Data load ho raha hai...</p>
 </div>
 </div>
+
+<!-- Tab 4: Ibadat Tracker -->
+<div id="tab-ibadat" class="card hidden">
+<h3>🕌 Ibadat Tracker & Namaz Record</h3>
+<p style="color:#64748b;">Yahan students ki namazon aur rozana ki ibadat ka record dekha ja sakega.</p>
+</div>
+
+<!-- Tab 5: Fees & Vouchers -->
+<div id="tab-fees" class="card hidden">
+<h3>💰 Fees & Vouchers Management</h3>
+<p style="color:#64748b;">Yahan fee invoices aur monthly vouchers generate kiye jayenge.</p>
+</div>
+
+<!-- Tab 6: Islamic Books Library -->
+<div id="tab-library" class="card hidden">
+<h3>📚 Islamic Books Library</h3>
+<p style="color:#64748b;">Quran, Hadith aur Deeni kutub ki PDF library yahan available hogi.</p>
+</div>
+
 </div>
 
 </div>
@@ -138,14 +198,40 @@ document.getElementById('admin-login-section').classList.remove('hidden');
 window.goBack = function(){
 document.querySelectorAll('.card, #admin-dashboard-section').forEach(el => el.classList.add('hidden'));
 document.getElementById('choice-section').classList.remove('hidden');
-document.getElementById('admin-sidebar').style.display = 'none';
+document.getElementById('app-sidebar').style.display = 'none';
 document.getElementById('main-area').style.marginLeft = '0';
 document.getElementById('student-email').value = '';
 document.getElementById('admin-pass').value = '';
 }
 
-window.logoutAdmin = function(){
-goBack();
+window.switchTab = function(tabName, el){
+if(tabName === 'logout'){ goBack(); return; }
+document.querySelectorAll('#admin-dashboard-section > div.card').forEach(c => c.classList.add('hidden'));
+document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+
+if(el) el.classList.add('active');
+
+if(tabName === 'add-student'){
+document.getElementById('tab-add-student').classList.remove('hidden');
+document.getElementById('panel-title').innerText = 'Naya Student Add Karein';
+} else if(tabName === 'students-dir'){
+document.getElementById('tab-students-dir').classList.remove('hidden');
+document.getElementById('panel-title').innerText = 'Students Profile Directory';
+loadStudentsDirectory();
+} else if(tabName === 'daily-rec'){
+document.getElementById('tab-daily-rec').classList.remove('hidden');
+document.getElementById('panel-title').innerText = 'Daily Sabaq & Attendance';
+loadAdminPanel();
+} else if(tabName === 'ibadat'){
+document.getElementById('tab-ibadat').classList.remove('hidden');
+document.getElementById('panel-title').innerText = 'Ibadat Tracker';
+} else if(tabName === 'fees'){
+document.getElementById('tab-fees').classList.remove('hidden');
+document.getElementById('panel-title').innerText = 'Fees & Vouchers';
+} else if(tabName === 'library'){
+document.getElementById('tab-library').classList.remove('hidden');
+document.getElementById('panel-title').innerText = 'Islamic Books Library';
+}
 }
 
 window.fetchStudentData = async function(){
@@ -155,18 +241,18 @@ const {data:studentData,error:studentError}=await supabase.from('students').sele
 if(studentError||!studentData){alert('Student nahi mila! Email check karein.');return}
 const {data:recordData}=await supabase.from('daily_records').select('*').eq('student_id',studentData.student_id).order('record_date',{ascending:false}).limit(1);
 
-document.getElementById('s-name').innerText=studentData.student_name || 'Naam mojood nahi';
+document.getElementById('s-name').innerText=studentData.student_name || '-';
+document.getElementById('s-fname').innerText=studentData.father_name || '-';
+document.getElementById('s-course').innerText=studentData.course || '-';
 document.getElementById('s-email-disp').innerText=studentData.email;
 if(recordData&&recordData.length>0){
 document.getElementById('s-attendance').innerText=recordData[0].attendance_status;
 document.getElementById('s-sabaq').innerText=recordData[0].sabaq_details||'Koi detail nahi';
 document.getElementById('s-fee').innerText=recordData[0].fee_status || 'Pending';
-document.getElementById('s-date').innerText=recordData[0].record_date;
 }else{
 document.getElementById('s-attendance').innerText='N/A';
 document.getElementById('s-sabaq').innerText='Aaj ka record mojood nahi';
 document.getElementById('s-fee').innerText='Pending';
-document.getElementById('s-date').innerText='-';
 }
 document.getElementById('student-login-section').classList.add('hidden');
 document.getElementById('dashboard-section').classList.remove('hidden');
@@ -177,9 +263,9 @@ const pass = document.getElementById('admin-pass').value.trim();
 if(pass === 'admin123' || pass === 'rizwan123'){
 document.getElementById('admin-login-section').classList.add('hidden');
 document.getElementById('admin-dashboard-section').classList.remove('hidden');
-document.getElementById('admin-sidebar').style.display = 'block';
-document.getElementById('main-area').style.marginLeft = '240px';
-loadAdminPanel();
+document.getElementById('app-sidebar').style.display = 'block';
+document.getElementById('main-area').style.marginLeft = '260px';
+loadStudentsDirectory();
 }else{
 alert('Ghalat Password! Dobara koshish karein.');
 }
@@ -187,14 +273,19 @@ alert('Ghalat Password! Dobara koshish karein.');
 
 window.addStudent = async function(){
 const name = document.getElementById('new-student-name').value.trim();
+const fname = document.getElementById('new-father-name').value.trim();
+const course = document.getElementById('new-course').value;
 const email = document.getElementById('new-student-email').value.trim();
-if(!name || !email){alert('Naam aur Email dono lazmi hain!');return;}
-const {error} = await supabase.from('students').insert([{student_name: name, email: email}]);
+const mobile = document.getElementById('new-mobile').value.trim();
+
+if(!name || !email){alert('Student Name aur Email lazmi hain!');return;}
+const {error} = await supabase.from('students').insert([{student_name: name, father_name: fname, course: course, email: email, mobile: mobile}]);
 if(error){alert('Error: ' + error.message);return;}
-alert('Student kamyabi se add ho gaya!');
+alert('Student kamyabi se save ho gaya!');
 document.getElementById('new-student-name').value = '';
+document.getElementById('new-father-name').value = '';
 document.getElementById('new-student-email').value = '';
-loadAdminPanel();
+document.getElementById('new-mobile').value = '';
 }
 
 window.deleteStudent = async function(id){
@@ -202,7 +293,7 @@ if(!confirm('Kya aap waqai is student ko delete karna chahte hain?')) return;
 const {error} = await supabase.from('students').delete().eq('student_id', id);
 if(error){alert('Error: ' + error.message);return;}
 alert('Student delete ho gaya.');
-loadAdminPanel();
+loadStudentsDirectory();
 }
 
 window.saveRecord = async function(studentId){
@@ -215,14 +306,34 @@ if(!date){alert('Tareekh lazmi select karein!');return;}
 const {data: existing} = await supabase.from('daily_records').select('*').eq('student_id', studentId).eq('record_date', date);
 
 if(existing && existing.length > 0){
-const {error} = await supabase.from('daily_records').update({attendance_status: att, sabaq_details: sabaq, fee_status: fee}).eq('record_id', existing[0].record_id);
-if(error){alert('Error: '+error.message);return;}
+await supabase.from('daily_records').update({attendance_status: att, sabaq_details: sabaq, fee_status: fee}).eq('record_id', existing[0].record_id);
 } else {
-const {error} = await supabase.from('daily_records').insert([{student_id: studentId, attendance_status: att, sabaq_details: sabaq, fee_status: fee, record_date: date}]);
-if(error){alert('Error: '+error.message);return;}
+await supabase.from('daily_records').insert([{student_id: studentId, attendance_status: att, sabaq_details: sabaq, fee_status: fee, record_date: date}]);
 }
-alert('Record aur Fee update ho gayi!');
+alert('Record update ho gaya!');
 loadAdminPanel();
+}
+
+async function loadStudentsDirectory(){
+const container = document.getElementById('students-directory-list');
+container.innerHTML = '<p>Loading...</p>';
+const {data: students, error} = await supabase.from('students').select('*');
+if(error || !students || students.length === 0){
+container.innerHTML = '<p>Koi student mojood nahi hai.</p>';
+return;
+}
+
+let html = `<table><tr><th>Naam & S/O</th><th>Course</th><th>Email / Mobile</th><th>Action</th></tr>`;
+for(let s of students){
+html += `<tr>
+<td><strong>${s.student_name}</strong><br><span style="color:#64748b;font-size:11px;">S/O: ${s.father_name || '-'}</span></td>
+<td>${s.course || '-'}</td>
+<td>${s.email}<br>${s.mobile || ''}</td>
+<td><button onclick="deleteStudent(${s.student_id})" class="btn-danger" style="padding:4px 8px;font-size:12px;">Delete</button></td>
+</tr>`;
+}
+html += `</table>`;
+container.innerHTML = html;
 }
 
 async function loadAdminPanel(){
@@ -231,27 +342,20 @@ container.innerHTML = '<p>Loading...</p>';
 const {data: students, error} = await supabase.from('students').select('*');
 if(error || !students || students.length === 0){
 container.innerHTML = '<p>Koi student mojood nahi hai.</p>';
-document.getElementById('stat-total-students').innerText = '0';
-document.getElementById('stat-fee-collected').innerText = '0 Paid';
 return;
 }
 
-document.getElementById('stat-total-students').innerText = students.length;
-let feeCount = 0;
-
-let html = `<table><tr><th>Naam & Email</th><th>Control & Details (Sabaq, Attendance, Fee)</th></tr>`;
+let html = `<table><tr><th>Student Detail</th><th>Daily Sabaq, Attendance & Fee</th></tr>`;
 for(let s of students){
 const {data: recs} = await supabase.from('daily_records').select('*').eq('student_id', s.student_id).order('record_date', {ascending:false}).limit(1);
 const lastRec = (recs && recs.length > 0) ? recs[0] : {attendance_status: 'Present', sabaq_details: '', fee_status: 'Pending', record_date: new Date().toISOString().split('T')[0]};
-
-if(lastRec.fee_status === 'Paid') feeCount++;
 
 html += `
 <tr>
 <td style="text-align:left;width:30%;">
 <strong>${s.student_name}</strong><br>
-<span style="color:#64748b;font-size:12px;">${s.email}</span><br><br>
-<button onclick="deleteStudent(${s.student_id})" class="btn-danger" style="padding:4px 8px;font-size:11px;">Delete Student</button>
+<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'}</span><br>
+<span style="color:#64748b;font-size:12px;">Course: ${s.course || '-'}</span>
 </td>
 <td style="text-align:left;">
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -266,8 +370,8 @@ html += `
 <div>
 <label><strong>Fee Status:</strong></label>
 <select id="fee-${s.student_id}">
-<option value="Paid" ${lastRec.fee_status==='Paid'?'selected':''}>Paid (Ada Shuda)</option>
-<option value="Pending" ${lastRec.fee_status==='Pending'?'selected':''}>Pending (Baqi)</option>
+<option value="Paid" ${lastRec.fee_status==='Paid'?'selected':''}>Paid</option>
+<option value="Pending" ${lastRec.fee_status==='Pending'?'selected':''}>Pending</option>
 </select>
 </div>
 </div>
@@ -275,13 +379,12 @@ html += `
 <input type="text" id="sabaq-${s.student_id}" value="${lastRec.sabaq_details || ''}" placeholder="Sabaq ki tafseel likhein">
 <label style="margin-top:5px;display:block;"><strong>Date:</strong></label>
 <input type="date" id="date-${s.student_id}" value="${lastRec.record_date || new Date().toISOString().split('T')[0]}">
-<button onclick="saveRecord(${s.student_id})" class="btn-success" style="margin-top:5px;width:100%;">Record & Fee Update Karein</button>
+<button onclick="saveRecord(${s.student_id})" class="btn-success" style="margin-top:5px;width:100%;">Update Record</button>
 </td>
 </tr>`;
 }
 html += `</table>`;
 container.innerHTML = html;
-document.getElementById('stat-fee-collected').innerText = `${feeCount} Students Paid`;
 }
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
