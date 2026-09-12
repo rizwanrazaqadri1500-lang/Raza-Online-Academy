@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+         <!DOCTYPE html>
 <html lang="ur" dir="ltr">
 <head>
 <meta charset="UTF-8">
@@ -96,7 +96,7 @@ Raza Online Islamic Academy
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f8fafc;padding:15px;border-radius:8px;border:1px solid #e2e8f0;font-size:13px;">
 <p><strong>Father's Name:</strong> <span id="s-fname">-</span></p>
-<p><strong>Age:</strong> <span id="s-age">-</span></p>
+<p><strong>Age / DOB:</strong> <span id="s-age">-</span></p>
 <p><strong>Course:</strong> <span id="s-course">-</span></p>
 <p><strong>Country & Currency:</strong> <span id="s-country">-</span></p>
 </div>
@@ -131,7 +131,7 @@ Raza Online Islamic Academy
 </div>
 <div class="grid-2">
 <div><label>Select Course</label><select id="new-course"><option value="Madani Qaida">Madani Qaida</option><option value="Hifz-ul-Quran">Hifz-ul-Quran</option><option value="Nazra Quran">Nazra Quran</option><option value="Islamic Studies">Islamic Studies</option></select></div>
-<div><label>Age / Umr *</label><input type="text" id="new-dob" placeholder="e.g. 10 Years"></div>
+<div><label>Age / DOB *</label><input type="text" id="new-dob" placeholder="e.g. 9 Years"></div>
 </div>
 <div class="grid-2">
 <div><label>Parent Mobile / WhatsApp</label><input type="text" id="new-mobile" placeholder="+61400123456 / +92..."></div>
@@ -141,7 +141,7 @@ Raza Online Islamic Academy
 <option value="Pakistan (PKR)">🇵🇰 Pakistan (PKR)</option>
 <option value="Australia (AUD)">🇦🇺 Australia (AUD)</option>
 <option value="United Kingdom (GBP)">🇬🇧 United Kingdom - UK (GBP)</option>
-<option value="United States (USD)">🇺🇸 United States - USA (USD)</option>
+<option value="United States (USD)">🇦🇺 United States - USA (USD)</option>
 <option value="Canada (CAD)">🇨🇦 Canada (CAD)</option>
 <option value="Saudi Arabia (SAR)">🇸🇦 Saudi Arabia (SAR)</option>
 <option value="UAE (AED)">🇦🇪 United Arab Emirates - UAE (AED)</option>
@@ -440,7 +440,7 @@ html += `
 ${photoTag}
 <div>
 <strong style="font-size:15px;color:#0f172a;">${s.student_name}</strong><br>
-<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age: <strong style="color:#059669;">${s.dob || 'N/A'}</strong></span><br>
+<span style="color:#64748b;font-size:12px;">S/O: ${s.father_name || '-'} | Age/DOB: <strong style="color:#059669;">${s.dob || 'N/A'}</strong></span><br>
 <span style="color:#4f46e5;font-size:11px;">🌍 Country: ${s.country_currency || 'Pakistan'}</span>
 </div>
 </div>
