@@ -35,7 +35,7 @@
                 </button>
 
                 <button onclick="switchTab('sabaq')" id="nav-sabaq" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-800/80 text-slate-300 transition">
-                    <i class="fa-solid fa-book-open w-4"></i><span>Daily Sabaq & Attendance</span>
+                    <i class="fa-solid fa-book-open w-4"></i><span>Daily Attendance & Sabaq</span>
                 </button>
 
                 <button onclick="switchTab('ibadat')" id="nav-ibadat" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl hover:bg-slate-800/80 text-slate-300 transition">
@@ -142,10 +142,22 @@
                     </div>
                 </div>
 
-                <!-- 3. Daily Sabaq & Attendance Tab -->
+                <!-- 3. Daily Attendance & Sabaq Tab -->
                 <div id="tab-sabaq" class="admin-tab hidden space-y-6">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs space-y-4">
-                        <h3 class="text-base font-bold text-slate-900">Daily Sabaq & Progress Update</h3>
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-xs space-y-5">
+                        <h3 class="text-base font-bold text-slate-900">Daily Attendance & Sabaq Progress Update</h3>
+                        
+                        <!-- Attendance Section -->
+                        <div class="p-4 bg-slate-50 border rounded-xl space-y-3">
+                            <label class="block font-bold text-slate-800 text-sm">Student Attendance Status:</label>
+                            <div class="flex space-x-3">
+                                <button type="button" onclick="setAttendance('Present')" id="att-present" class="px-4 py-2 bg-emerald-600 text-white font-bold rounded-xl transition shadow">Present</button>
+                                <button type="button" onclick="setAttendance('Absent')" id="att-absent" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold rounded-xl transition">Absent</button>
+                                <button type="button" onclick="setAttendance('Late')" id="att-late" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold rounded-xl transition">Late</button>
+                            </div>
+                        </div>
+
+                        <!-- Sabaq Section -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block font-bold text-slate-700 mb-1">Total Sabaq Finished / Completed:</label>
@@ -156,7 +168,7 @@
                                 <input type="text" id="admin-mujaddaha" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none font-semibold">
                             </div>
                         </div>
-                        <button onclick="saveSabaqProgress()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition">Update Sabaq Progress</button>
+                        <button onclick="saveSabaqProgress()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition shadow-md">Save Attendance & Sabaq Progress</button>
                     </div>
                 </div>
 
@@ -282,8 +294,12 @@
                         <button onclick="toggleMainView()" class="text-xs text-blue-600 hover:underline font-bold bg-blue-50 px-3 py-1.5 rounded-lg">Back to Admin</button>
                     </div>
 
-                    <!-- Sabaq Progress Box -->
-                    <div class="p-4 bg-slate-50 border rounded-xl grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                    <!-- Attendance & Sabaq Progress Box -->
+                    <div class="p-4 bg-slate-50 border rounded-xl grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                        <div>
+                            <span class="text-slate-500 block font-semibold">Today's Attendance:</span>
+                            <span class="font-bold text-emerald-600 text-sm" id="card-disp-attendance">Present</span>
+                        </div>
                         <div>
                             <span class="text-slate-500 block font-semibold">Total Sabaq Finished:</span>
                             <span class="font-bold text-slate-900 text-sm" id="card-disp-finished"></span>
@@ -352,6 +368,7 @@
             name: "Abdul Rehman",
             age: 6,
             course: "Hifz-ul-Quran",
+            attendance: "Present",
             sabaqFinished: "Para 3 (Surah Al-Imran Ayat 50 Completed)",
             mujaddaha: "Para 3 - Ruku 4",
             t: { makharij: 28, adaigi: 18, rawah: 27, hifz: 10, malumaat: 5, pehchan: 5 },
@@ -359,7 +376,7 @@
         };
 
         function loadData() {
-            let saved = localStorage.getItem('raza_academy_v4');
+            let saved = localStorage.getItem('raza_academy_v5');
             return saved ? JSON.parse(saved) : db;
         }
 
@@ -385,6 +402,7 @@
 
             document.getElementById('admin-sabaq-finished').value = currentData.sabaqFinished;
             document.getElementById('admin-mujaddaha').value = currentData.mujaddaha;
+            setAttendanceUI(currentData.attendance);
 
             document.getElementById('form-disp-id').innerText = currentData.id;
             document.getElementById('form-disp-name').innerText = currentData.name;
@@ -404,7 +422,6 @@
         }
 
         function switchTab(tabId) {
-            // Ensure Admin panel is visible when clicking any sidebar tab
             let admin = document.getElementById('admin-container');
             let student = document.getElementById('student-container');
             let viewBtn = document.getElementById('view-switch-btn');
@@ -415,7 +432,6 @@
                 if(viewBtn) viewBtn.innerText = "Switch to Parent View";
             }
 
-            // Hide all tabs and reset navigation buttons style
             ['add-student', 'directory', 'sabaq', 'ibadat', 'exams', 'fees', 'library'].forEach(t => {
                 let el = document.getElementById('tab-' + t);
                 let nav = document.getElementById('nav-' + t);
@@ -426,7 +442,6 @@
                 }
             });
 
-            // Show target tab and highlight corresponding nav button
             let targetTab = document.getElementById('tab-' + tabId);
             let targetNav = document.getElementById('nav-' + tabId);
             if(targetTab) targetTab.classList.remove('hidden');
@@ -436,13 +451,33 @@
             }
         }
 
+        function setAttendance(status) {
+            currentData.attendance = status;
+            setAttendanceUI(status);
+        }
+
+        function setAttendanceUI(status) {
+            ['Present', 'Absent', 'Late'].forEach(s => {
+                let btn = document.getElementById('att-' + s.toLowerCase());
+                if(btn) {
+                    btn.className = "px-4 py-2 bg-slate-200 text-slate-700 font-bold rounded-xl transition";
+                }
+            });
+            let activeBtn = document.getElementById('att-' + status.toLowerCase());
+            if(activeBtn) {
+                if(status === 'Present') activeBtn.className = "px-4 py-2 bg-emerald-600 text-white font-bold rounded-xl transition shadow";
+                else if(status === 'Absent') activeBtn.className = "px-4 py-2 bg-red-600 text-white font-bold rounded-xl transition shadow";
+                else activeBtn.className = "px-4 py-2 bg-amber-500 text-white font-bold rounded-xl transition shadow";
+            }
+        }
+
         function handleSaveStudent(e) {
             e.preventDefault();
             currentData.id = document.getElementById('input-id').value;
             currentData.name = document.getElementById('input-name').value;
             currentData.age = document.getElementById('input-age').value;
             currentData.course = document.getElementById('input-course').value;
-            localStorage.setItem('raza_academy_v4', JSON.stringify(currentData));
+            localStorage.setItem('raza_academy_v5', JSON.stringify(currentData));
             populateAdmin();
             alert("Student Profile Saved Successfully!");
         }
@@ -450,8 +485,9 @@
         function saveSabaqProgress() {
             currentData.sabaqFinished = document.getElementById('admin-sabaq-finished').value;
             currentData.mujaddaha = document.getElementById('admin-mujaddaha').value;
-            localStorage.setItem('raza_academy_v4', JSON.stringify(currentData));
-            alert("Sabaq Progress Updated!");
+            localStorage.setItem('raza_academy_v5', JSON.stringify(currentData));
+            updateReportCards();
+            alert("Attendance & Sabaq Progress Updated Successfully!");
         }
 
         function getStatusTitle(score) {
@@ -475,7 +511,7 @@
             currentData.n.miswak = parseInt(document.getElementById('n-miswak').value) || 0;
             currentData.n.sunnah = parseInt(document.getElementById('n-sunnah').value) || 0;
 
-            localStorage.setItem('raza_academy_v4', JSON.stringify(currentData));
+            localStorage.setItem('raza_academy_v5', JSON.stringify(currentData));
             updateReportCards();
             alert("Exams Saved & Report Cards Automatically Updated!");
         }
@@ -486,6 +522,14 @@
             document.getElementById('card-disp-age').innerText = currentData.age;
             document.getElementById('card-disp-finished').innerText = currentData.sabaqFinished;
             document.getElementById('card-disp-mujaddaha').innerText = currentData.mujaddaha;
+            
+            let attEl = document.getElementById('card-disp-attendance');
+            if(attEl) {
+                attEl.innerText = currentData.attendance;
+                if(currentData.attendance === 'Present') attEl.className = "font-bold text-emerald-600 text-sm";
+                else if(currentData.attendance === 'Absent') attEl.className = "font-bold text-red-600 text-sm";
+                else attEl.className = "font-bold text-amber-500 text-sm";
+            }
 
             let tTotal = currentData.t.makharij + currentData.t.adaigi + currentData.t.rawah + currentData.t.hifz + currentData.t.malumaat + currentData.t.pehchan;
             document.getElementById('res-t-mak').innerText = currentData.t.makharij + "/30";
@@ -524,4 +568,5 @@
         }
     </script>
 </body>
+</html>
 </html>
