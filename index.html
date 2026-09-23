@@ -444,7 +444,7 @@
                 </div>
             </div>
 
-            <!-- 1. TAB: Daily Sabaq & Attendance (With Start Time & End Time) -->
+            <!-- 1. TAB: Daily Sabaq & Attendance -->
             <div id="sabaq-tab" class="tab-page active">
                 <div class="card">
                     <div class="card-title">Daily Sabaq & Attendance Entry</div>
@@ -539,7 +539,7 @@
                 </div>
             </div>
 
-            <!-- 2. TAB: Student Directory (With Auto ID, Edit, Save, Delete) -->
+            <!-- 2. TAB: Student Directory -->
             <div id="students-tab" class="tab-page">
                 <div class="card">
                     <div class="card-title">Add / Register New Student (Auto ID)</div>
@@ -612,7 +612,7 @@
                 </div>
             </div>
 
-            <!-- 4. TAB: Fee Vouchers & Combined Family Vouchers (All Countries Option) -->
+            <!-- 4. TAB: Fee Vouchers (Short Currency Codes & Dynamic Student Addition for Combined) -->
             <div id="fee-tab" class="tab-page">
                 <div class="card">
                     <div class="card-title">Fee Voucher & Combined Family Vouchers Management</div>
@@ -624,48 +624,57 @@
                                 <option value="combined">Combined Family Fee Voucher</option>
                             </select>
                         </div>
+
+                        <!-- Single Student Select -->
                         <div class="form-group" id="singleStudentGroup">
-                            <label>Select Student ID</label>
+                            <label>Select Student</label>
                             <select id="feeStudentSelect">
                                 <option value="">-- Select Student --</option>
                             </select>
                         </div>
+
+                        <!-- Combined Family Add Students Option -->
                         <div class="form-group" id="combinedStudentGroup" style="display: none;">
-                            <label>Select Multiple Students (Family / Group)</label>
-                            <input type="text" id="combinedStudentIds" placeholder="e.g. STU-001, STU-002">
+                            <label>Add Students for Combined Voucher</label>
+                            <div style="display: flex; gap: 8px; margin-bottom: 6px;">
+                                <select id="familyStudentDropdown" style="flex-grow: 1;">
+                                    <option value="">-- Select Student to Add --</option>
+                                </select>
+                                <button type="button" class="btn-secondary" onclick="addStudentToCombinedList()" style="padding: 10px 16px;">Add</button>
+                            </div>
+                            <input type="text" id="combinedStudentIds" readonly placeholder="Selected students will appear here" style="background-color: #f1f5f9; font-size: 13px;">
                         </div>
+
+                        <!-- Short Currency Codes Only -->
                         <div class="form-group">
-                            <label>Country & Currency (All Countries)</label>
+                            <label>Currency Code</label>
                             <select id="countryCurrencySelect">
-                                <optgroup label="Popular Currencies">
-                                    <option value="PKR">🇵🇰 Pakistan - Pakistani Rupee (PKR)</option>
-                                    <option value="USD">🇺🇸 United States - US Dollar ($ USD)</option>
-                                    <option value="GBP">🇬🇧 United Kingdom - British Pound (£ GBP)</option>
-                                    <option value="SAR">🇸🇦 Saudi Arabia - Saudi Riyal (SAR)</option>
-                                    <option value="AED">🇦🇪 United Arab Emirates - UAE Dirham (AED)</option>
-                                    <option value="EUR">🇪🇪 European Union - Euro (€ EUR)</option>
-                                    <option value="CAD">🇨🇦 Canada - Canadian Dollar ($ CAD)</option>
-                                    <option value="AUD">🇦🇺 Australia - Australian Dollar ($ AUD)</option>
-                                </optgroup>
-                                <optgroup label="Other International Currencies">
-                                    <option value="INR">🇮🇳 India - Indian Rupee (INR)</option>
-                                    <option value="BDT">🇧🇩 Bangladesh - Bangladeshi Taka (BDT)</option>
-                                    <option value="QAR">🇶🇦 Qatar - Qatari Riyal (QAR)</option>
-                                    <option value="OMR">🇴🇲 Oman - Omani Rial (OMR)</option>
-                                    <option value="KWD">🇰🇼 Kuwait - Kuwaiti Dinar (KWD)</option>
-                                    <option value="BHD">🇧🇭 Bahrain - Bahraini Dinar (BHD)</option>
-                                    <option value="MYR">🇲🇾 Malaysia - Malaysian Ringgit (MYR)</option>
-                                    <option value="SGD">🇸🇬 Singapore - Singapore Dollar (SGD)</option>
-                                    <option value="TRY">🇹🇷 Turkey - Turkish Lira (TRY)</option>
-                                </optgroup>
+                                <option value="PKR">PKR</option>
+                                <option value="USD">USD</option>
+                                <option value="AUD">AUD</option>
+                                <option value="GBP">GBP</option>
+                                <option value="EUR">EUR</option>
+                                <option value="SAR">SAR</option>
+                                <option value="AED">AED</option>
+                                <option value="CAD">CAD</option>
+                                <option value="INR">INR</option>
+                                <option value="BDT">BDT</option>
+                                <option value="QAR">QAR</option>
+                                <option value="OMR">OMR</option>
+                                <option value="KWD">KWD</option>
+                                <option value="BHD">BHD</option>
+                                <option value="MYR">MYR</option>
+                                <option value="SGD">SGD</option>
+                                <option value="TRY">TRY</option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label>Monthly Academy Fee & Donation Amount</label>
                             <input type="number" placeholder="Enter amount (Fee + Donation)">
                         </div>
                     </div>
-                    <button type="button" onclick="alert('Fee Voucher Generated Successfully for Selected Country!')">Generate Fee Voucher</button>
+                    <button type="button" onclick="alert('Fee Voucher Generated Successfully!')">Generate Fee Voucher</button>
                 </div>
             </div>
 
@@ -732,6 +741,7 @@
 
         let currentActiveId = "";
         let presentTodayCount = 0;
+        let selectedCombinedStudents = [];
 
         window.onload = function() {
             setDefaultDateTime();
@@ -766,7 +776,6 @@
 
             if(startTimeInput && !startTimeInput.value) startTimeInput.value = currentTimeStr;
             
-            // Default End Time 1 hour later
             if(endTimeInput && !endTimeInput.value) {
                 let endHours = String((now.getHours() + 1) % 24).padStart(2, '0');
                 endTimeInput.value = `${endHours}:${minutes}`;
@@ -794,7 +803,7 @@
         }
 
         function updateAllStudentDropdowns() {
-            const selects = ['attendanceStudentSelect', 'ibadatStudentSelect', 'examStudentSelect', 'feeStudentSelect'];
+            const selects = ['attendanceStudentSelect', 'ibadatStudentSelect', 'examStudentSelect', 'feeStudentSelect', 'familyStudentDropdown'];
             selects.forEach(selectId => {
                 const selectElement = document.getElementById(selectId);
                 if(selectElement) {
@@ -841,6 +850,22 @@
                 document.getElementById('singleStudentGroup').style.display = 'flex';
                 document.getElementById('combinedStudentGroup').style.display = 'none';
             }
+        }
+
+        function addStudentToCombinedList() {
+            const dropdown = document.getElementById('familyStudentDropdown');
+            const selectedVal = dropdown.value;
+            if(!selectedVal) {
+                alert('Please select a student from the dropdown first!');
+                return;
+            }
+            if(!selectedCombinedStudents.includes(selectedVal)) {
+                selectedCombinedStudents.push(selectedVal);
+                document.getElementById('combinedStudentIds').value = selectedCombinedStudents.join(', ');
+            } else {
+                alert('This student is already added to the list!');
+            }
+            dropdown.value = '';
         }
 
         function saveSabaqRecord(type) {
