@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raza Online Academy - Premium Portal</title>
+    <title>Raza Online Academy - Professional Portal</title>
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-            --sidebar-bg: #090d16;
-            --sidebar-hover: #1e293b;
-            --bg-color: #f1f5f9;
+            --primary-gradient: linear-gradient(135deg, #0f766e 0%, #042f2e 100%);
+            --accent-gradient: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            --sidebar-bg: #022c22;
+            --sidebar-hover: #064e3b;
+            --bg-color: #f0fdf4;
             --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
+            --text-main: #065f46;
+            --text-muted: #4b5563;
+            --border-color: #a7f3d0;
         }
 
         * {
@@ -39,29 +39,27 @@
             color: #ffffff;
             display: flex;
             flex-direction: column;
-            box-shadow: 6px 0 30px rgba(0, 0, 0, 0.12);
+            box-shadow: 6px 0 30px rgba(0, 0, 0, 0.15);
             z-index: 10;
         }
 
         .sidebar-header {
             padding: 30px 20px;
-            background: linear-gradient(180deg, #111827 0%, #090d16 100%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            background: #011c16;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             text-align: center;
         }
 
         .sidebar-header h2 {
             font-size: 20px;
-            background: linear-gradient(135deg, #38bdf8, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #34d399;
             font-weight: 800;
             letter-spacing: 0.5px;
         }
 
         .sidebar-header p {
             font-size: 11px;
-            color: #94a3b8;
+            color: #9ca3af;
             margin-top: 6px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -83,7 +81,7 @@
             align-items: center;
             gap: 14px;
             font-size: 14px;
-            color: #94a3b8;
+            color: #d1d5db;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -102,7 +100,8 @@
             background: var(--primary-gradient);
             color: #ffffff;
             font-weight: 600;
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+            border-left: 4px solid #34d399;
         }
 
         /* Main Workspace */
@@ -114,7 +113,7 @@
         }
 
         .top-bar {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
             padding: 20px 35px;
             border-bottom: 1px solid var(--border-color);
@@ -129,16 +128,17 @@
         .top-bar h1 {
             font-size: 22px;
             font-weight: 700;
-            color: var(--text-main);
+            color: #064e3b;
         }
 
         .badge-session {
-            background: #ede9fe;
-            color: #7c3aed;
+            background: #d1fae5;
+            color: #047857;
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
+            border: 1px solid #6ee7b7;
         }
 
         .content-body {
@@ -169,10 +169,10 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
             padding: 20px;
             border-radius: 16px;
-            border: 1px solid var(--border-color);
+            border: 1.5px solid var(--border-color);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
             display: flex;
             align-items: center;
@@ -189,13 +189,13 @@
             justify-content: center;
             color: white;
             font-size: 22px;
-            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 6px 15px rgba(5, 150, 105, 0.3);
         }
 
         .stat-info h3 {
             font-size: 20px;
             font-weight: 700;
-            color: var(--text-main);
+            color: #064e3b;
         }
 
         .stat-info p {
@@ -209,7 +209,7 @@
             background: var(--card-bg);
             padding: 28px;
             border-radius: 20px;
-            border: 1px solid var(--border-color);
+            border: 1.5px solid var(--border-color);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
             margin-bottom: 25px;
         }
@@ -218,7 +218,7 @@
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 20px;
-            color: var(--text-main);
+            color: #064e3b;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -228,7 +228,7 @@
             content: '';
             width: 4px;
             height: 20px;
-            background: #6366f1;
+            background: #059669;
             border-radius: 4px;
         }
 
@@ -249,7 +249,7 @@
             font-weight: 600;
             margin-bottom: 8px;
             font-size: 13px;
-            color: #475569;
+            color: #047857;
         }
 
         input, select, textarea {
@@ -257,20 +257,20 @@
             border: 1.5px solid var(--border-color);
             border-radius: 12px;
             font-size: 14px;
-            background-color: #f8fafc;
+            background-color: #f9fafb;
             transition: all 0.2s ease;
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #6366f1;
+            border-color: #059669;
             background-color: #ffffff;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
         }
 
         input[readonly] {
-            background-color: #f1f5f9;
-            color: #64748b;
+            background-color: #f3f4f6;
+            color: #4b5563;
             cursor: not-allowed;
         }
 
@@ -283,18 +283,18 @@
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
             transition: all 0.2s ease;
         }
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
         }
 
         button.btn-secondary {
-            background: var(--secondary-gradient);
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            background: var(--accent-gradient);
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
         }
 
         button.btn-success {
@@ -319,23 +319,24 @@
             background: white;
             border-radius: 12px;
             overflow: hidden;
+            border: 1px solid var(--border-color);
         }
 
         th, td {
             padding: 15px 18px;
             text-align: left;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid #e6f4ea;
             font-size: 14px;
         }
 
         th {
-            background-color: #f8fafc;
-            color: #475569;
+            background-color: #ecfdf5;
+            color: #065f46;
             font-weight: 600;
         }
 
         tr:hover {
-            background-color: #f8fafc;
+            background-color: #f0fdf4;
         }
 
         .badge {
@@ -361,7 +362,7 @@
         }
 
         .student-detail-box {
-            background-color: #f8fafc;
+            background-color: #f0fdf4;
             padding: 25px;
             border-right: 1.5px solid var(--border-color);
             display: flex;
@@ -374,45 +375,71 @@
         }
 
         .conditional-box {
-            background: #f0fdf4;
+            background: #ecfdf5;
             padding: 18px;
             border-radius: 12px;
             margin-bottom: 20px;
-            border: 1.5px solid #bbf7d0;
+            border: 1.5px solid #6ee7b7;
             display: none;
         }
 
-        /* Classic Voucher Preview Card */
-        .voucher-preview-card {
-            background: linear-gradient(135deg, #ffffff 0%, #fdf4ff 100%);
-            border: 2px dashed #c084fc;
+        /* Professional Print-Optimized Classic Voucher Card */
+        .voucher-print-card {
+            background: #ffffff;
+            border: 2px solid #047857;
             border-radius: 16px;
-            padding: 25px;
+            padding: 30px;
             margin-top: 25px;
-            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.08);
+            box-shadow: 0 12px 35px rgba(4, 120, 87, 0.12);
             position: relative;
             display: none;
         }
 
-        .voucher-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #f3e8ff;
-            padding-bottom: 12px;
-            margin-bottom: 15px;
+        .voucher-academy-header {
+            text-align: center;
+            border-bottom: 2px dashed #059669;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        .voucher-header h4 {
-            font-size: 18px;
-            color: #7c3aed;
+        .voucher-academy-header h3 {
+            font-size: 24px;
+            color: #064e3b;
             font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .voucher-body p {
+        .voucher-academy-header p {
+            font-size: 13px;
+            color: #047857;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .voucher-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: #f0fdf4;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #a7f3d0;
+        }
+
+        .voucher-details-grid p {
             font-size: 14px;
-            color: #334155;
-            margin-bottom: 8px;
+            color: #1f2937;
+            margin-bottom: 6px;
+        }
+
+        .voucher-amount-box {
+            background: #ecfdf5;
+            border: 1.5px solid #34d399;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
 
         .whatsapp-btn {
@@ -422,7 +449,36 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            margin-top: 15px;
+            margin-right: 10px;
+        }
+
+        .print-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.35);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #voucherPrintCard, #voucherPrintCard * {
+                visibility: visible;
+            }
+            #voucherPrintCard {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+            }
+            .no-print {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -432,7 +488,7 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <h2>Raza Online Academy</h2>
-            <p>Dashboard Portal</p>
+            <p>Admin Dashboard Portal</p>
         </div>
         <ul class="nav-list">
             <li class="nav-item active" onclick="switchTab('sabaq-tab', this)">
@@ -442,10 +498,10 @@
                 <span>👤</span> Student Directory
             </li>
             <li class="nav-item" onclick="switchTab('ibadat-tab', this)">
-                <span>🕌</span> Daily Ibadat Tracker
+                <span>🕌</span> Comprehensive Ibadat & Namaz
             </li>
             <li class="nav-item" onclick="switchTab('fee-tab', this)">
-                <span>💳</span> Fee Vouchers & Don.
+                <span>💳</span> Fee Vouchers, Month & Zakat
             </li>
             <li class="nav-item" onclick="switchTab('exams-tab', this)">
                 <span>📊</span> Exam Results & Announce
@@ -472,7 +528,7 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon" style="background: var(--secondary-gradient);">📅</div>
+                    <div class="stat-icon" style="background: var(--accent-gradient);">📅</div>
                     <div class="stat-info">
                         <h3 id="todayAttendanceCount">0</h3>
                         <p>Marked Present Today</p>
@@ -482,7 +538,7 @@
                     <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">💳</div>
                     <div class="stat-info">
                         <h3>Active</h3>
-                        <p>Global Fee & Vouchers</p>
+                        <p>Fee & Zakat Vouchers</p>
                     </div>
                 </div>
             </div>
@@ -502,9 +558,9 @@
                     <div class="portal-grid">
                         <div class="student-detail-box">
                             <label style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Student Detail</label>
-                            <h3 id="displayName" style="margin: 0 0 4px 0; font-size: 18px; color: var(--text-main);">-</h3>
+                            <h3 id="displayName" style="margin: 0 0 4px 0; font-size: 18px; color: #064e3b;">-</h3>
                             <p id="displayFather" style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">S/O: -</p>
-                            <span id="displayId" style="display:inline-block; font-size: 12px; font-weight: 700; color: #6366f1;">-</span>
+                            <span id="displayId" style="display:inline-block; font-size: 12px; font-weight: 700; color: #059669;">-</span>
                         </div>
 
                         <div class="action-box">
@@ -627,10 +683,10 @@
                 </div>
             </div>
 
-            <!-- 3. TAB: Daily Ibadat Tracker -->
+            <!-- 3. TAB: Comprehensive Daily Ibadat & Namaz Tracker -->
             <div id="ibadat-tab" class="tab-page">
                 <div class="card">
-                    <div class="card-title">Daily Ibadat & Namaz Tracking</div>
+                    <div class="card-title">🕌 Comprehensive Daily Ibadat & Namaz Tracker</div>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Select Student</label>
@@ -642,23 +698,148 @@
                             <label>Date</label>
                             <input type="date" id="ibadatDate">
                         </div>
-                        <div class="form-group">
-                            <label>Fajr Namaz</label>
-                            <select><option>Ba-Jamaat</option><option>Individual</option><option>Qaza</option></select>
-                        </div>
-                        <div class="form-group">
-                            <label>Other Prayers</label>
-                            <select><option>Completed All</option><option>Partial</option><option>Missed</option></select>
+                    </div>
+
+                    <!-- 5 Namaz Tracker with Attendance -->
+                    <div style="background: #f0fdf4; border: 1.5px solid #a7f3d0; padding: 20px; border-radius: 14px; margin-bottom: 20px;">
+                        <h4 style="color: #064e3b; margin-bottom: 14px; font-size: 16px;">5-Time Namaz Attendance & Status</h4>
+                        <div class="form-grid" style="margin-bottom: 0;">
+                            <div class="form-group">
+                                <label>Fajr Namaz</label>
+                                <select id="fajrNamazStatus">
+                                    <option value="Ba-Jamaat">Ba-Jamaat</option>
+                                    <option value="Individual">Individual</option>
+                                    <option value="Qaza">Qaza</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Zuhr Namaz</label>
+                                <select id="zuhrNamazStatus">
+                                    <option value="Ba-Jamaat">Ba-Jamaat</option>
+                                    <option value="Individual">Individual</option>
+                                    <option value="Qaza">Qaza</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Asr Namaz</label>
+                                <select id="asrNamazStatus">
+                                    <option value="Ba-Jamaat">Ba-Jamaat</option>
+                                    <option value="Individual">Individual</option>
+                                    <option value="Qaza">Qaza</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Maghrib Namaz</label>
+                                <select id="maghribNamazStatus">
+                                    <option value="Ba-Jamaat">Ba-Jamaat</option>
+                                    <option value="Individual">Individual</option>
+                                    <option value="Qaza">Qaza</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Isha Namaz</label>
+                                <select id="ishaNamazStatus">
+                                    <option value="Ba-Jamaat">Ba-Jamaat</option>
+                                    <option value="Individual">Individual</option>
+                                    <option value="Qaza">Qaza</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <button type="button" onclick="alert('Ibadat Record Saved Successfully!')">Save Daily Ibadat Record</button>
+
+                    <!-- Tilawat-e-Quran & Wazifay -->
+                    <div style="background: #ecfdf5; border: 1.5px solid #6ee7b7; padding: 20px; border-radius: 14px; margin-bottom: 20px;">
+                        <h4 style="color: #064e3b; margin-bottom: 14px; font-size: 16px;">Tilawat-e-Quran & Special Azkar Tracker</h4>
+                        <div class="form-grid" style="margin-bottom: 0;">
+                            <div class="form-group">
+                                <label>Daily Tilawat (Quran)</label>
+                                <select id="tilawatStatus">
+                                    <option value="Done">Done (Completed Daily Portion)</option>
+                                    <option value="Partial">Partial</option>
+                                    <option value="Not Done">Not Done</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Fajr Ba'd: Surah Yaseen</label>
+                                <select id="yaseenStatus">
+                                    <option value="Recited">Recited</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Maghrib Ba'd: Surah Waqiah</label>
+                                <select id="waqiahStatus">
+                                    <option value="Recited">Recited</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Kalimah Tayyibah</label>
+                                <select id="kalimahStatus">
+                                    <option value="Recited Daily">Recited Daily (100+ Times)</option>
+                                    <option value="Partial">Partial</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Durood Shareef</label>
+                                <select id="duroodStatus">
+                                    <option value="Recited Daily">Recited Daily (100+ Times)</option>
+                                    <option value="Partial">Partial</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Astaghfar</label>
+                                <select id="astaghfarStatus">
+                                    <option value="Recited Daily">Recited Daily (100+ Times)</option>
+                                    <option value="Partial">Partial</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ayatul Kursi & Ayatul Kareema</label>
+                                <select id="ayatStatus">
+                                    <option value="Recited">Recited</option>
+                                    <option value="Missed">Missed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="saveIbadatRecord()">Save Complete Ibadat Record</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Saved Ibadat Records History</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Date</th>
+                                <th>Namaz Summary</th>
+                                <th>Tilawat & Surahs</th>
+                                <th>Azkar (Kalimah/Durood)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ibadatTableBody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-muted);">No ibadat records logged yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <!-- 4. TAB: Fee Vouchers with Instant Screen Preview & WhatsApp Business Send -->
+            <!-- 4. TAB: Fee Vouchers with Month, Advance & Zakat/Sadqat -->
             <div id="fee-tab" class="tab-page">
                 <div class="card">
-                    <div class="card-title">Fee Voucher & Combined Family Vouchers Management</div>
+                    <div class="card-title">💳 Fee Voucher, Month, Advance & Zakat / Sadqat Management</div>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Voucher Type</label>
@@ -685,57 +866,126 @@
                                 </select>
                                 <button type="button" class="btn-secondary" onclick="addStudentToCombinedList()" style="padding: 10px 16px;">Add</button>
                             </div>
-                            <input type="text" id="combinedStudentIds" readonly placeholder="Selected students will appear here" style="background-color: #f1f5f9; font-size: 13px;">
+                            <input type="text" id="combinedStudentIds" readonly placeholder="Selected students will appear here">
+                        </div>
+
+                        <!-- Automatic Month Selection -->
+                        <div class="form-group">
+                            <label>Fee Month (Automatic Select)</label>
+                            <select id="feeMonthSelect">
+                                <option value="January 2026">January 2026</option>
+                                <option value="February 2026">February 2026</option>
+                                <option value="March 2026">March 2026</option>
+                                <option value="April 2026">April 2026</option>
+                                <option value="May 2026">May 2026</option>
+                                <option value="June 2026">June 2026</option>
+                                <option value="July 2026">July 2026</option>
+                                <option value="August 2026">August 2026</option>
+                                <option value="September 2026" selected>September 2026</option>
+                                <option value="October 2026">October 2026</option>
+                                <option value="November 2026">November 2026</option>
+                                <option value="December 2026">December 2026</option>
+                                <option value="January 2027">January 2027</option>
+                                <option value="February 2027">February 2027</option>
+                                <option value="March 2027">March 2027</option>
+                                <option value="April 2027">April 2027</option>
+                                <option value="May 2027">May 2027</option>
+                                <option value="June 2027">June 2027</option>
+                            </select>
+                        </div>
+
+                        <!-- Advance Payment Option -->
+                        <div class="form-group">
+                            <label>Advance Payment Option</label>
+                            <select id="advanceOptionSelect">
+                                <option value="No Advance (Current Month Only)">No Advance (Current Month Only)</option>
+                                <option value="1 Month Advance">1 Month Advance</option>
+                                <option value="2 Months Advance">2 Months Advance</option>
+                                <option value="3 Months Advance (Quarterly)">3 Months Advance (Quarterly)</option>
+                                <option value="6 Months Advance (Bi-Annually)">6 Months Advance (Bi-Annually)</option>
+                                <option value="12 Months Advance (Yearly)">12 Months Advance (Yearly)</option>
+                            </select>
                         </div>
 
                         <!-- Currency Code -->
                         <div class="form-group">
                             <label>Currency Code</label>
                             <select id="countryCurrencySelect">
-                                <option value="PKR">PKR</option>
-                                <option value="USD">USD</option>
-                                <option value="AUD">AUD</option>
-                                <option value="GBP">GBP</option>
-                                <option value="EUR">EUR</option>
-                                <option value="SAR">SAR</option>
-                                <option value="AED">AED</option>
+                                <option value="PKR">PKR (Pakistani Rupee)</option>
+                                <option value="USD">USD (US Dollar)</option>
+                                <option value="AUD">AUD (Australian Dollar)</option>
+                                <option value="GBP">GBP (British Pound)</option>
+                                <option value="EUR">EUR (Euro)</option>
+                                <option value="SAR">SAR (Saudi Riyal)</option>
+                                <option value="AED">AED (UAE Dirham)</option>
                                 <option value="CAD">CAD</option>
                                 <option value="INR">INR</option>
-                                <option value="BDT">BDT</option>
                                 <option value="QAR">QAR</option>
-                                <option value="OMR">OMR</option>
-                                <option value="KWD">KWD</option>
-                                <option value="BHD">BHD</option>
-                                <option value="MYR">MYR</option>
-                                <option value="SGD">SGD</option>
-                                <option value="TRY">TRY</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label>Monthly Academy Fee & Donation Amount</label>
-                            <input type="number" id="feeAmountInput" placeholder="e.g. 5000">
+                            <label>Monthly Academy Fee Amount</label>
+                            <input type="number" id="feeAmountInput" placeholder="e.g. 5000" value="5000">
+                        </div>
+
+                        <!-- Zakat & Sadqat Category (Automatic sub-options) -->
+                        <div class="form-group">
+                            <label>Zakat / Sadqat Category</label>
+                            <select id="zakatCategorySelect" onchange="handleZakatCategoryChange()">
+                                <option value="None">None / Regular Fee Only</option>
+                                <option value="Zakat">Zakat (زکوٰۃ)</option>
+                                <option value="Sadaqah Nafl">Sadaqah Nafl (صدقہ نافلہ)</option>
+                                <option value="Sadaqah Wajibah">Sadaqah Wajibah (صدقہ واجبہ / فدیہ)</option>
+                                <option value="Sadaqah Fitr">Sadaqah Fitr (صدقہ فطر)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="zakatAmountGroup" style="display: none;">
+                            <label id="zakatAmountLabel">Contribution / Donation Amount</label>
+                            <input type="number" id="zakatAmountInput" placeholder="Enter amount" value="0">
                         </div>
                     </div>
                     
                     <button type="button" onclick="generateAndShowVoucher()">Generate Fee Voucher</button>
 
-                    <!-- Unique & Classic Voucher Preview Card -->
-                    <div id="voucherPreviewBox" class="voucher-preview-card">
-                        <div class="voucher-header">
-                            <h4>✨ Raza Online Academy - Fee Voucher</h4>
-                            <span id="voucherDateBadge" style="font-size: 12px; color: #64748b; font-weight: 600;"></span>
+                    <!-- Professional Print-Optimized Classic Voucher Card -->
+                    <div id="voucherPrintCard" class="voucher-print-card">
+                        <div class="voucher-academy-header">
+                            <h3>Raza Online Academy</h3>
+                            <p>Official Fee & Contribution Voucher</p>
                         </div>
-                        <div class="voucher-body" style="margin-top: 15px;">
-                            <p><strong>Voucher ID:</strong> <span id="vouchIdText"></span></p>
-                            <p><strong>Target Student(s):</strong> <span id="vouchStudentText"></span></p>
-                            <p><strong>Currency:</strong> <span id="vouchCurrencyText"></span></p>
-                            <p><strong>Payable Amount:</strong> <span id="vouchAmountText" style="font-size: 18px; color: #7c3aed; font-weight: 700;"></span></p>
-                            <p><strong>Status:</strong> <span style="color: #10b981; font-weight: 600;">Unpaid / Active</span></p>
+
+                        <div class="voucher-details-grid">
+                            <div>
+                                <p><strong>Voucher ID:</strong> <span id="vouchIdText"></span></p>
+                                <p><strong>Student Name(s):</strong> <span id="vouchStudentText"></span></p>
+                                <p><strong>Father Name(s):</strong> <span id="vouchFatherText"></span></p>
+                                <p><strong>Fee Month:</strong> <span id="vouchMonthText" style="color: #047857; font-weight: 700;"></span></p>
+                            </div>
+                            <div>
+                                <p><strong>Advance Option:</strong> <span id="vouchAdvanceText"></span></p>
+                                <p><strong>Currency:</strong> <span id="vouchCurrencyText"></span></p>
+                                <p><strong>Issue Date:</strong> <span id="vouchDateText"></span></p>
+                                <p><strong>Status:</strong> <span style="color: #10b981; font-weight: 700;">Unpaid / Active</span></p>
+                            </div>
                         </div>
-                        <button type="button" class="whatsapp-btn" onclick="sendVoucherViaWhatsApp()">
-                            <span>💬</span> Send via WhatsApp Business
-                        </button>
+
+                        <div class="voucher-amount-box">
+                            <p style="margin-bottom: 6px;"><strong>Monthly Academy Fee:</strong> <span id="vouchBaseFeeText"></span></p>
+                            <p id="vouchZakatRow" style="margin-bottom: 6px; display: none;"><strong><span id="vouchZakatTitle">Donation</span>:</strong> <span id="vouchZakatAmountText"></span></p>
+                            <hr style="border: none; border-top: 1px dashed #34d399; margin: 10px 0;">
+                            <p style="font-size: 18px; color: #064e3b; font-weight: 800;">Total Payable Amount: <span id="vouchTotalAmountText"></span></p>
+                        </div>
+
+                        <div class="no-print" style="margin-top: 20px; display: flex; gap: 12px;">
+                            <button type="button" class="whatsapp-btn" onclick="sendVoucherViaWhatsApp()">
+                                <span>💬</span> Send via WhatsApp Business
+                            </button>
+                            <button type="button" class="print-btn" onclick="window.print()">
+                                <span>🖨️</span> Print Voucher
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -915,6 +1165,21 @@
             }
         }
 
+        function handleZakatCategoryChange() {
+            const cat = document.getElementById('zakatCategorySelect').value;
+            const group = document.getElementById('zakatAmountGroup');
+            const label = document.getElementById('zakatAmountLabel');
+            if(cat === 'None') {
+                group.style.display = 'none';
+            } else {
+                group.style.display = 'flex';
+                if(cat === 'Zakat') label.innerText = "Zakat Amount (زکوٰۃ رقم)";
+                else if(cat === 'Sadaqah Nafl') label.innerText = "Sadaqah Nafl Amount (صدقہ نافلہ)";
+                else if(cat === 'Sadaqah Wajibah') label.innerText = "Sadaqah Wajibah / Fidyah Amount";
+                else if(cat === 'Sadaqah Fitr') label.innerText = "Sadaqah Fitr Amount (صدقہ فطر)";
+            }
+        }
+
         function addStudentToCombinedList() {
             const dropdown = document.getElementById('familyStudentDropdown');
             const selectedVal = dropdown.value;
@@ -934,14 +1199,19 @@
         function generateAndShowVoucher() {
             const type = document.getElementById('voucherTypeSelect').value;
             const currency = document.getElementById('countryCurrencySelect').value;
-            const amount = document.getElementById('feeAmountInput').value;
+            const month = document.getElementById('feeMonthSelect').value;
+            const advance = document.getElementById('advanceOptionSelect').value;
+            const baseAmount = parseFloat(document.getElementById('feeAmountInput').value) || 0;
+            const zakatCat = document.getElementById('zakatCategorySelect').value;
+            const zakatAmount = parseFloat(document.getElementById('zakatAmountInput').value) || 0;
 
-            if(!amount) {
-                alert('Please enter monthly fee & donation amount!');
+            if(!baseAmount) {
+                alert('Please enter monthly fee amount!');
                 return;
             }
 
             let targetText = "";
+            let fatherText = "";
             let voucherId = "VOC-" + Math.floor(100000 + Math.random() * 900000);
 
             if(type === 'single') {
@@ -950,34 +1220,62 @@
                     alert('Please select a student for the single voucher!');
                     return;
                 }
-                const sName = studentsDatabase[singleId] ? studentsDatabase[singleId].name : singleId;
-                targetText = `${singleId} (${sName})`;
+                const s = studentsDatabase[singleId];
+                targetText = `${singleId} (${s ? s.name : singleId})`;
+                fatherText = s ? s.father || '-' : '-';
             } else {
                 if(selectedCombinedStudents.length === 0) {
                     alert('Please add at least one student for combined voucher!');
                     return;
                 }
                 targetText = selectedCombinedStudents.join(', ');
+                fatherText = "Family Combined";
             }
+
+            // Calculate multiplier based on advance option
+            let multiplier = 1;
+            if(advance.includes('2 Months')) multiplier = 2;
+            else if(advance.includes('3 Months')) multiplier = 3;
+            else if(advance.includes('6 Months')) multiplier = 6;
+            else if(advance.includes('12 Months')) multiplier = 12;
+
+            const totalFeeCalculated = baseAmount * multiplier;
+            const grandTotal = totalFeeCalculated + zakatAmount;
 
             // Populate Preview Card
             document.getElementById('vouchIdText').innerText = voucherId;
             document.getElementById('vouchStudentText').innerText = targetText;
+            document.getElementById('vouchFatherText').innerText = fatherText;
+            document.getElementById('vouchMonthText').innerText = month;
+            document.getElementById('vouchAdvanceText').innerText = advance;
             document.getElementById('vouchCurrencyText').innerText = currency;
-            document.getElementById('vouchAmountText').innerText = `${amount} ${currency}`;
-            document.getElementById('voucherDateBadge').innerText = new Date().toLocaleDateString();
+            document.getElementById('vouchDateText').innerText = new Date().toLocaleDateString();
+            document.getElementById('vouchBaseFeeText').innerText = `${totalFeeCalculated} ${currency} (${multiplier > 1 ? multiplier + ' Months' : '1 Month'})`;
 
-            document.getElementById('voucherPreviewBox').style.display = 'block';
+            if(zakatCat !== 'None' && zakatAmount > 0) {
+                document.getElementById('vouchZakatRow').style.display = 'block';
+                document.getElementById('vouchZakatTitle').innerText = zakatCat;
+                document.getElementById('vouchZakatAmountText').innerText = `${zakatAmount} ${currency}`;
+            } else {
+                document.getElementById('vouchZakatRow').style.display = 'none';
+            }
+
+            document.getElementById('vouchTotalAmountText').innerText = `${grandTotal} ${currency}`;
+            document.getElementById('voucherPrintCard').style.display = 'block';
 
             // Prepare WhatsApp text
-            lastGeneratedVoucherData = `*Raza Online Academy - Fee Voucher*%0A` +
+            lastGeneratedVoucherData = `*Raza Online Academy - Fee & Contribution Voucher*%0A` +
                 `--------------------------------%0A` +
                 `*Voucher ID:* ${voucherId}%0A` +
                 `*Student(s):* ${targetText}%0A` +
-                `*Amount:* ${amount} ${currency}%0A` +
+                `*Fee Month:* ${month}%0A` +
+                `*Advance:* ${advance}%0A` +
+                `*Academy Fee:* ${totalFeeCalculated} ${currency}%0A` +
+                (zakatCat !== 'None' && zakatAmount > 0 ? `*${zakatCat}:* ${zakatAmount} ${currency}%0A` : '') +
+                `*Total Payable:* ${grandTotal} ${currency}%0A` +
                 `*Status:* Unpaid / Active%0A` +
                 `--------------------------------%0A` +
-                `Kindly clear dues on time. Jazakallah!`;
+                `Jazakallah khair!`;
 
             alert('Fee Voucher Generated Successfully!');
         }
@@ -1030,6 +1328,41 @@
             tbody.insertBefore(row, tbody.firstChild);
             document.getElementById('sabaqDetailsInput').value = '';
             alert(type === 'update' ? 'Sabaq Updated Successfully!' : 'Record Saved Successfully!');
+        }
+
+        function saveIbadatRecord() {
+            const studentId = document.getElementById('ibadatStudentSelect').value;
+            if(!studentId) {
+                alert('Please select a student for Ibadat tracking!');
+                return;
+            }
+            const dateVal = document.getElementById('ibadatDate').value;
+            const fajr = document.getElementById('fajrNamazStatus').value;
+            const zuhr = document.getElementById('zuhrNamazStatus').value;
+            const asr = document.getElementById('asrNamazStatus').value;
+            const maghrib = document.getElementById('maghribNamazStatus').value;
+            const isha = document.getElementById('ishaNamazStatus').value;
+            const tilawat = document.getElementById('tilawatStatus').value;
+            const yaseen = document.getElementById('yaseenStatus').value;
+            const waqiah = document.getElementById('waqiahStatus').value;
+            const kalimah = document.getElementById('kalimahStatus').value;
+            const durood = document.getElementById('duroodStatus').value;
+
+            const tbody = document.getElementById('ibadatTableBody');
+            if(tbody.innerHTML.includes('No ibadat records')) {
+                tbody.innerHTML = '';
+            }
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong>${studentId}</strong></td>
+                <td>${dateVal}</td>
+                <td>Fajr:${fajr}, Zuhr:${zuhr}, Asr:${asr}, Maghrib:${maghrib}, Isha:${isha}</td>
+                <td>Tilawat: ${tilawat} | Yaseen: ${yaseen} | Waqiah: ${waqiah}</td>
+                <td>Kalimah: ${kalimah} | Durood: ${durood}</td>
+            `;
+            tbody.insertBefore(row, tbody.firstChild);
+            alert('Ibadat Record Saved Successfully!');
         }
 
         function renderDirectory() {
