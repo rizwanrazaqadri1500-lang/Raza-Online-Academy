@@ -463,28 +463,25 @@
             <div id="students-tab" class="tab-page">
                 <div class="card">
                     <div class="card-title">Add / Register New Student</div>
-                    <!-- Form tag lagane se page reload nahi hoga aur data safe rahega -->
-                    <form onsubmit="event.preventDefault(); addNewStudent();">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>Portal Student ID</label>
-                                <input type="text" id="newStudentId" placeholder="e.g. STU-004" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" id="newStudentName" placeholder="Student Name" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Father's Name</label>
-                                <input type="text" id="newFatherName" placeholder="Father Name">
-                            </div>
-                            <div class="form-group">
-                                <label>Contact Phone</label>
-                                <input type="text" id="newContact" placeholder="0300-1234567">
-                            </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Portal Student ID</label>
+                            <input type="text" id="newStudentId" placeholder="e.g. STU-004">
                         </div>
-                        <button type="submit">Save Student Profile</button>
-                    </form>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="newStudentName" placeholder="Student Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Father's Name</label>
+                            <input type="text" id="newFatherName" placeholder="Father Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Phone</label>
+                            <input type="text" id="newContact" placeholder="0300-1234567">
+                        </div>
+                    </div>
+                    <button type="button" onclick="addNewStudent()">Save Student Profile</button>
                 </div>
 
                 <div class="card">
@@ -599,27 +596,12 @@
     </div>
 
     <script>
-        // Safe LocalStorage initialization with fallback memory object
-        let studentsDatabase = {};
-        try {
-            const savedData = localStorage.getItem('raza_students_db');
-            if (savedData) {
-                studentsDatabase = JSON.parse(savedData);
-            } else {
-                studentsDatabase = {
-                    "STU-001": { name: "Abdul Rehman", father: "Ali", contact: "0300-1112233" },
-                    "STU-002": { name: "Muhammad Ahmed", father: "Usman", contact: "0321-4455667" },
-                    "STU-003": { name: "Hassan Raza", father: "Ahmad", contact: "0333-8899001" }
-                };
-                localStorage.setItem('raza_students_db', JSON.stringify(studentsDatabase));
-            }
-        } catch (e) {
-            studentsDatabase = {
-                "STU-001": { name: "Abdul Rehman", father: "Ali", contact: "0300-1112233" },
-                "STU-002": { name: "Muhammad Ahmed", father: "Usman", contact: "0321-4455667" },
-                "STU-003": { name: "Hassan Raza", father: "Ahmad", contact: "0333-8899001" }
-            };
-        }
+        // LocalStorage se data load karna, agar pehle se na ho to default students add karna
+        let studentsDatabase = JSON.parse(localStorage.getItem('raza_students_db')) || {
+            "STU-001": { name: "Abdul Rehman", father: "Ali", contact: "0300-1112233" },
+            "STU-002": { name: "Muhammad Ahmed", father: "Usman", contact: "0321-4455667" },
+            "STU-003": { name: "Hassan Raza", father: "Ahmad", contact: "0333-8899001" }
+        };
 
         let currentActiveId = "";
 
@@ -641,17 +623,11 @@
 
         function setDefaultDateTime() {
             const now = new Date();
-            const dateInput = document.getElementById('autoDate');
-            const timeInput = document.getElementById('autoTime');
-            const ibadatInput = document.getElementById('ibadatDate');
-            
-            if(dateInput) dateInput.valueAsDate = now;
-            if(timeInput) {
-                let hours = String(now.getHours()).padStart(2, '0');
-                let minutes = String(now.getMinutes()).padStart(2, '0');
-                timeInput.value = `${hours}:${minutes}`;
-            }
-            if(ibadatInput) ibadatInput.valueAsDate = now;
+            document.getElementById('autoDate').valueAsDate = now;
+            let hours = String(now.getHours()).padStart(2, '0');
+            let minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('autoTime').value = `${hours}:${minutes}`;
+            document.getElementById('ibadatDate').valueAsDate = now;
         }
 
         function updateAllStudentDropdowns() {
@@ -731,7 +707,6 @@
 
         function renderDirectory() {
             const tbody = document.getElementById('studentDirectoryBody');
-            if(!tbody) return;
             tbody.innerHTML = '';
             for(let id in studentsDatabase) {
                 const s = studentsDatabase[id];
@@ -739,24 +714,19 @@
                     <tr>
                         <td><strong>${id}</strong></td>
                         <td>${s.name}</td>
-                        <td>${s.father || '-'}</td>
-                        <td>${s.contact || '-'}</td>
-                        <td><button type="button" class="btn-danger" onclick="deleteStudent('${id}')">Delete</button></td>
+                        <td>${s.father}</td>
+                        <td>${s.contact}</td>
+                        <td><button class="btn-danger" onclick="deleteStudent('${id}')">Delete</button></td>
                     </tr>
                 `;
             }
         }
 
         function addNewStudent() {
-            const idInput = document.getElementById('newStudentId');
-            const nameInput = document.getElementById('newStudentName');
-            const fatherInput = document.getElementById('newFatherName');
-            const contactInput = document.getElementById('newContact');
-
-            const id = idInput.value.trim();
-            const name = nameInput.value.trim();
-            const father = fatherInput.value.trim();
-            const contact = contactInput.value.trim();
+            const id = document.getElementById('newStudentId').value.trim();
+            const name = document.getElementById('newStudentName').value.trim();
+            const father = document.getElementById('newFatherName').value.trim();
+            const contact = document.getElementById('newContact').value.trim();
 
             if(!id || !name) {
                 alert('Please enter Student ID and Name!');
@@ -770,20 +740,17 @@
 
             studentsDatabase[id] = { name, father, contact };
             
-            try {
-                localStorage.setItem('raza_students_db', JSON.stringify(studentsDatabase));
-            } catch (e) {
-                console.error('Storage error:', e);
-            }
+            // LocalStorage me save karna taaki data refresh hone par delete na ho
+            localStorage.setItem('raza_students_db', JSON.stringify(studentsDatabase));
 
             renderDirectory();
             updateAllStudentDropdowns();
 
-            // Clear form inputs
-            idInput.value = '';
-            nameInput.value = '';
-            fatherInput.value = '';
-            contactInput.value = '';
+            // Form clear karna
+            document.getElementById('newStudentId').value = '';
+            document.getElementById('newStudentName').value = '';
+            document.getElementById('newFatherName').value = '';
+            document.getElementById('newContact').value = '';
 
             alert('New Student Registered Successfully!');
         }
@@ -791,11 +758,7 @@
         function deleteStudent(id) {
             if(confirm(`Are you sure you want to delete student ${id}?`)) {
                 delete studentsDatabase[id];
-                try {
-                    localStorage.setItem('raza_students_db', JSON.stringify(studentsDatabase));
-                } catch (e) {
-                    console.error('Storage error:', e);
-                }
+                localStorage.setItem('raza_students_db', JSON.stringify(studentsDatabase));
                 renderDirectory();
                 updateAllStudentDropdowns();
                 alert('Student deleted successfully!');
