@@ -381,6 +381,49 @@
             border: 1.5px solid #bbf7d0;
             display: none;
         }
+
+        /* Classic Voucher Preview Card */
+        .voucher-preview-card {
+            background: linear-gradient(135deg, #ffffff 0%, #fdf4ff 100%);
+            border: 2px dashed #c084fc;
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 25px;
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.08);
+            position: relative;
+            display: none;
+        }
+
+        .voucher-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f3e8ff;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+
+        .voucher-header h4 {
+            font-size: 18px;
+            color: #7c3aed;
+            font-weight: 800;
+        }
+
+        .voucher-body p {
+            font-size: 14px;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
@@ -612,7 +655,7 @@
                 </div>
             </div>
 
-            <!-- 4. TAB: Fee Vouchers (Short Currency Codes & Dynamic Student Addition for Combined) -->
+            <!-- 4. TAB: Fee Vouchers with Instant Screen Preview & WhatsApp Business Send -->
             <div id="fee-tab" class="tab-page">
                 <div class="card">
                     <div class="card-title">Fee Voucher & Combined Family Vouchers Management</div>
@@ -645,7 +688,7 @@
                             <input type="text" id="combinedStudentIds" readonly placeholder="Selected students will appear here" style="background-color: #f1f5f9; font-size: 13px;">
                         </div>
 
-                        <!-- Short Currency Codes Only -->
+                        <!-- Currency Code -->
                         <div class="form-group">
                             <label>Currency Code</label>
                             <select id="countryCurrencySelect">
@@ -671,10 +714,29 @@
 
                         <div class="form-group">
                             <label>Monthly Academy Fee & Donation Amount</label>
-                            <input type="number" placeholder="Enter amount (Fee + Donation)">
+                            <input type="number" id="feeAmountInput" placeholder="e.g. 5000">
                         </div>
                     </div>
-                    <button type="button" onclick="alert('Fee Voucher Generated Successfully!')">Generate Fee Voucher</button>
+                    
+                    <button type="button" onclick="generateAndShowVoucher()">Generate Fee Voucher</button>
+
+                    <!-- Unique & Classic Voucher Preview Card -->
+                    <div id="voucherPreviewBox" class="voucher-preview-card">
+                        <div class="voucher-header">
+                            <h4>✨ Raza Online Academy - Fee Voucher</h4>
+                            <span id="voucherDateBadge" style="font-size: 12px; color: #64748b; font-weight: 600;"></span>
+                        </div>
+                        <div class="voucher-body" style="margin-top: 15px;">
+                            <p><strong>Voucher ID:</strong> <span id="vouchIdText"></span></p>
+                            <p><strong>Target Student(s):</strong> <span id="vouchStudentText"></span></p>
+                            <p><strong>Currency:</strong> <span id="vouchCurrencyText"></span></p>
+                            <p><strong>Payable Amount:</strong> <span id="vouchAmountText" style="font-size: 18px; color: #7c3aed; font-weight: 700;"></span></p>
+                            <p><strong>Status:</strong> <span style="color: #10b981; font-weight: 600;">Unpaid / Active</span></p>
+                        </div>
+                        <button type="button" class="whatsapp-btn" onclick="sendVoucherViaWhatsApp()">
+                            <span>💬</span> Send via WhatsApp Business
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -742,6 +804,7 @@
         let currentActiveId = "";
         let presentTodayCount = 0;
         let selectedCombinedStudents = [];
+        let lastGeneratedVoucherData = "";
 
         window.onload = function() {
             setDefaultDateTime();
@@ -866,6 +929,66 @@
                 alert('This student is already added to the list!');
             }
             dropdown.value = '';
+        }
+
+        function generateAndShowVoucher() {
+            const type = document.getElementById('voucherTypeSelect').value;
+            const currency = document.getElementById('countryCurrencySelect').value;
+            const amount = document.getElementById('feeAmountInput').value;
+
+            if(!amount) {
+                alert('Please enter monthly fee & donation amount!');
+                return;
+            }
+
+            let targetText = "";
+            let voucherId = "VOC-" + Math.floor(100000 + Math.random() * 900000);
+
+            if(type === 'single') {
+                const singleId = document.getElementById('feeStudentSelect').value;
+                if(!singleId) {
+                    alert('Please select a student for the single voucher!');
+                    return;
+                }
+                const sName = studentsDatabase[singleId] ? studentsDatabase[singleId].name : singleId;
+                targetText = `${singleId} (${sName})`;
+            } else {
+                if(selectedCombinedStudents.length === 0) {
+                    alert('Please add at least one student for combined voucher!');
+                    return;
+                }
+                targetText = selectedCombinedStudents.join(', ');
+            }
+
+            // Populate Preview Card
+            document.getElementById('vouchIdText').innerText = voucherId;
+            document.getElementById('vouchStudentText').innerText = targetText;
+            document.getElementById('vouchCurrencyText').innerText = currency;
+            document.getElementById('vouchAmountText').innerText = `${amount} ${currency}`;
+            document.getElementById('voucherDateBadge').innerText = new Date().toLocaleDateString();
+
+            document.getElementById('voucherPreviewBox').style.display = 'block';
+
+            // Prepare WhatsApp text
+            lastGeneratedVoucherData = `*Raza Online Academy - Fee Voucher*%0A` +
+                `--------------------------------%0A` +
+                `*Voucher ID:* ${voucherId}%0A` +
+                `*Student(s):* ${targetText}%0A` +
+                `*Amount:* ${amount} ${currency}%0A` +
+                `*Status:* Unpaid / Active%0A` +
+                `--------------------------------%0A` +
+                `Kindly clear dues on time. Jazakallah!`;
+
+            alert('Fee Voucher Generated Successfully!');
+        }
+
+        function sendVoucherViaWhatsApp() {
+            if(!lastGeneratedVoucherData) {
+                alert('Please generate voucher first!');
+                return;
+            }
+            const whatsappUrl = `https://wa.me/?text=${lastGeneratedVoucherData}`;
+            window.open(whatsappUrl, '_blank');
         }
 
         function saveSabaqRecord(type) {
