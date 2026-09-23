@@ -439,12 +439,12 @@
                     <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">💳</div>
                     <div class="stat-info">
                         <h3>Active</h3>
-                        <p>Fee & Vouchers System</p>
+                        <p>Global Fee & Vouchers</p>
                     </div>
                 </div>
             </div>
 
-            <!-- 1. TAB: Daily Sabaq & Attendance -->
+            <!-- 1. TAB: Daily Sabaq & Attendance (With Start Time & End Time) -->
             <div id="sabaq-tab" class="tab-page active">
                 <div class="card">
                     <div class="card-title">Daily Sabaq & Attendance Entry</div>
@@ -490,12 +490,16 @@
                             <div id="dateTimeContainer" class="conditional-box">
                                 <div class="form-grid" style="margin-bottom: 0;">
                                     <div class="form-group">
-                                        <label>Arrival Date (Auto)</label>
+                                        <label>Attendance Date</label>
                                         <input type="date" id="autoDate">
                                     </div>
                                     <div class="form-group">
-                                        <label>Arrival Time (Auto)</label>
-                                        <input type="time" id="autoTime">
+                                        <label>Class Start Time</label>
+                                        <input type="time" id="classStartTime">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Class End Time</label>
+                                        <input type="time" id="classEndTime">
                                     </div>
                                 </div>
                             </div>
@@ -520,16 +524,15 @@
                             <tr>
                                 <th>Student ID</th>
                                 <th>Name</th>
-                                <th>Father Name</th>
                                 <th>Attendance</th>
-                                <th>Date & Time</th>
+                                <th>Date & Timing (Start - End)</th>
                                 <th>Fee Status</th>
                                 <th>Sabaq Details</th>
                             </tr>
                         </thead>
                         <tbody id="sabaqTableBody">
                             <tr>
-                                <td colspan="7" style="text-align: center; color: var(--text-muted);">No records added yet.</td>
+                                <td colspan="6" style="text-align: center; color: var(--text-muted);">No records added yet.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -609,7 +612,7 @@
                 </div>
             </div>
 
-            <!-- 4. TAB: Fee Vouchers & Combined Family Vouchers -->
+            <!-- 4. TAB: Fee Vouchers & Combined Family Vouchers (All Countries Option) -->
             <div id="fee-tab" class="tab-page">
                 <div class="card">
                     <div class="card-title">Fee Voucher & Combined Family Vouchers Management</div>
@@ -632,19 +635,37 @@
                             <input type="text" id="combinedStudentIds" placeholder="e.g. STU-001, STU-002">
                         </div>
                         <div class="form-group">
-                            <label>Currency</label>
-                            <select>
-                                <option value="PKR">PKR (Pakistani Rupee)</option>
-                                <option value="USD">USD ($)</option>
-                                <option value="GBP">GBP (£)</option>
+                            <label>Country & Currency (All Countries)</label>
+                            <select id="countryCurrencySelect">
+                                <optgroup label="Popular Currencies">
+                                    <option value="PKR">🇵🇰 Pakistan - Pakistani Rupee (PKR)</option>
+                                    <option value="USD">🇺🇸 United States - US Dollar ($ USD)</option>
+                                    <option value="GBP">🇬🇧 United Kingdom - British Pound (£ GBP)</option>
+                                    <option value="SAR">🇸🇦 Saudi Arabia - Saudi Riyal (SAR)</option>
+                                    <option value="AED">🇦🇪 United Arab Emirates - UAE Dirham (AED)</option>
+                                    <option value="EUR">🇪🇪 European Union - Euro (€ EUR)</option>
+                                    <option value="CAD">🇨🇦 Canada - Canadian Dollar ($ CAD)</option>
+                                    <option value="AUD">🇦🇺 Australia - Australian Dollar ($ AUD)</option>
+                                </optgroup>
+                                <optgroup label="Other International Currencies">
+                                    <option value="INR">🇮🇳 India - Indian Rupee (INR)</option>
+                                    <option value="BDT">🇧🇩 Bangladesh - Bangladeshi Taka (BDT)</option>
+                                    <option value="QAR">🇶🇦 Qatar - Qatari Riyal (QAR)</option>
+                                    <option value="OMR">🇴🇲 Oman - Omani Rial (OMR)</option>
+                                    <option value="KWD">🇰🇼 Kuwait - Kuwaiti Dinar (KWD)</option>
+                                    <option value="BHD">🇧🇭 Bahrain - Bahraini Dinar (BHD)</option>
+                                    <option value="MYR">🇲🇾 Malaysia - Malaysian Ringgit (MYR)</option>
+                                    <option value="SGD">🇸🇬 Singapore - Singapore Dollar (SGD)</option>
+                                    <option value="TRY">🇹🇷 Turkey - Turkish Lira (TRY)</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Monthly Academy Fee & Donation</label>
-                            <input type="number" placeholder="5000 Fee + 1000 Donation">
+                            <label>Monthly Academy Fee & Donation Amount</label>
+                            <input type="number" placeholder="Enter amount (Fee + Donation)">
                         </div>
                     </div>
-                    <button type="button" onclick="alert('Fee Voucher Generated Successfully!')">Generate Fee Voucher</button>
+                    <button type="button" onclick="alert('Fee Voucher Generated Successfully for Selected Country!')">Generate Fee Voucher</button>
                 </div>
             </div>
 
@@ -733,15 +754,24 @@
         function setDefaultDateTime() {
             const now = new Date();
             const dateInput = document.getElementById('autoDate');
-            const timeInput = document.getElementById('autoTime');
+            const startTimeInput = document.getElementById('classStartTime');
+            const endTimeInput = document.getElementById('classEndTime');
             const ibadatInput = document.getElementById('ibadatDate');
             
             if(dateInput) dateInput.valueAsDate = now;
-            if(timeInput) {
-                let hours = String(now.getHours()).padStart(2, '0');
-                let minutes = String(now.getMinutes()).padStart(2, '0');
-                timeInput.value = `${hours}:${minutes}`;
+            
+            let hours = String(now.getHours()).padStart(2, '0');
+            let minutes = String(now.getMinutes()).padStart(2, '0');
+            let currentTimeStr = `${hours}:${minutes}`;
+
+            if(startTimeInput && !startTimeInput.value) startTimeInput.value = currentTimeStr;
+            
+            // Default End Time 1 hour later
+            if(endTimeInput && !endTimeInput.value) {
+                let endHours = String((now.getHours() + 1) % 24).padStart(2, '0');
+                endTimeInput.value = `${endHours}:${minutes}`;
             }
+
             if(ibadatInput) ibadatInput.valueAsDate = now;
         }
 
@@ -824,9 +854,12 @@
             const fee = document.getElementById('sabaqFeeStatus').value;
             const sabaq = document.getElementById('sabaqDetailsInput').value;
 
-            let dt = "N/A";
+            let dtTiming = "N/A";
             if (status === 'Present' || status === 'Late') {
-                dt = `${document.getElementById('autoDate').value} (${document.getElementById('autoTime').value})`;
+                const dateVal = document.getElementById('autoDate').value;
+                const startVal = document.getElementById('classStartTime').value;
+                const endVal = document.getElementById('classEndTime').value;
+                dtTiming = `${dateVal} | ${startVal} to ${endVal}`;
                 presentTodayCount++;
                 updateDashboardStats();
             }
@@ -840,9 +873,8 @@
             row.innerHTML = `
                 <td><strong>${currentActiveId}</strong></td>
                 <td>${student.name}</td>
-                <td>${student.father}</td>
                 <td><strong>${status}</strong></td>
-                <td>${dt}</td>
+                <td>${dtTiming}</td>
                 <td>${fee}</td>
                 <td>${sabaq || 'No Sabaq Provided'}</td>
             `;
