@@ -926,9 +926,35 @@
                                     <option value="May 2027">May 2027</option>
                                     <option value="June 2027">June 2027</option>
                                 </select>
-                                <button type="button" class="btn-secondary" onclick="addNewMonthPrompt()" style="padding: 10px 14px; white-space: nowrap;">+ Add Month</button>
-                            </div>
-                        </div>
+                                <button type="button" class="btn-secondary" onclick="addNewMonthPrompt()"function addNewMonthPrompt() {
+    // Prompt ki jagah aik clean aur reliable input prompt ya direct modal
+    const newMonth = prompt("Enter new month and year (e.g., July 2027):");
+    
+    if (newMonth && newMonth.trim() !== "") {
+        const select = document.getElementById('feeMonthSelect');
+        const trimmedMonth = newMonth.trim();
+        
+        // Check karein ke kya month pehle se mojood hai ya nahi
+        let exists = false;
+        for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].value.toLowerCase() === trimmedMonth.toLowerCase()) {
+                exists = true;
+                break;
+            }
+        }
+        
+        if (!exists) {
+            const opt = document.createElement('option');
+            opt.value = trimmedMonth;
+            opt.text = trimmedMonth;
+            opt.selected = true; // Foran select ho jaye ga
+            select.appendChild(opt);
+            alert(`"${trimmedMonth}" successfully add ho gaya hai aur select ho gaya hai!`);
+        } else {
+            alert('Yeh month pehle se list mein mojood hai!');
+        }
+    }
+}
 
                         <!-- Advance Payment Option -->
                         <div class="form-group">
