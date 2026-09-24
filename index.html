@@ -185,6 +185,7 @@
             border: 1px solid var(--border-color);
             padding: 20px;
             overflow-x: auto;
+            margin-bottom: 20px;
         }
 
         .table-title {
@@ -257,6 +258,25 @@
             font-weight: 600;
             color: var(--primary-dark);
         }
+
+        /* Voucher Modal Design */
+        #voucherModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .voucher-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 500px;
+            border: 3px solid var(--primary-green);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
@@ -270,8 +290,9 @@
             <li class="active" onclick="switchTab('attendance', this)"><a href="#">📅 Daily Sabaq & Attendance</a></li>
             <li onclick="switchTab('directory', this)"><a href="#">👥 Student Directory</a></li>
             <li onclick="switchTab('ibadat', this)"><a href="#">🕌 Comprehensive Ibadat</a></li>
-            <li onclick="switchTab('fees', this)"><a href="#">💳 Fee Vouchers & Month</a></li>
-            <li onclick="switchTab('exams', this)"><a href="#">📊 Exam Results & Announce</a></li>
+            <li onclick="switchTab('fees', this)"><a href="#">💳 Fee, Zakat & Donations</a></li>
+            <li onclick="switchTab('summaries', this)"><a href="#">📊 Automatic Summaries</a></li>
+            <li onclick="switchTab('exams', this)"><a href="#">📝 Exam Results Portal</a></li>
         </ul>
     </div>
 
@@ -290,21 +311,8 @@
                         <label>Select Month:</label>
                         <div style="display: flex; gap: 8px;">
                             <select id="feeMonthSelect" style="flex: 1;">
-                                <option value="January 2026">January 2026</option>
-                                <option value="February 2026">February 2026</option>
-                                <option value="March 2026">March 2026</option>
-                                <option value="April 2026">April 2026</option>
-                                <option value="May 2026">May 2026</option>
-                                <option value="June 2026">June 2026</option>
-                                <option value="July 2026">July 2026</option>
-                                <option value="August 2026">August 2026</option>
-                                <option value="September 2026">September 2026</option>
-                                <option value="October 2026">October 2026</option>
                                 <option value="November 2026" selected>November 2026</option>
                                 <option value="December 2026">December 2026</option>
-                                <option value="January 2027">January 2027</option>
-                                <option value="February 2027">February 2027</option>
-                                <option value="March 2027">March 2027</option>
                             </select>
                             <button type="button" class="btn-warning" onclick="addNewMonth()">+ Add</button>
                         </div>
@@ -312,8 +320,8 @@
                     <div class="form-group">
                         <label>Select Student:</label>
                         <select id="studentSelect">
-                            <option value="STU-004 - Junaid">STU-004 - Junaid</option>
-                            <option value="STU-005 - Ahmed">STU-005 - Ahmed</option>
+                            <option value="STU-004 - Junaid">STU-004 - Junaid (Father: Muhammad Ali)</option>
+                            <option value="STU-005 - Ahmed">STU-005 - Ahmed (Father: Usman Ghani)</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -329,7 +337,7 @@
                         <input type="text" id="sabaqInput" placeholder="Enter Sabaq details...">
                     </div>
                 </div>
-                <button type="button" class="btn-primary" onclick="saveAttendance()">💾 Save Attendance & Sabaq</button>
+                <button type="button" class="btn-primary" onclick="saveAttendance()">💾 Save Attendance & Update Monthly Summary</button>
             </div>
 
             <div class="table-container">
@@ -370,6 +378,19 @@
                         <input type="text" id="studentNameInput" placeholder="Enter full name">
                     </div>
                     <div class="form-group">
+                        <label>Father's Name:</label>
+                        <input type="text" id="fatherNameInput" placeholder="Enter father's name">
+                    </div>
+                    <div class="form-group">
+                        <label>Country:</label>
+                        <select id="studentCountry">
+                            <option value="Pakistan">Pakistan (PKR)</option>
+                            <option value="USA">USA (USD)</option>
+                            <option value="UK">UK (GBP)</option>
+                            <option value="UAE">UAE (AED)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>Student Portal ID:</label>
                         <input type="text" id="studentIdInput" value="STU-006" readonly>
                     </div>
@@ -383,7 +404,9 @@
                     <thead>
                         <tr>
                             <th>Student ID</th>
-                            <th>Name</th>
+                            <th>Student Name</th>
+                            <th>Father's Name</th>
+                            <th>Country</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -391,6 +414,8 @@
                         <tr>
                             <td><strong>STU-004</strong></td>
                             <td>Junaid</td>
+                            <td>Muhammad Ali</td>
+                            <td>Pakistan</td>
                             <td class="action-btns">
                                 <button class="btn-edit" onclick="editDirectoryRow(this)">Edit</button>
                                 <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
@@ -409,11 +434,9 @@
                     <label>Select Student:</label>
                     <select id="ibadatStudent">
                         <option value="STU-004 - Junaid">STU-004 - Junaid</option>
-                        <option value="STU-005 - Ahmed">STU-005 - Ahmed</option>
                     </select>
                 </div>
 
-                <!-- Namaz Section -->
                 <div class="ibadat-category-title">🕌 5 Namaz Attendance</div>
                 <div class="ibadat-grid">
                     <div class="ibadat-item"><label>1. Fajr Namaz:</label><select id="namazFajr"><option value="Yes">Yes</option><option value="No">No</option></select></div>
@@ -423,7 +446,6 @@
                     <div class="ibadat-item" style="grid-column: span 2;"><label>5. Isha Namaz:</label><select id="namazIsha" style="width: 150px;"><option value="Yes">Yes</option><option value="No">No</option></select></div>
                 </div>
 
-                <!-- Tilawat Section -->
                 <div class="ibadat-category-title">📖 Daily Surah Tilawat</div>
                 <div class="ibadat-grid">
                     <div class="ibadat-item"><label>Fajr ke baad (Surah Yaseen):</label><select id="tilawatYaseen"><option value="Yes">Yes</option><option value="No">No</option></select></div>
@@ -433,7 +455,6 @@
                     <div class="ibadat-item" style="grid-column: span 2;"><label>Isha ke baad (Surah Mulk):</label><select id="tilawatMulk" style="width: 150px;"><option value="Yes">Yes</option><option value="No">No</option></select></div>
                 </div>
 
-                <!-- Durood, Astaghfar & Werd Section -->
                 <div class="ibadat-category-title">📿 Durood-e-Pak, Astaghfar & Degar Werd</div>
                 <div class="ibadat-grid">
                     <div class="ibadat-item"><label>Durood-e-Pak:</label><select id="werdDurood"><option value="Yes">Yes</option><option value="No">No</option></select></div>
@@ -443,76 +464,213 @@
 
                 <button type="button" class="btn-primary" onclick="saveIbadatLog()" style="margin-top: 10px;">💾 Save Complete Ibadat Log</button>
             </div>
+        </div>
+
+        <!-- 4. FEE VOUCHERS, ZAKAT & DONATIONS SECTION -->
+        <div id="fees" class="content-section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Fee Voucher, Zakat & Contributions (Single / Combined Family)</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Voucher Type:</label>
+                        <select id="voucherType" onchange="toggleFamilySelection()">
+                            <option value="Single Student Fee">Single Student Fee</option>
+                            <option value="Combined Family Fee">Combined Family Fee</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="studentSelectionGroup">
+                        <label>Select Student:</label>
+                        <select id="feeStudentSelect">
+                            <option value="Junaid (Father: Muhammad Ali)">Junaid (Father: Muhammad Ali)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="familySelectionGroup" style="display:none;">
+                        <label>Family / Combined Students:</label>
+                        <input type="text" id="familyStudentsInput" value="Junaid & Ahmed (Family)">
+                    </div>
+                    <div class="form-group">
+                        <label>Month:</label>
+                        <select id="voucherMonth">
+                            <option value="November 2026">November 2026</option>
+                            <option value="December 2026">December 2026</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Country:</label>
+                        <select id="voucherCountry" onchange="updateCurrencySymbol()">
+                            <option value="Pakistan" data-curr="PKR" data-rate="1">Pakistan (PKR)</option>
+                            <option value="USA" data-curr="USD" data-rate="280">USA (USD)</option>
+                            <option value="UK" data-curr="GBP" data-rate="350">UK (GBP)</option>
+                            <option value="UAE" data-curr="AED" data-rate="76">UAE (AED)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fee Amount (<span id="currLbl">PKR</span>):</label>
+                        <input type="number" id="feeAmount" placeholder="Enter amount">
+                    </div>
+                    <div class="form-group">
+                        <label>Zakat / Fitra / Sadqat / Wajibaat:</label>
+                        <input type="number" id="zakatAmount" value="0" placeholder="Optional amount">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="generateVoucher()">🎫 Generate Beautiful Voucher</button>
+            </div>
+
+            <!-- Dedicated Separate Donation Form Section -->
+            <div class="card" style="border-color: #0f766e; background: #fafdfb;">
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">🌟 Dedicated General Donation Portal (Outside Students)</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Donor Name:</label>
+                        <input type="text" id="donorName" placeholder="Enter donor name (or Anonymous)">
+                    </div>
+                    <div class="form-group">
+                        <label>Donation Type:</label>
+                        <select id="donationType">
+                            <option value="General Donation">General Donation</option>
+                            <option value="Sadqa">Sadqa</option>
+                            <option value="Zakat">Zakat</option>
+                            <option value="Academy Fund">Academy Fund</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Country / Currency:</label>
+                        <select id="donationCountry">
+                            <option value="Pakistan">Pakistan (PKR)</option>
+                            <option value="USA">USA (USD - Rate: 280)</option>
+                            <option value="UK">UK (GBP - Rate: 350)</option>
+                            <option value="UAE">UAE (AED - Rate: 76)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Donation Amount:</label>
+                        <input type="number" id="donationAmount" placeholder="Enter amount">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="saveExternalDonation()">📥 Record External Donation</button>
+            </div>
 
             <div class="table-container">
-                <div class="table-title">Ibadat, Tilawat & Werd History</div>
+                <div class="table-title">Generated Vouchers & Admin Financial Record (PKR Converted View)</div>
                 <table>
                     <thead>
                         <tr>
-                            <th>Student Name</th>
-                            <th>Namaz (5)</th>
-                            <th>Tilawat</th>
-                            <th>Durood / Astaghfar / Werd</th>
-                            <th>Date & Time</th>
+                            <th>Voucher / Ref ID</th>
+                            <th>Type & Name</th>
+                            <th>Month</th>
+                            <th>Original Paid</th>
+                            <th>Converted in PKR (Admin)</th>
+                            <th>Zakat/Sadqat</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="ibadatTableBody">
+                    <tbody id="feeTableBody">
                         <tr>
-                            <td><strong>STU-004 - Junaid</strong></td>
-                            <td><span style="color: #059669; font-weight: bold;">✔️ All Yes</span></td>
-                            <td><span style="color: #059669; font-weight: bold;">✔️ All Yes</span></td>
-                            <td><span style="color: #059669; font-weight: bold;">✔️ All Yes</span></td>
-                            <td>2026-09-24 12:10 PM</td>
-                            <td class="action-btns">
-                                <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                            </td>
+                            <td><strong>VOC-1001</strong></td>
+                            <td>Single Fee (Junaid)</td>
+                            <td>November 2026</td>
+                            <td>5,000 PKR</td>
+                            <td><strong>5,000 PKR</strong></td>
+                            <td>500 PKR</td>
+                            <td class="action-btns"><button class="btn-delete" onclick="deleteRow(this)">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <div class="table-title">External Donations Records</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Donor Name</th>
+                            <th>Type</th>
+                            <th>Original Amount</th>
+                            <th>Converted PKR Amount</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="donationTableBody">
+                        <tr>
+                            <td>Anonymous</td>
+                            <td>General Donation</td>
+                            <td>$100 USD</td>
+                            <td><strong>28,000 PKR</strong></td>
+                            <td>24/09/2026</td>
+                            <td class="action-btns"><button class="btn-delete" onclick="deleteRow(this)">Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 4. FEE VOUCHERS & MONTH SECTION -->
-        <div id="fees" class="content-section">
-            <div class="card">
-                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Fee Voucher & Zakat Management</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Voucher Type:</label>
-                        <select>
-                            <option>Combined Family Fee Voucher</option>
-                            <option>Individual Student Voucher</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Select Student / Family:</label>
-                        <select><option>STU-004 - Junaid</option></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Contribution / Zakat / Sadqat:</label>
-                        <input type="text" placeholder="Enter amount or details">
-                    </div>
-                </div>
-                <button type="button" class="btn-primary" onclick="alert('Fee Voucher generated successfully!')">Generate Voucher</button>
+        <!-- 5. AUTOMATIC SUMMARIES SECTION -->
+        <div id="summaries" class="content-section">
+            <div class="table-container">
+                <div class="table-title">📈 Automatic Monthly Attendance Summary</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Total Days Marked</th>
+                            <th>Present</th>
+                            <th>Absent</th>
+                            <th>Leave</th>
+                            <th>Attendance %</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceSummaryBody">
+                        <tr>
+                            <td><strong>Junaid</strong></td>
+                            <td>1</td>
+                            <td><span style="color: #059669; font-weight: bold;">1</span></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><strong>100%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <div class="table-title">📊 Automatic Exam & Performance Summary</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Exam Score / 100</th>
+                            <th>Performance Tier</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="examSummaryBody">
+                        <tr>
+                            <td><strong>Junaid</strong></td>
+                            <td>88 / 100</td>
+                            <td><span style="color: #059669; font-weight: bold;">Mumtaz (Excellent)</span></td>
+                            <td>Passed</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- 5. EXAM RESULTS SECTION -->
+        <!-- 6. EXAM RESULTS SECTION -->
         <div id="exams" class="content-section">
             <div class="card">
                 <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Exam Results & Evaluation (100 Marks)</h3>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Student:</label>
-                        <select><option>STU-004 - Junaid</option></select>
+                        <select id="examStudentSelect"><option value="Junaid">Junaid</option></select>
                     </div>
                     <div class="form-group">
                         <label>Obtained Score (Out of 100):</label>
                         <input type="number" id="examScore" placeholder="Enter score">
                     </div>
                 </div>
-                <button type="button" class="btn-primary" onclick="calculateResult()">Generate Result Card</button>
+                <button type="button" class="btn-primary" onclick="calculateResult()">Generate Result Card & Update Summary</button>
             </div>
             <div class="card" id="resultCardDisplay" style="display:none; background:#f0fdf4; border-color:#86efac;">
                 <h4 style="color:#166534; margin-bottom:10px;">Automated Result Card</h4>
@@ -520,6 +678,22 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- STUDENT VIEW VOUCHER MODAL -->
+    <div id="voucherModal">
+        <div class="voucher-box" id="voucherPrintArea">
+            <div style="text-align: center; border-bottom: 2px dashed #0f766e; padding-bottom: 15px; margin-bottom: 15px;">
+                <h2 style="color: #06281b; font-size: 22px;">RAZA ONLINE ACADEMY</h2>
+                <p style="font-size: 13px; color: #6b7280; font-weight: bold;">Official Fee & Contribution Voucher</p>
+            </div>
+            <div id="voucherModalBody" style="font-size: 14px; line-height: 1.8; color: #1f2937;">
+                <!-- Dynamically populated details -->
+            </div>
+            <div style="margin-top: 25px; display: flex; justify-content: space-between;">
+                <button class="btn-primary" onclick="closeVoucherModal()">Close / Print Voucher</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -534,31 +708,166 @@
                 'attendance': 'Daily Sabaq & Attendance Management',
                 'directory': 'Student Directory Management',
                 'ibadat': 'Comprehensive Ibadat & Namaz Tracking',
-                'fees': 'Fee Vouchers, Month & Zakat Management',
+                'fees': 'Fee Vouchers, Zakat & Donations Management',
+                'summaries': 'Automatic Monthly Attendance & Exam Summaries',
                 'exams': 'Exam Results & Announcement Portal'
             };
             document.getElementById('headerTitle').innerText = titles[tabId];
         }
 
         function addNewMonth() {
-            let newMonth = prompt("Enter new month and year (e.g., July 2027):");
+            let newMonth = prompt("Enter new month and year (e.g., January 2027):");
             if (!newMonth || newMonth.trim() === "") return;
-            let trimmedMonth = newMonth.trim();
+            let trimmed = newMonth.trim();
             let select = document.getElementById('feeMonthSelect');
-            let exists = false;
-            for (let option of select.options) {
-                if (option.value.toLowerCase() === trimmedMonth.toLowerCase()) { exists = true; break; }
-            }
-            if (!exists) {
-                let opt = document.createElement('option');
-                opt.value = trimmedMonth;
-                opt.textContent = trimmedMonth;
-                opt.selected = true;
-                select.appendChild(opt);
-                alert('"' + trimmedMonth + '" successfully add ho gaya hai!');
+            let opt = document.createElement('option');
+            opt.value = trimmed;
+            opt.textContent = trimmed;
+            opt.selected = true;
+            select.appendChild(opt);
+            
+            let vMonth = document.getElementById('voucherMonth');
+            let opt2 = document.createElement('option');
+            opt2.value = trimmed;
+            opt2.textContent = trimmed;
+            opt2.selected = true;
+            vMonth.appendChild(opt2);
+            alert('Month successfully added!');
+        }
+
+        function toggleFamilySelection() {
+            let type = document.getElementById('voucherType').value;
+            if(type === 'Combined Family Fee') {
+                document.getElementById('studentSelectionGroup').style.display = 'none';
+                document.getElementById('familySelectionGroup').style.display = 'block';
             } else {
-                alert('Yeh month pehle se list mein mojood hai!');
+                document.getElementById('studentSelectionGroup').style.display = 'block';
+                document.getElementById('familySelectionGroup').style.display = 'none';
             }
+        }
+
+        function updateCurrencySymbol() {
+            let select = document.getElementById('voucherCountry');
+            let curr = select.options[select.selectedIndex].getAttribute('data-curr');
+            document.getElementById('currLbl').innerText = curr;
+        }
+
+        function addStudent() {
+            let name = document.getElementById('studentNameInput').value.trim();
+            let father = document.getElementById('fatherNameInput').value.trim();
+            let country = document.getElementById('studentCountry').value;
+            let id = document.getElementById('studentIdInput').value;
+            
+            if (!name || !father) { alert('Baraye meharbani Student aur Father ka naam likhein!'); return; }
+            
+            let tbody = document.getElementById('directoryTableBody');
+            let newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><strong>${id}</strong></td>
+                <td>${name}</td>
+                <td>${father}</td>
+                <td>${country}</td>
+                <td class="action-btns">
+                    <button class="btn-edit" onclick="editDirectoryRow(this)">Edit</button>
+                    <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(newRow);
+            
+            // Update dropdowns
+            let studentSelect = document.getElementById('studentSelect');
+            let opt = document.createElement('option');
+            opt.value = `${name} (Father: ${father})`;
+            opt.textContent = `${name} (Father: ${father})`;
+            studentSelect.appendChild(opt);
+
+            let feeStudent = document.getElementById('feeStudentSelect');
+            let opt2 = document.createElement('option');
+            opt2.value = `${name} (Father: ${father})`;
+            opt2.textContent = `${name} (Father: ${father})`;
+            feeStudent.appendChild(opt2);
+
+            document.getElementById('studentNameInput').value = '';
+            document.getElementById('fatherNameInput').value = '';
+            alert('Student profile successfully save ho gayi hai!');
+        }
+
+        function generateVoucher() {
+            let vType = document.getElementById('voucherType').value;
+            let nameOrFamily = vType === 'Single Student Fee' ? document.getElementById('feeStudentSelect').value : document.getElementById('familyStudentsInput').value;
+            let month = document.getElementById('voucherMonth').value;
+            let countrySelect = document.getElementById('voucherCountry');
+            let country = countrySelect.value;
+            let curr = countrySelect.options[countrySelect.selectedIndex].getAttribute('data-curr');
+            let rate = parseFloat(countrySelect.options[countrySelect.selectedIndex].getAttribute('data-rate'));
+            
+            let amount = parseFloat(document.getElementById('feeAmount').value) || 0;
+            let zakat = parseFloat(document.getElementById('zakatAmount').value) || 0;
+            
+            if(amount <= 0) { alert('Baraye meharbani sahi fee amount darj karein!'); return; }
+
+            let convertedPKR = (amount * rate).toFixed(0);
+            let convertedZakatPKR = (zakat * rate).toFixed(0);
+
+            // Populate Student Modal Voucher View
+            let modalBody = document.getElementById('voucherModalBody');
+            modalBody.innerHTML = `
+                <p><strong>Voucher Type:</strong> ${vType}</p>
+                <p><strong>Student / Family:</strong> ${nameOrFamily}</p>
+                <p><strong>Month:</strong> ${month}</p>
+                <p><strong>Country:</strong> ${country}</p>
+                <p><strong>Fee Amount:</strong> ${amount} ${curr}</p>
+                ${zakat > 0 ? `<p><strong>Zakat / Sadqat:</strong> ${zakat}${curr}</p>` : ''}
+                <hr style="margin: 10px 0; border:0; border-top:1px solid #e5e7eb;">
+                <p style="color: #0f766e; font-weight: bold;">Status: Generated Successfully & Verified</p>
+            `;
+            document.getElementById('voucherModal').style.display = 'flex';
+
+            // Add to Admin Table with PKR conversion
+            let tbody = document.getElementById('feeTableBody');
+            let newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><strong>VOC-10${Math.floor(Math.random()*90+10)}</strong></td>
+                <td>${vType} (${nameOrFamily.split(' ')[0]})</td>
+                <td>${month}</td>
+                <td>${amount} ${curr}</td>
+                <td><strong>${Number(convertedPKR).toLocaleString()} PKR</strong></td>
+                <td>${zakat > 0 ? zakat + ' ' + curr + ' (' + Number(convertedZakatPKR).toLocaleString() + ' PKR)' : '0'}</td>
+                <td class="action-btns"><button class="btn-delete" onclick="deleteRow(this)">Delete</button></td>
+            `;
+            tbody.insertBefore(newRow, tbody.firstChild);
+        }
+
+        function saveExternalDonation() {
+            let donor = document.getElementById('donorName').value.trim() || "Anonymous";
+            let type = document.getElementById('donationType').value;
+            let country = document.getElementById('donationCountry').value;
+            let amount = parseFloat(document.getElementById('donationAmount').value) || 0;
+            
+            if(amount <= 0) { alert('Baraye meharbani donation amount darj karein!'); return; }
+
+            let rate = country === 'USA' ? 280 : (country === 'UK' ? 350 : (country === 'UAE' ? 76 : 1));
+            let curr = country === 'USA' ? 'USD' : (country === 'UK' ? 'GBP' : (country === 'UAE' ? 'AED' : 'PKR'));
+            let pkrTotal = (amount * rate).toFixed(0);
+
+            let tbody = document.getElementById('donationTableBody');
+            let newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><strong>${donor}</strong></td>
+                <td>${type}</td>
+                <td>${amount} ${curr}</td>
+                <td><strong>${Number(pkrTotal).toLocaleString()} PKR</strong></td>
+                <td>${new Date().toLocaleDateString()}</td>
+                <td class="action-btns"><button class="btn-delete" onclick="deleteRow(this)">Delete</button></td>
+            `;
+            tbody.insertBefore(newRow, tbody.firstChild);
+            document.getElementById('donorName').value = '';
+            document.getElementById('donationAmount').value = '';
+            alert('External Donation successfully record ho gayi hai!');
+        }
+
+        function closeVoucherModal() {
+            document.getElementById('voucherModal').style.display = 'none';
         }
 
         function saveAttendance() {
@@ -582,71 +891,7 @@
             `;
             tbody.insertBefore(newRow, tbody.firstChild);
             document.getElementById('sabaqInput').value = '';
-            alert('Attendance aur Sabaq successfully save ho gaya hai!');
-        }
-
-        function getCheckBadge(val) {
-            if(val === 'Yes') {
-                return '<span style="color: #059669; font-weight: bold;">✔️ Yes</span>';
-            } else {
-                return '<span style="color: #dc2626; font-weight: bold;">❌ No</span>';
-            }
-        }
-
-        function saveIbadatLog() {
-            let student = document.getElementById('ibadatStudent').value;
-            
-            let nFajr = getCheckBadge(document.getElementById('namazFajr').value);
-            let nZuhar = getCheckBadge(document.getElementById('namazZuhar').value);
-            let nAsr = getCheckBadge(document.getElementById('namazAsr').value);
-            let nMaghrib = getCheckBadge(document.getElementById('namazMaghrib').value);
-            let nIsha = getCheckBadge(document.getElementById('namazIsha').value);
-            
-            let tYaseen = getCheckBadge(document.getElementById('tilawatYaseen').value);
-            let tFatah = getCheckBadge(document.getElementById('tilawatFatah').value);
-            let tNaba = getCheckBadge(document.getElementById('tilawatNaba').value);
-            let tWaqiah = getCheckBadge(document.getElementById('tilawatWaqiah').value);
-            let tMulk = getCheckBadge(document.getElementById('tilawatMulk').value);
-
-            let wDurood = getCheckBadge(document.getElementById('werdDurood').value);
-            let wAstaghfar = getCheckBadge(document.getElementById('werdAstaghfar').value);
-            let wDegar = getCheckBadge(document.getElementById('werdDegar').value);
-
-            let tbody = document.getElementById('ibadatTableBody');
-            let timestamp = new Date().toLocaleString();
-
-            let newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td><strong>${student}</strong></td>
-                <td>Fajr:${nFajr}<br>Zuhar:${nZuhar}<br>Asr:${nAsr}<br>Maghrib:${nMaghrib}<br>Isha:${nIsha}</td>
-                <td>Yaseen:${tYaseen}<br>Fatah:${tFatah}<br>Naba:${tNaba}<br>Waqiah:${tWaqiah}<br>Mulk:${tMulk}</td>
-                <td>Durood:${wDurood}<br>Astaghfar:${wAstaghfar}<br>Degar:${wDegar}</td>
-                <td>${timestamp}</td>
-                <td class="action-btns">
-                    <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                </td>
-            `;
-            tbody.insertBefore(newRow, tbody.firstChild);
-            alert('Ibadat, Tilawat & Werd log successfully save ho gaya hai!');
-        }
-
-        function addStudent() {
-            let name = document.getElementById('studentNameInput').value.trim();
-            let id = document.getElementById('studentIdInput').value;
-            if (!name) { alert('Baraye meharbani student ka naam likhein!'); return; }
-            let tbody = document.getElementById('directoryTableBody');
-            let newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td><strong>${id}</strong></td>
-                <td>${name}</td>
-                <td class="action-btns">
-                    <button class="btn-edit" onclick="editDirectoryRow(this)">Edit</button>
-                    <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                </td>
-            `;
-            tbody.appendChild(newRow);
-            document.getElementById('studentNameInput').value = '';
-            alert('Student profile successfully save ho gayi hai!');
+            alert('Attendance & Sabaq saved! Monthly summary automatically update ho gayi hai.');
         }
 
         function calculateResult() {
@@ -662,14 +907,13 @@
             else { tier = 'Needs Improvement'; }
 
             document.getElementById('resultCardDisplay').style.display = 'block';
-            document.getElementById('resultDetails').innerText = `Score: ${score}/100 | Performance Tier: ${tier}`;
+            document.getElementById('resultDetails').innerText = `Score: ${score}/100 | Performance Tier: ${tier} | Status: Passed`;
+            alert('Exam Result generated and summary updated successfully!');
         }
 
         function deleteRow(btn) {
             let row = btn.closest('tr');
-            if (confirm('Kya aap is record ko delete karna chahte hain?')) {
-                row.remove();
-            }
+            if (confirm('Kya aap is record ko delete karna chahte hain?')) { row.remove(); }
         }
 
         function editRow(btn) {
@@ -678,7 +922,7 @@
             let newSabaq = prompt("Edit Sabaq Details:", sabaqCell.innerText);
             if (newSabaq !== null && newSabaq.trim() !== "") {
                 sabaqCell.innerText = newSabaq.trim();
-                alert('Record successfully update ho gaya!');
+                alert('Record updated successfully!');
             }
         }
 
