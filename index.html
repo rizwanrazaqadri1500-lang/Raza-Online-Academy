@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raza Online Academy - Portal</title>
+    <title>Raza Online Academy - Admin Dashboard Portal</title>
     <style>
         :root {
             --primary-dark: #06281b;
@@ -30,7 +30,7 @@
             overflow: hidden;
         }
 
-        /* Sidebar */
+        /* Sidebar Styling */
         .sidebar {
             width: 260px;
             background-color: var(--primary-dark);
@@ -38,6 +38,7 @@
             display: flex;
             flex-direction: column;
             padding: 20px 15px;
+            flex-shrink: 0;
         }
 
         .sidebar-brand {
@@ -49,10 +50,11 @@
         }
 
         .sidebar-brand span {
-            font-size: 12px;
+            font-size: 11px;
             color: #9ca3af;
             font-weight: normal;
             display: block;
+            margin-top: 4px;
         }
 
         .nav-links {
@@ -71,6 +73,7 @@
             text-decoration: none;
             border-radius: 8px;
             font-size: 14px;
+            cursor: pointer;
             transition: all 0.2s ease;
         }
 
@@ -79,13 +82,13 @@
             color: white;
         }
 
-        /* Main Content */
+        /* Main Content Area */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
-            padding: 20px 30px;
+            padding: 25px 30px;
         }
 
         .header {
@@ -104,28 +107,74 @@
             color: var(--primary-dark);
         }
 
-        /* Controls Section (Add Month & Dropdown) */
-        .controls-card {
+        .session-badge {
+            background: #e6f4ea;
+            color: #137333;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Tab Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Cards & Forms */
+        .card {
             background: white;
             padding: 20px;
             border-radius: 10px;
             border: 1px solid var(--border-color);
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
         }
 
-        .controls-card select {
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+        }
+
+        .form-group select, .form-group input {
+            width: 100%;
             padding: 10px;
             border-radius: 6px;
             border: 1px solid var(--border-color);
             font-size: 14px;
             outline: none;
-            min-width: 200px;
         }
 
-        .btn-add {
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-warning {
             background-color: #d97706;
             color: white;
             border: none;
@@ -136,11 +185,7 @@
             font-size: 14px;
         }
 
-        .btn-add:hover {
-            background-color: #b45309;
-        }
-
-        /* Table Design */
+        /* Tables */
         .table-container {
             background: white;
             border-radius: 10px;
@@ -175,9 +220,9 @@
         }
 
         .action-btns button {
-            padding: 6px 12px;
+            padding: 5px 10px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             font-size: 12px;
             font-weight: bold;
@@ -191,87 +236,233 @@
 </head>
 <body>
 
-    <!-- Sidebar -->
+    <!-- Sidebar Navigation -->
     <div class="sidebar">
         <div class="sidebar-brand">
             Raza Online Academy
             <span>ADMIN DASHBOARD PORTAL</span>
         </div>
         <ul class="nav-links">
-            <li class="active"><a href="#">📅 Sabaq & Attendance</a></li>
-            <li><a href="#">👥 Student Directory</a></li>
-            <li><a href="#">🕌 Comprehensive Ibadat</a></li>
-            <li><a href="#">💳 Fee Vouchers & Month</a></li>
-            <li><a href="#">📊 Exam Results</a></li>
+            <li class="active" onclick="switchTab('attendance', this)"><a href="#">📅 Daily Sabaq & Attendance</a></li>
+            <li onclick="switchTab('directory', this)"><a href="#">👥 Student Directory</a></li>
+            <li onclick="switchTab('ibadat', this)"><a href="#">🕌 Comprehensive Ibadat</a></li>
+            <li onclick="switchTab('fees', this)"><a href="#">💳 Fee Vouchers & Month</a></li>
+            <li onclick="switchTab('exams', this)"><a href="#">📊 Exam Results & Announce</a></li>
         </ul>
     </div>
 
-    <!-- Main Content Area -->
+    <!-- Main Content Container -->
     <div class="main-content">
         
-        <!-- Header -->
         <div class="header">
-            <h2>Attendance & Sabaq Management</h2>
-            <span style="background: #e6f4ea; color: #137333; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;">Session: 2026-2027</span>
+            <h2 id="headerTitle">Daily Sabaq & Attendance Management</h2>
+            <div class="session-badge">Session: 2026-2027</div>
         </div>
 
-        <!-- Month Add Section -->
-        <div class="controls-card">
-            <label for="feeMonthSelect" style="font-weight: 600; font-size: 14px;">Select Month:</label>
-            <select id="feeMonthSelect">
-                <option value="November 2026">November 2026</option>
-                <option value="December 2026">December 2026</option>
-                <option value="January 2027">January 2027</option>
-            </select>
-            <button type="button" class="btn-add" onclick="addNewMonth()">+ Add Month</button>
+        <!-- 1. ATTENDANCE & SABAQ SECTION -->
+        <div id="attendance" class="content-section active">
+            <div class="card">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Select Month:</label>
+                        <div style="display: flex; gap: 8px;">
+                            <select id="feeMonthSelect" style="flex: 1;">
+                                <option value="November 2026">November 2026</option>
+                                <option value="December 2026">December 2026</option>
+                                <option value="January 2027">January 2027</option>
+                            </select>
+                            <button type="button" class="btn-warning" onclick="addNewMonth()">+ Add</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Student:</label>
+                        <select id="studentSelect">
+                            <option value="STU-004 - Junaid">STU-004 - Junaid</option>
+                            <option value="STU-005 - Ahmed">STU-005 - Ahmed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Attendance Status:</label>
+                        <select id="attendanceStatus">
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                            <option value="Leave">Leave</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Sabaq Details:</label>
+                        <input type="text" id="sabaqInput" placeholder="Enter Sabaq details...">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="saveAttendance()">💾 Save Attendance & Sabaq</button>
+            </div>
+
+            <div class="table-container">
+                <div class="table-title">Attendance & Sabaq History</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID & Name</th>
+                            <th>Month</th>
+                            <th>Attendance</th>
+                            <th>Sabaq Details</th>
+                            <th>Timestamp</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceTableBody">
+                        <tr>
+                            <td><strong>STU-004 - Junaid</strong></td>
+                            <td>November 2026</td>
+                            <td><span style="color: #059669; font-weight: bold;">Present</span></td>
+                            <td>Para 3 (Surah Al-Baqarah)</td>
+                            <td>2026-09-24 11:55 AM</td>
+                            <td class="action-btns">
+                                <button class="btn-edit" onclick="editRow(this)">Edit</button>
+                                <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- Table Section with Edit & Delete -->
-        <div class="table-container">
-            <div class="table-title">Attendance & Sabaq History</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Student ID</th>
-                        <th>Name</th>
-                        <th>Attendance</th>
-                        <th>Date & Timing</th>
-                        <th>Fee Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="attendanceTableBody">
-                    <tr>
-                        <td><strong>STU-004</strong></td>
-                        <td>Junaid</td>
-                        <td><span style="color: #059669; font-weight: bold;">Present</span></td>
-                        <td>2026-09-24 | 10:25 to 10:45</td>
-                        <td>Paid</td>
-                        <td class="action-btns">
-                            <button class="btn-edit" onclick="editRow(this)">Edit</button>
-                            <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>STU-005</strong></td>
-                        <td>Ahmed</td>
-                        <td><span style="color: #059669; font-weight: bold;">Present</span></td>
-                        <td>2026-09-24 | 10:30 to 10:50</td>
-                        <td>Pending</td>
-                        <td class="action-btns">
-                            <button class="btn-edit" onclick="editRow(this)">Edit</button>
-                            <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- 2. STUDENT DIRECTORY SECTION -->
+        <div id="directory" class="content-section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Add New Student</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Student Name:</label>
+                        <input type="text" id="studentNameInput" placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Student Portal ID:</label>
+                        <input type="text" id="studentIdInput" value="STU-006" readonly>
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="addStudent()">Save Student Profile</button>
+            </div>
+
+            <div class="table-container">
+                <div class="table-title">Registered Students Directory</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="directoryTableBody">
+                        <tr>
+                            <td><strong>STU-004</strong></td>
+                            <td>Junaid</td>
+                            <td class="action-btns">
+                                <button class="btn-edit" onclick="editDirectoryRow(this)">Edit</button>
+                                <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. COMPREHENSIVE IBADAT SECTION -->
+        <div id="ibadat" class="content-section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Log Daily Ibadat & Namaz</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Student:</label>
+                        <select><option>STU-004 - Junaid</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Namaz Track (5 Times):</label>
+                        <select><option>All Prayers Offered</option><option>Missed Some Prayers</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tilawat (Paras/Surah):</label>
+                        <input type="text" placeholder="e.g. 1 Para Completed">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="alert('Ibadat record saved successfully!')">Save Ibadat Log</button>
+            </div>
+        </div>
+
+        <!-- 4. FEE VOUCHERS & MONTH SECTION -->
+        <div id="fees" class="content-section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Fee Voucher & Zakat Management</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Voucher Type:</label>
+                        <select>
+                            <option>Combined Family Fee Voucher</option>
+                            <option>Individual Student Voucher</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Student / Family:</label>
+                        <select><option>STU-004 - Junaid</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Contribution / Zakat / Sadqat:</label>
+                        <input type="text" placeholder="Enter amount or details">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="alert('Fee Voucher generated successfully!')">Generate Voucher</button>
+            </div>
+        </div>
+
+        <!-- 5. EXAM RESULTS SECTION -->
+        <div id="exams" class="content-section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Exam Results & Evaluation (100 Marks)</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Student:</label>
+                        <select><option>STU-004 - Junaid</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Obtained Score (Out of 100):</label>
+                        <input type="number" id="examScore" placeholder="Enter score">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="calculateResult()">Generate Result Card</button>
+            </div>
+            <div class="card" id="resultCardDisplay" style="display:none; background:#f0fdf4; border-color:#86efac;">
+                <h4 style="color:#166534; margin-bottom:10px;">Automated Result Card</h4>
+                <p id="resultDetails" style="font-size:14px; font-weight:600; color:#14532d;"></p>
+            </div>
         </div>
 
     </div>
 
-    <!-- JavaScript for Month Adding and Table Edit/Delete -->
+    <!-- JavaScript for Tab Switching and Functions -->
     <script>
-        // Function to add new month to dropdown
+        function switchTab(tabId, el) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            // Remove active class from nav links
+            document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(tabId).classList.add('active');
+            el.classList.add('active');
+
+            // Update Header Title
+            const titles = {
+                'attendance': 'Daily Sabaq & Attendance Management',
+                'directory': 'Student Directory Management',
+                'ibadat': 'Comprehensive Ibadat & Namaz Tracking',
+                'fees': 'Fee Vouchers, Month & Zakat Management',
+                'exams': 'Exam Results & Announcement Portal'
+            };
+            document.getElementById('headerTitle').innerText = titles[tabId];
+        }
+
+        // Add Month Functionality
         function addNewMonth() {
             let newMonth = prompt("Enter new month and year (e.g., July 2027):");
             if (!newMonth || newMonth.trim() === "") return;
@@ -299,7 +490,73 @@
             }
         }
 
-        // Function to delete a table row
+        // Save Attendance
+        function saveAttendance() {
+            let month = document.getElementById('feeMonthSelect').value;
+            let student = document.getElementById('studentSelect').value;
+            let status = document.getElementById('attendanceStatus').value;
+            let sabaq = document.getElementById('sabaqInput').value.trim() || "No Sabaq Provided";
+            
+            let tbody = document.getElementById('attendanceTableBody');
+            let timestamp = new Date().toLocaleString();
+            let statusColor = status === 'Present' ? '#059669' : (status === 'Absent' ? '#dc2626' : '#d97706');
+            
+            let newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><strong>${student}</strong></td>
+                <td>${month}</td>
+                <td><span style="color: ${statusColor}; font-weight: bold;">${status}</span></td>
+                <td>${sabaq}</td>
+                <td>${timestamp}</td>
+                <td class="action-btns">
+                    <button class="btn-edit" onclick="editRow(this)">Edit</button>
+                    <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                </td>
+            `;
+            tbody.insertBefore(newRow, tbody.firstChild);
+            document.getElementById('sabaqInput').value = '';
+            alert('Attendance aur Sabaq successfully save ho gaya hai!');
+        }
+
+        // Add Student
+        function addStudent() {
+            let name = document.getElementById('studentNameInput').value.trim();
+            let id = document.getElementById('studentIdInput').value;
+            if (!name) { alert('Baraye meharbani student ka naam likhein!'); return; }
+            
+            let tbody = document.getElementById('directoryTableBody');
+            let newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><strong>${id}</strong></td>
+                <td>${name}</td>
+                <td class="action-btns">
+                    <button class="btn-edit" onclick="editDirectoryRow(this)">Edit</button>
+                    <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(newRow);
+            document.getElementById('studentNameInput').value = '';
+            alert('Student profile successfully save ho gayi hai!');
+        }
+
+        // Exam Score Evaluation (Munasib, Bhtar, Mumtaz tiers)
+        function calculateResult() {
+            let score = parseInt(document.getElementById('examScore').value);
+            if (isNaN(score) || score < 0 || score > 100) {
+                alert('Baraye meharbani 0 se 100 ke darmiyan sahi score darj karein!');
+                return;
+            }
+            let tier = '';
+            if (score >= 85) { tier = 'Mumtaz (Excellent)'; }
+            else if (score >= 70) { tier = 'Bhtar (Very Good)'; }
+            else if (score >= 60) { tier = 'Munasib (Good / Satisfactory)'; }
+            else { tier = 'Needs Improvement'; }
+
+            document.getElementById('resultCardDisplay').style.display = 'block';
+            document.getElementById('resultDetails').innerText = `Score: ${score}/100 | Performance Tier: ${tier}`;
+        }
+
+        // Common Delete
         function deleteRow(btn) {
             let row = btn.closest('tr');
             if (confirm('Kya aap is record ko delete karna chahte hain?')) {
@@ -307,20 +564,25 @@
             }
         }
 
-        // Function to edit a table row
+        // Edit Attendance Row
         function editRow(btn) {
             let row = btn.closest('tr');
+            let sabaqCell = row.cells[3];
+            let newSabaq = prompt("Edit Sabaq Details:", sabaqCell.innerText);
+            if (newSabaq !== null && newSabaq.trim() !== "") {
+                sabaqCell.innerText = newSabaq.trim();
+                alert('Record successfully update ho gaya!');
+            }
+        }
+
+        // Edit Directory Row
+        function editDirectoryRow(btn) {
+            let row = btn.closest('tr');
             let nameCell = row.cells[1];
-            let statusCell = row.cells[2];
-            
             let newName = prompt("Edit Student Name:", nameCell.innerText);
             if (newName !== null && newName.trim() !== "") {
                 nameCell.innerText = newName.trim();
-            }
-            
-            let newStatus = prompt("Edit Attendance Status (Present/Absent):", statusCell.innerText);
-            if (newStatus !== null && newStatus.trim() !== "") {
-                statusCell.innerHTML = `<span style="color: #059669; font-weight: bold;">${newStatus.trim()}</span>`;
+                alert('Student profile update ho gayi!');
             }
         }
     </script>
