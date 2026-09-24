@@ -292,7 +292,7 @@
             <div class="session-badge">Session: 2026-2027</div>
         </div>
 
-        <!-- 1. ATTENDANCE & SABAQ SECTION -->
+        <!-- 1. ATTENDANCE & SABAQ SECTION WITH CLASS START & END TIME -->
         <div id="attendance" class="content-section active">
             <div class="card">
                 <div class="form-row">
@@ -317,6 +317,8 @@
                         <label>Select Student:</label>
                         <select id="studentSelect">
                             <option value="STU-004 - Junaid">STU-004 - Junaid (Father: Muhammad Ali)</option>
+                            <option value="STU-001 - Ahmed">STU-001 - Ahmed (Father: Tariq Mahmood)</option>
+                            <option value="STU-002 - Fatima">STU-002 - Fatima (Father: Zubair Ahmed)</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -329,10 +331,17 @@
                             <option value="Skip Day">Skip Day</option>
                         </select>
                     </div>
+                    
+                    <!-- Class Start Time & Class End Time Fields -->
                     <div class="form-group" id="attendanceDateGroup">
-                        <label>Present Date & Time:</label>
-                        <input type="datetime-local" id="attendanceDateTimeInput">
+                        <label>Class Start Time & Date:</label>
+                        <input type="datetime-local" id="classStartTimeInput">
                     </div>
+                    <div class="form-group" id="attendanceEndDateGroup">
+                        <label>Class End Time & Date:</label>
+                        <input type="datetime-local" id="classEndTimeInput">
+                    </div>
+
                     <div class="form-group">
                         <label>Sabaq Details:</label>
                         <input type="text" id="sabaqInput" placeholder="Enter Sabaq details...">
@@ -348,7 +357,7 @@
                         <tr>
                             <th>Student ID & Name</th>
                             <th>Attendance Status</th>
-                            <th>Date & Time (If Present)</th>
+                            <th>Class Start & End Time</th>
                             <th>Sabaq Details</th>
                             <th>Actions</th>
                         </tr>
@@ -357,7 +366,7 @@
                         <tr>
                             <td><strong>STU-004 - Junaid</strong></td>
                             <td><span style="color: #059669; font-weight: bold;">Present</span></td>
-                            <td>2026-09-24 11:55 AM</td>
+                            <td>2026-09-24 [11:00 AM - 12:00 PM]</td>
                             <td>Para 3 (Surah Al-Baqarah)</td>
                             <td class="action-btns">
                                 <button class="btn-edit" onclick="editRow(this)">Edit</button>
@@ -383,7 +392,7 @@
                         <input type="text" id="fatherNameInput" placeholder="Enter father's name">
                     </div>
                     <div class="form-group">
-                        <label>Country (All Countries):</label>
+                        <label>Country / Currency Option:</label>
                         <select id="studentCountry">
                             <option value="All Countries">🌐 All Countries (Global)</option>
                             <option value="Pakistan">Pakistan (PKR)</option>
@@ -394,7 +403,6 @@
                             <option value="Canada">Canada (CAD)</option>
                             <option value="Australia">Australia (AUD)</option>
                             <option value="India">India (INR)</option>
-                            <option value="Other">Other Country</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -428,26 +436,6 @@
                                 <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td><strong>STU-001</strong></td>
-                            <td>Ahmed</td>
-                            <td>Tariq Mahmood</td>
-                            <td>All Countries</td>
-                            <td class="action-btns">
-                                <button class="btn-edit" onclick="editDirectoryRow(this)">Edit</button>
-                                <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>STU-002</strong></td>
-                            <td>Fatima</td>
-                            <td>Zubair Ahmed</td>
-                            <td>USA</td>
-                            <td class="action-btns">
-                                <button class="btn-edit" onclick="editDirectoryRow(this)">Edit</button>
-                                <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -462,7 +450,6 @@
                     <select id="ibadatStudent">
                         <option value="STU-004 - Junaid">STU-004 - Junaid</option>
                         <option value="STU-001 - Ahmed">STU-001 - Ahmed</option>
-                        <option value="STU-002 - Fatima">STU-002 - Fatima</option>
                     </select>
                 </div>
 
@@ -475,30 +462,14 @@
                     <div class="ibadat-item" style="grid-column: span 2;"><label>5. Isha Namaz:</label><select id="namazIsha" style="width: 150px;"><option value="Yes">Yes</option><option value="No">No</option></select></div>
                 </div>
 
-                <div class="ibadat-category-title">📖 Daily Surah Tilawat</div>
-                <div class="ibadat-grid">
-                    <div class="ibadat-item"><label>Fajr ke baad (Surah Yaseen):</label><select id="tilawatYaseen"><option value="Yes">Yes</option><option value="No">No</option></select></div>
-                    <div class="ibadat-item"><label>Zuhar ke baad (Surah Fatah):</label><select id="tilawatFatah"><option value="Yes">Yes</option><option value="No">No</option></select></div>
-                    <div class="ibadat-item"><label>Asr ke baad (Surah Naba):</label><select id="tilawatNaba"><option value="Yes">Yes</option><option value="No">No</option></select></div>
-                    <div class="ibadat-item"><label>Maghrib ke baad (Surah Waqiah):</label><select id="tilawatWaqiah"><option value="Yes">Yes</option><option value="No">No</option></select></div>
-                    <div class="ibadat-item" style="grid-column: span 2;"><label>Isha ke baad (Surah Mulk):</label><select id="tilawatMulk" style="width: 150px;"><option value="Yes">Yes</option><option value="No">No</option></select></div>
-                </div>
-
-                <div class="ibadat-category-title">📿 Durood-e-Pak, Astaghfar & Degar Werd</div>
-                <div class="ibadat-grid">
-                    <div class="ibadat-item"><label>Durood-e-Pak:</label><select id="werdDurood"><option value="Yes">Yes</option><option value="No">No</option></select></div>
-                    <div class="ibadat-item"><label>Astaghfar:</label><select id="werdAstaghfar"><option value="Yes">Yes</option><option value="No">No</option></select></div>
-                    <div class="ibadat-item" style="grid-column: span 2;"><label>Degar Werd (Other Azkaar):</label><select id="werdDegar" style="width: 150px;"><option value="Yes">Yes</option><option value="No">No</option></select></div>
-                </div>
-
                 <button type="button" class="btn-primary" onclick="saveIbadatLog()" style="margin-top: 10px;">💾 Save Complete Ibadat Log</button>
             </div>
         </div>
 
-        <!-- 4. FEE VOUCHERS, ZAKAT & DONATIONS SECTION -->
+        <!-- 4. FEE VOUCHERS (WITH ALL COUNTRIES) & SEPARATE DONATIONS SECTION -->
         <div id="fees" class="content-section">
             <div class="card">
-                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Fee Voucher, Zakat & Contributions (Single / Combined Family)</h3>
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Fee Voucher & Advance Fee (12 Months, All Countries & Zakat/Sadqat inside Fee)</h3>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Voucher Type:</label>
@@ -512,7 +483,6 @@
                         <select id="feeStudentSelect">
                             <option value="Junaid (Father: Muhammad Ali)">Junaid (Father: Muhammad Ali)</option>
                             <option value="Ahmed (Father: Tariq Mahmood)">Ahmed (Father: Tariq Mahmood)</option>
-                            <option value="Fatima (Father: Zubair Ahmed)">Fatima (Father: Zubair Ahmed)</option>
                         </select>
                     </div>
                     <div class="form-group" id="familySelectionGroup" style="display:none;">
@@ -521,29 +491,28 @@
                             <input type="text" id="familyStudent1" placeholder="Student 1 Name" value="Junaid">
                             <input type="text" id="familyStudent2" placeholder="Student 2 Name" value="Ahmed">
                         </div>
-                        <input type="text" id="familyStudent3" placeholder="Student 3 Name (Optional)" style="margin-top: 5px;">
                     </div>
                     <div class="form-group">
-                        <label>Month (12 Months):</label>
+                        <label>Fee Month (12 Months Selection):</label>
                         <select id="voucherMonth">
-                            <option value="January 2026">January 2026</option>
-                            <option value="February 2026">February 2026</option>
-                            <option value="March 2026">March 2026</option>
-                            <option value="April 2026">April 2026</option>
-                            <option value="May 2026">May 2026</option>
-                            <option value="June 2026">June 2026</option>
-                            <option value="July 2026">July 2026</option>
-                            <option value="August 2026">August 2026</option>
-                            <option value="September 2026">September 2026</option>
-                            <option value="October 2026">October 2026</option>
-                            <option value="November 2026" selected>November 2026</option>
-                            <option value="December 2026">December 2026</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November" selected>November</option>
+                            <option value="December">December</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Country:</label>
+                        <label>Country / Currency (All Countries Added):</label>
                         <select id="voucherCountry" onchange="updateCurrencySymbol()">
-                            <option value="All Countries">All Countries (Global)</option>
+                            <option value="All Countries">🌐 All Countries (Global Option)</option>
                             <option value="Pakistan">Pakistan (PKR)</option>
                             <option value="USA">USA (USD)</option>
                             <option value="UK">UK (GBP)</option>
@@ -551,24 +520,31 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Fee Amount (<span id="currLbl">PKR</span>):</label>
-                        <input type="number" id="feeAmount" placeholder="Enter amount">
+                        <label>Fee Category (Fee / Advance Fee):</label>
+                        <select id="feeCategoryType">
+                            <option value="Regular Fee">Regular Fee</option>
+                            <option value="Advance Fee">Advance Fee</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Zakat / Fitra / Sadqat / Wajibaat:</label>
+                        <label>Fee Amount (<span id="currLbl">PKR</span>):</label>
+                        <input type="number" id="feeAmount" placeholder="Enter fee amount">
+                    </div>
+                    <div class="form-group">
+                        <label>Zakat / Fitra / Sadqat (Inside Fee Column):</label>
                         <input type="number" id="zakatAmount" value="0" placeholder="Optional amount">
                     </div>
                 </div>
-                <button type="button" class="btn-primary" onclick="generateVoucher()">🎫 Generate Beautiful Voucher</button>
+                <button type="button" class="btn-primary" onclick="generateVoucher()">🎫 Generate Auto Fee Voucher</button>
             </div>
 
-            <!-- Dedicated Separate Donation Form Section -->
+            <!-- Dedicated Separate Donation Portal Section -->
             <div class="card" style="border-color: #0f766e; background: #fafdfb;">
-                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">🌟 Dedicated General Donation Portal (Outside Students)</h3>
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">🌟 Dedicated Donation Column (Completely Separate from Fee)</h3>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Donor Name:</label>
-                        <input type="text" id="donorName" placeholder="Enter donor name (or Anonymous)">
+                        <input type="text" id="donorName" placeholder="Enter donor name or anonymous">
                     </div>
                     <div class="form-group">
                         <label>Donation Type:</label>
@@ -591,22 +567,23 @@
                     </div>
                     <div class="form-group">
                         <label>Donation Amount:</label>
-                        <input type="number" id="donationAmount" placeholder="Enter amount">
+                        <input type="number" id="donationAmount" placeholder="Enter donation amount">
                     </div>
                 </div>
-                <button type="button" class="btn-primary" onclick="saveExternalDonation()">📥 Record External Donation</button>
+                <button type="button" class="btn-primary" onclick="saveExternalDonation()">📥 Record Separate Donation</button>
             </div>
 
             <div class="table-container">
-                <div class="table-title">Generated Vouchers & Admin Financial Record (PKR Converted View)</div>
+                <div class="table-title">Generated Vouchers & Admin Financial Record (Auto Converted to PKR)</div>
                 <table>
                     <thead>
                         <tr>
-                            <th>Voucher / Ref ID</th>
+                            <th>Voucher ID</th>
                             <th>Type & Name</th>
                             <th>Month</th>
+                            <th>Fee Type</th>
                             <th>Original Paid</th>
-                            <th>Converted in PKR (Admin)</th>
+                            <th>Admin PKR Converted View</th>
                             <th>Zakat/Sadqat</th>
                             <th>Actions</th>
                         </tr>
@@ -615,7 +592,8 @@
                         <tr>
                             <td><strong>VOC-1001</strong></td>
                             <td>Single Fee (Junaid)</td>
-                            <td>November 2026</td>
+                            <td>November</td>
+                            <td>Regular Fee</td>
                             <td>5,000 PKR</td>
                             <td><strong>5,000 PKR</strong></td>
                             <td>500 PKR</td>
@@ -626,14 +604,14 @@
             </div>
 
             <div class="table-container">
-                <div class="table-title">External Donations Records</div>
+                <div class="table-title">Separate Donations Records</div>
                 <table>
                     <thead>
                         <tr>
                             <th>Donor Name</th>
                             <th>Type</th>
                             <th>Original Amount</th>
-                            <th>Converted PKR Amount</th>
+                            <th>Converted PKR Amount (Admin View)</th>
                             <th>Date</th>
                             <th>Actions</th>
                         </tr>
@@ -676,36 +654,6 @@
                             <td>0</td>
                             <td><strong>100%</strong></td>
                         </tr>
-                        <tr>
-                            <td><strong>Ahmed</strong></td>
-                            <td>1</td>
-                            <td><span style="color: #059669; font-weight: bold;">1</span></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><strong>100%</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="table-container">
-                <div class="table-title">📊 Automatic Exam & Performance Summary</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Student Name</th>
-                            <th>Exam Score / 100</th>
-                            <th>Performance Tier</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="examSummaryBody">
-                        <tr>
-                            <td><strong>Junaid</strong></td>
-                            <td>88 / 100</td>
-                            <td><span style="color: #059669; font-weight: bold;">Mumtaz (Excellent)</span></td>
-                            <td>Passed</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -721,7 +669,6 @@
                         <select id="examStudentSelect">
                             <option value="Junaid">Junaid</option>
                             <option value="Ahmed">Ahmed</option>
-                            <option value="Fatima">Fatima</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -779,10 +726,13 @@
         function toggleAttendanceDateTime() {
             let status = document.getElementById('attendanceStatus').value;
             let dateGroup = document.getElementById('attendanceDateGroup');
+            let endDateGroup = document.getElementById('attendanceEndDateGroup');
             if(status === 'Present') {
                 dateGroup.style.display = 'block';
+                endDateGroup.style.display = 'block';
             } else {
                 dateGroup.style.display = 'none';
+                endDateGroup.style.display = 'none';
             }
         }
 
@@ -799,7 +749,12 @@
 
         function updateCurrencySymbol() {
             let select = document.getElementById('voucherCountry');
-            let curr = select.options[select.selectedIndex].getAttribute('data-curr') || 'PKR';
+            let country = select.value;
+            let curr = 'PKR';
+            if(country === 'USA') curr = 'USD';
+            else if(country === 'UK') curr = 'GBP';
+            else if(country === 'UAE') curr = 'AED';
+            else if(country === 'All Countries') curr = 'Global (PKR default)';
             document.getElementById('currLbl').innerText = curr;
         }
 
@@ -868,17 +823,21 @@
             } else {
                 let s1 = document.getElementById('familyStudent1').value.trim();
                 let s2 = document.getElementById('familyStudent2').value.trim();
-                let s3 = document.getElementById('familyStudent3').value.trim();
-                let list = [s1, s2, s3].filter(Boolean);
+                let list = [s1, s2].filter(Boolean);
                 nameOrFamily = list.join(', ') + " (Family)";
             }
 
             let month = document.getElementById('voucherMonth').value;
             let countrySelect = document.getElementById('voucherCountry');
             let country = countrySelect.value;
+            let feeCategory = document.getElementById('feeCategoryType').value;
+            
             let curr = 'PKR';
             let rate = 1;
-            
+            if(country === 'USA') { curr = 'USD'; rate = 280; }
+            else if(country === 'UK') { curr = 'GBP'; rate = 350; }
+            else if(country === 'UAE') { curr = 'AED'; rate = 76; }
+
             let amount = parseFloat(document.getElementById('feeAmount').value) || 0;
             let zakat = parseFloat(document.getElementById('zakatAmount').value) || 0;
             
@@ -891,12 +850,13 @@
             modalBody.innerHTML = `
                 <p><strong>Voucher Type:</strong> ${vType}</p>
                 <p><strong>Student / Students:</strong> ${nameOrFamily}</p>
-                <p><strong>Month:</strong> ${month}</p>
-                <p><strong>Country:</strong> ${country}</p>
+                <p><strong>Fee Month:</strong> ${month}</p>
+                <p><strong>Fee Type:</strong> ${feeCategory}</p>
+                <p><strong>Country Option:</strong> ${country}</p>
                 <p><strong>Fee Amount:</strong> ${amount} ${curr}</p>
                 ${zakat > 0 ? `<p><strong>Zakat / Sadqat:</strong> ${zakat}${curr}</p>` : ''}
                 <hr style="margin: 10px 0; border:0; border-top:1px solid #e5e7eb;">
-                <p style="color: #0f766e; font-weight: bold;">Status: Generated Successfully & Verified</p>
+                <p style="color: #0f766e; font-weight: bold;">Status: Auto-Generated Voucher Successfully Verified</p>
             `;
             document.getElementById('voucherModal').style.display = 'flex';
 
@@ -906,6 +866,7 @@
                 <td><strong>VOC-10${Math.floor(Math.random()*90+10)}</strong></td>
                 <td>${vType} (${nameOrFamily.split(' ')[0]})</td>
                 <td>${month}</td>
+                <td>${feeCategory}</td>
                 <td>${amount} ${curr}</td>
                 <td><strong>${Number(convertedPKR).toLocaleString()} PKR</strong></td>
                 <td>${zakat > 0 ? zakat + ' ' + curr + ' (' + Number(convertedZakatPKR).toLocaleString() + ' PKR)' : '0'}</td>
@@ -939,7 +900,7 @@
             tbody.insertBefore(newRow, tbody.firstChild);
             document.getElementById('donorName').value = '';
             document.getElementById('donationAmount').value = '';
-            alert('External Donation successfully record ho gayi hai!');
+            alert('Separate Donation successfully record ho gayi hai!');
         }
 
         function closeVoucherModal() {
@@ -949,7 +910,8 @@
         function saveAttendance() {
             let student = document.getElementById('studentSelect').value;
             let status = document.getElementById('attendanceStatus').value;
-            let dateTimeVal = document.getElementById('attendanceDateTimeInput').value;
+            let startVal = document.getElementById('classStartTimeInput').value;
+            let endVal = document.getElementById('classEndTimeInput').value;
             let sabaq = document.getElementById('sabaqInput').value.trim() || "No Sabaq Provided";
             let tbody = document.getElementById('attendanceTableBody');
             
@@ -960,13 +922,13 @@
             else if (status === 'Weekend') statusColor = '#2563eb';
             else if (status === 'Skip Day') statusColor = '#7c3aed';
 
-            let displayTime = (status === 'Present' && dateTimeVal) ? dateTimeVal.replace('T', ' ') : 'N/A';
+            let timingDisplay = (status === 'Present' && startVal && endVal) ? `${startVal.replace('T', ' ')} to ${endVal.replace('T', ' ')}` : 'N/A';
             
             let newRow = document.createElement('tr');
             newRow.innerHTML = `
                 <td><strong>${student}</strong></td>
                 <td><span style="color: ${statusColor}; font-weight: bold;">${status}</span></td>
-                <td>${displayTime}</td>
+                <td>${timingDisplay}</td>
                 <td>${sabaq}</td>
                 <td class="action-btns">
                     <button class="btn-edit" onclick="editRow(this)">Edit</button>
@@ -975,7 +937,7 @@
             `;
             tbody.insertBefore(newRow, tbody.firstChild);
             document.getElementById('sabaqInput').value = '';
-            alert('Attendance & Sabaq saved successfully!');
+            alert('Attendance & Class Timings saved successfully!');
         }
 
         function calculateResult() {
@@ -1004,7 +966,7 @@
             let row = btn.closest('tr');
             let sabaqCell = row.cells[3];
             let newSabaq = prompt("Edit Sabaq Details:", sabaqCell.innerText);
-            if (newS_abaq !== null && newSabaq.trim() !== "") {
+            if (newSabaq !== null && newSabaq.trim() !== "") {
                 sabaqCell.innerText = newSabaq.trim();
                 alert('Record updated successfully!');
             }
