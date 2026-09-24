@@ -116,7 +116,6 @@
             font-weight: 600;
         }
 
-        /* Tab Content Sections */
         .content-section {
             display: none;
         }
@@ -125,7 +124,6 @@
             display: block;
         }
 
-        /* Cards & Forms */
         .card {
             background: white;
             padding: 20px;
@@ -170,10 +168,6 @@
             font-size: 14px;
         }
 
-        .btn-primary:hover {
-            opacity: 0.9;
-        }
-
         .btn-warning {
             background-color: #d97706;
             color: white;
@@ -185,7 +179,6 @@
             font-size: 14px;
         }
 
-        /* Tables */
         .table-container {
             background: white;
             border-radius: 10px;
@@ -232,14 +225,23 @@
 
         .btn-edit { background-color: var(--primary-green); }
         .btn-delete { background-color: #dc2626; }
-        
-        /* Ibadat Grid Form styling */
+
+        .ibadat-category-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--primary-green);
+            margin: 15px 0 10px 0;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 5px;
+        }
+
         .ibadat-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-bottom: 15px;
         }
+
         .ibadat-item {
             background: var(--light-bg);
             padding: 10px 15px;
@@ -249,6 +251,7 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .ibadat-item label {
             font-size: 13px;
             font-weight: 600;
@@ -258,7 +261,6 @@
 </head>
 <body>
 
-    <!-- Sidebar Navigation -->
     <div class="sidebar">
         <div class="sidebar-brand">
             Raza Online Academy
@@ -273,7 +275,6 @@
         </ul>
     </div>
 
-    <!-- Main Content Container -->
     <div class="main-content">
         
         <div class="header">
@@ -403,7 +404,7 @@
         <!-- 3. COMPREHENSIVE IBADAT SECTION -->
         <div id="ibadat" class="content-section">
             <div class="card">
-                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Log Daily 5 Namaz & Tilawat Attendance</h3>
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Log Daily Ibadat, Tilawat & Werd</h3>
                 <div class="form-group" style="margin-bottom: 15px; max-width: 300px;">
                     <label>Select Student:</label>
                     <select id="ibadatStudent">
@@ -412,58 +413,46 @@
                     </select>
                 </div>
 
+                <!-- Namaz Section -->
+                <div class="ibadat-category-title">🕌 5 Namaz Attendance</div>
                 <div class="ibadat-grid">
-                    <div class="ibadat-item">
-                        <label>1. Fajr (Surah Yaseen):</label>
-                        <select id="ibadatFajr" style="width: 110px; padding: 6px; border-radius: 4px; border: 1px solid var(--border-color);">
-                            <option value="Yes">Yes (Yes)</option>
-                            <option value="No">No (No)</option>
-                        </select>
-                    </div>
-                    <div class="ibadat-item">
-                        <label>2. Zuhar (Surah Fatah):</label>
-                        <select id="ibadatZuhar" style="width: 110px; padding: 6px; border-radius: 4px; border: 1px solid var(--border-color);">
-                            <option value="Yes">Yes (Yes)</option>
-                            <option value="No">No (No)</option>
-                        </select>
-                    </div>
-                    <div class="ibadat-item">
-                        <label>3. Asr (Surah Naba):</label>
-                        <select id="ibadatAsr" style="width: 110px; padding: 6px; border-radius: 4px; border: 1px solid var(--border-color);">
-                            <option value="Yes">Yes (Yes)</option>
-                            <option value="No">No (No)</option>
-                        </select>
-                    </div>
-                    <div class="ibadat-item">
-                        <label>4. Maghrib (Surah Waqiah):</label>
-                        <select id="ibadatMaghrib" style="width: 110px; padding: 6px; border-radius: 4px; border: 1px solid var(--border-color);">
-                            <option value="Yes">Yes (Yes)</option>
-                            <option value="No">No (No)</option>
-                        </select>
-                    </div>
-                    <div class="ibadat-item" style="grid-column: span 2;">
-                        <label>5. Isha (Surah Mulk):</label>
-                        <select id="ibadatIsha" style="width: 150px; padding: 6px; border-radius: 4px; border: 1px solid var(--border-color);">
-                            <option value="Yes">Yes (Yes)</option>
-                            <option value="No">No (No)</option>
-                        </select>
-                    </div>
+                    <div class="ibadat-item"><label>1. Fajr Namaz:</label><select id="namazFajr"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item"><label>2. Zuhar Namaz:</label><select id="namazZuhar"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item"><label>3. Asr Namaz:</label><select id="namazAsr"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item"><label>4. Maghrib Namaz:</label><select id="namazMaghrib"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item" style="grid-column: span 2;"><label>5. Isha Namaz:</label><select id="namazIsha" style="width: 150px;"><option value="Yes">Yes</option><option value="No">No</option></select></div>
                 </div>
 
-                <button type="button" class="btn-primary" onclick="saveIbadatLog()">Save Ibadat & Tilawat Log</button>
+                <!-- Tilawat Section -->
+                <div class="ibadat-category-title">📖 Daily Surah Tilawat</div>
+                <div class="ibadat-grid">
+                    <div class="ibadat-item"><label>Fajr ke baad (Surah Yaseen):</label><select id="tilawatYaseen"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item"><label>Zuhar ke baad (Surah Fatah):</label><select id="tilawatFatah"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item"><label>Asr ke baad (Surah Naba):</label><select id="tilawatNaba"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item"><label>Maghrib ke baad (Surah Waqiah):</label><select id="tilawatWaqiah"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item" style="grid-column: span 2;"><label>Isha ke baad (Surah Mulk):</label><select id="tilawatMulk" style="width: 150px;"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                </div>
+
+                <!-- Durood, Astaghfar & Werd Section -->
+                <div class="ibadat-category-title">📿 Durood-e-Pak, Astaghfar & Degar Werd</div>
+                <div class="ibadat-grid">
+                    <div class="ibadat-item"><label>Durood-e-Pak:</label><select id="werdDurood"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item"><label>Astaghfar:</label><select id="werdAstaghfar"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item" style="grid-column: span 2;"><label>Degar Werd (Other Azkaar):</label><select id="werdDegar" style="width: 150px;"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                </div>
+
+                <button type="button" class="btn-primary" onclick="saveIbadatLog()" style="margin-top: 10px;">💾 Save Complete Ibadat Log</button>
             </div>
 
             <div class="table-container">
-                <div class="table-title">Daily Ibadat & Tilawat History</div>
+                <div class="table-title">Ibadat, Tilawat & Werd History</div>
                 <table>
                     <thead>
                         <tr>
                             <th>Student Name</th>
-                            <th>Fajr (Yaseen)</th>
-                            <th>Zuhar (Fatah)</th>
-                            <th>Asr (Naba)</th>
-                            <th>Maghrib (Waqiah)</th>
-                            <th>Isha (Mulk)</th>
+                            <th>Namaz (5)</th>
+                            <th>Tilawat</th>
+                            <th>Durood / Astaghfar / Werd</th>
                             <th>Date & Time</th>
                             <th>Actions</th>
                         </tr>
@@ -471,12 +460,10 @@
                     <tbody id="ibadatTableBody">
                         <tr>
                             <td><strong>STU-004 - Junaid</strong></td>
-                            <td><span style="color: #059669; font-weight: bold; font-size: 16px;">✔️ Yes</span></td>
-                            <td><span style="color: #059669; font-weight: bold; font-size: 16px;">✔️ Yes</span></td>
-                            <td><span style="color: #dc2626; font-weight: bold; font-size: 16px;">❌ No</span></td>
-                            <td><span style="color: #059669; font-weight: bold; font-size: 16px;">✔️ Yes</span></td>
-                            <td><span style="color: #059669; font-weight: bold; font-size: 16px;">✔️ Yes</span></td>
-                            <td>2026-09-24 12:00 PM</td>
+                            <td><span style="color: #059669; font-weight: bold;">✔️ All Yes</span></td>
+                            <td><span style="color: #059669; font-weight: bold;">✔️ All Yes</span></td>
+                            <td><span style="color: #059669; font-weight: bold;">✔️ All Yes</span></td>
+                            <td>2026-09-24 12:10 PM</td>
                             <td class="action-btns">
                                 <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
                             </td>
@@ -535,7 +522,6 @@
 
     </div>
 
-    <!-- JavaScript for Tab Switching and Functions -->
     <script>
         function switchTab(tabId, el) {
             document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
@@ -554,22 +540,15 @@
             document.getElementById('headerTitle').innerText = titles[tabId];
         }
 
-        // Add Month Functionality
         function addNewMonth() {
             let newMonth = prompt("Enter new month and year (e.g., July 2027):");
             if (!newMonth || newMonth.trim() === "") return;
-            
             let trimmedMonth = newMonth.trim();
             let select = document.getElementById('feeMonthSelect');
-            
             let exists = false;
             for (let option of select.options) {
-                if (option.value.toLowerCase() === trimmedMonth.toLowerCase()) {
-                    exists = true;
-                    break;
-                }
+                if (option.value.toLowerCase() === trimmedMonth.toLowerCase()) { exists = true; break; }
             }
-            
             if (!exists) {
                 let opt = document.createElement('option');
                 opt.value = trimmedMonth;
@@ -582,12 +561,10 @@
             }
         }
 
-        // Save Attendance
         function saveAttendance() {
             let student = document.getElementById('studentSelect').value;
             let status = document.getElementById('attendanceStatus').value;
             let sabaq = document.getElementById('sabaqInput').value.trim() || "No Sabaq Provided";
-            
             let tbody = document.getElementById('attendanceTableBody');
             let timestamp = new Date().toLocaleString();
             let statusColor = status === 'Present' ? '#059669' : (status === 'Absent' ? '#dc2626' : '#d97706');
@@ -608,23 +585,32 @@
             alert('Attendance aur Sabaq successfully save ho gaya hai!');
         }
 
-        // Save Ibadat Log with Green Ticks and Red Crosses
+        function getCheckBadge(val) {
+            if(val === 'Yes') {
+                return '<span style="color: #059669; font-weight: bold;">✔️ Yes</span>';
+            } else {
+                return '<span style="color: #dc2626; font-weight: bold;">❌ No</span>';
+            }
+        }
+
         function saveIbadatLog() {
             let student = document.getElementById('ibadatStudent').value;
             
-            let fajr = document.getElementById('ibadatFajr').value;
-            let zuhar = document.getElementById('ibadatZuhar').value;
-            let asr = document.getElementById('ibadatAsr').value;
-            let maghrib = document.getElementById('ibadatMaghrib').value;
-            let isha = document.getElementById('ibadatIsha').value;
+            let nFajr = getCheckBadge(document.getElementById('namazFajr').value);
+            let nZuhar = getCheckBadge(document.getElementById('namazZuhar').value);
+            let nAsr = getCheckBadge(document.getElementById('namazAsr').value);
+            let nMaghrib = getCheckBadge(document.getElementById('namazMaghrib').value);
+            let nIsha = getCheckBadge(document.getElementById('namazIsha').value);
             
-            function getBadge(val) {
-                if(val === 'Yes') {
-                    return '<span style="color: #059669; font-weight: bold; font-size: 16px;">✔️ Yes</span>';
-                } else {
-                    return '<span style="color: #dc2626; font-weight: bold; font-size: 16px;">❌ No</span>';
-                }
-            }
+            let tYaseen = getCheckBadge(document.getElementById('tilawatYaseen').value);
+            let tFatah = getCheckBadge(document.getElementById('tilawatFatah').value);
+            let tNaba = getCheckBadge(document.getElementById('tilawatNaba').value);
+            let tWaqiah = getCheckBadge(document.getElementById('tilawatWaqiah').value);
+            let tMulk = getCheckBadge(document.getElementById('tilawatMulk').value);
+
+            let wDurood = getCheckBadge(document.getElementById('werdDurood').value);
+            let wAstaghfar = getCheckBadge(document.getElementById('werdAstaghfar').value);
+            let wDegar = getCheckBadge(document.getElementById('werdDegar').value);
 
             let tbody = document.getElementById('ibadatTableBody');
             let timestamp = new Date().toLocaleString();
@@ -632,26 +618,22 @@
             let newRow = document.createElement('tr');
             newRow.innerHTML = `
                 <td><strong>${student}</strong></td>
-                <td>${getBadge(fajr)}</td>
-                <td>${getBadge(zuhar)}</td>
-                <td>${getBadge(asr)}</td>
-                <td>${getBadge(maghrib)}</td>
-                <td>${getBadge(isha)}</td>
+                <td>Fajr:${nFajr}<br>Zuhar:${nZuhar}<br>Asr:${nAsr}<br>Maghrib:${nMaghrib}<br>Isha:${nIsha}</td>
+                <td>Yaseen:${tYaseen}<br>Fatah:${tFatah}<br>Naba:${tNaba}<br>Waqiah:${tWaqiah}<br>Mulk:${tMulk}</td>
+                <td>Durood:${wDurood}<br>Astaghfar:${wAstaghfar}<br>Degar:${wDegar}</td>
                 <td>${timestamp}</td>
                 <td class="action-btns">
                     <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
                 </td>
             `;
             tbody.insertBefore(newRow, tbody.firstChild);
-            alert('Ibadat aur Tilawat record successfully save ho gaya hai!');
+            alert('Ibadat, Tilawat & Werd log successfully save ho gaya hai!');
         }
 
-        // Add Student
         function addStudent() {
             let name = document.getElementById('studentNameInput').value.trim();
             let id = document.getElementById('studentIdInput').value;
             if (!name) { alert('Baraye meharbani student ka naam likhein!'); return; }
-            
             let tbody = document.getElementById('directoryTableBody');
             let newRow = document.createElement('tr');
             newRow.innerHTML = `
@@ -667,7 +649,6 @@
             alert('Student profile successfully save ho gayi hai!');
         }
 
-        // Exam Score Evaluation
         function calculateResult() {
             let score = parseInt(document.getElementById('examScore').value);
             if (isNaN(score) || score < 0 || score > 100) {
@@ -684,7 +665,6 @@
             document.getElementById('resultDetails').innerText = `Score: ${score}/100 | Performance Tier: ${tier}`;
         }
 
-        // Common Delete
         function deleteRow(btn) {
             let row = btn.closest('tr');
             if (confirm('Kya aap is record ko delete karna chahte hain?')) {
@@ -692,7 +672,6 @@
             }
         }
 
-        // Edit Attendance Row
         function editRow(btn) {
             let row = btn.closest('tr');
             let sabaqCell = row.cells[2];
@@ -703,7 +682,6 @@
             }
         }
 
-        // Edit Directory Row
         function editDirectoryRow(btn) {
             let row = btn.closest('tr');
             let nameCell = row.cells[1];
