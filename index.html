@@ -309,19 +309,25 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>Select Month:</label>
-                        <div style="display: flex; gap: 8px;">
-                            <select id="feeMonthSelect" style="flex: 1;">
-                                <option value="November 2026" selected>November 2026</option>
-                                <option value="December 2026">December 2026</option>
-                            </select>
-                            <button type="button" class="btn-warning" onclick="addNewMonth()">+ Add</button>
-                        </div>
+                        <select id="feeMonthSelect">
+                            <option value="January 2026">January 2026</option>
+                            <option value="February 2026">February 2026</option>
+                            <option value="March 2026">March 2026</option>
+                            <option value="April 2026">April 2026</option>
+                            <option value="May 2026">May 2026</option>
+                            <option value="June 2026">June 2026</option>
+                            <option value="July 2026">July 2026</option>
+                            <option value="August 2026">August 2026</option>
+                            <option value="September 2026">September 2026</option>
+                            <option value="October 2026">October 2026</option>
+                            <option value="November 2026" selected>November 2026</option>
+                            <option value="December 2026">December 2026</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Select Student:</label>
                         <select id="studentSelect">
                             <option value="STU-004 - Junaid">STU-004 - Junaid (Father: Muhammad Ali)</option>
-                            <option value="STU-005 - Ahmed">STU-005 - Ahmed (Father: Usman Ghani)</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -392,7 +398,7 @@
                     </div>
                     <div class="form-group">
                         <label>Student Portal ID:</label>
-                        <input type="text" id="studentIdInput" value="STU-006" readonly>
+                        <input type="text" id="studentIdInput" value="STU-005" readonly>
                     </div>
                 </div>
                 <button type="button" class="btn-primary" onclick="addStudent()">Save Student Profile</button>
@@ -489,9 +495,19 @@
                         <input type="text" id="familyStudentsInput" value="Junaid & Ahmed (Family)">
                     </div>
                     <div class="form-group">
-                        <label>Month:</label>
+                        <label>Month (12 Months):</label>
                         <select id="voucherMonth">
-                            <option value="November 2026">November 2026</option>
+                            <option value="January 2026">January 2026</option>
+                            <option value="February 2026">February 2026</option>
+                            <option value="March 2026">March 2026</option>
+                            <option value="April 2026">April 2026</option>
+                            <option value="May 2026">May 2026</option>
+                            <option value="June 2026">June 2026</option>
+                            <option value="July 2026">July 2026</option>
+                            <option value="August 2026">August 2026</option>
+                            <option value="September 2026">September 2026</option>
+                            <option value="October 2026">October 2026</option>
+                            <option value="November 2026" selected>November 2026</option>
                             <option value="December 2026">December 2026</option>
                         </select>
                     </div>
@@ -697,6 +713,8 @@
     </div>
 
     <script>
+        let studentCounter = 5;
+
         function switchTab(tabId, el) {
             document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
@@ -713,26 +731,6 @@
                 'exams': 'Exam Results & Announcement Portal'
             };
             document.getElementById('headerTitle').innerText = titles[tabId];
-        }
-
-        function addNewMonth() {
-            let newMonth = prompt("Enter new month and year (e.g., January 2027):");
-            if (!newMonth || newMonth.trim() === "") return;
-            let trimmed = newMonth.trim();
-            let select = document.getElementById('feeMonthSelect');
-            let opt = document.createElement('option');
-            opt.value = trimmed;
-            opt.textContent = trimmed;
-            opt.selected = true;
-            select.appendChild(opt);
-            
-            let vMonth = document.getElementById('voucherMonth');
-            let opt2 = document.createElement('option');
-            opt2.value = trimmed;
-            opt2.textContent = trimmed;
-            opt2.selected = true;
-            vMonth.appendChild(opt2);
-            alert('Month successfully added!');
         }
 
         function toggleFamilySelection() {
@@ -756,10 +754,15 @@
             let name = document.getElementById('studentNameInput').value.trim();
             let father = document.getElementById('fatherNameInput').value.trim();
             let country = document.getElementById('studentCountry').value;
-            let id = document.getElementById('studentIdInput').value;
             
-            if (!name || !father) { alert('Baraye meharbani Student aur Father ka naam likhein!'); return; }
+            if (!name || !father) { 
+                alert('Baraye meharbani Student aur Father ka naam likhein!'); 
+                return; 
+            }
             
+            let id = `STU-00${studentCounter++}`;
+            
+            // Add to Directory Table
             let tbody = document.getElementById('directoryTableBody');
             let newRow = document.createElement('tr');
             newRow.innerHTML = `
@@ -774,11 +777,11 @@
             `;
             tbody.appendChild(newRow);
             
-            // Update dropdowns
+            // Update Student Dropdowns across the portal
             let studentSelect = document.getElementById('studentSelect');
             let opt = document.createElement('option');
-            opt.value = `${name} (Father: ${father})`;
-            opt.textContent = `${name} (Father: ${father})`;
+            opt.value = `${id} - ${name}`;
+            opt.textContent = `${id} - ${name} (Father: ${father})`;
             studentSelect.appendChild(opt);
 
             let feeStudent = document.getElementById('feeStudentSelect');
@@ -787,9 +790,24 @@
             opt2.textContent = `${name} (Father: ${father})`;
             feeStudent.appendChild(opt2);
 
+            let ibadatStudent = document.getElementById('ibadatStudent');
+            let opt3 = document.createElement('option');
+            opt3.value = `${id} - ${name}`;
+            opt3.textContent = `${id} - ${name}`;
+            ibadatStudent.appendChild(opt3);
+
+            let examStudent = document.getElementById('examStudentSelect');
+            let opt4 = document.createElement('option');
+            opt4.value = name;
+            opt4.textContent = name;
+            examStudent.appendChild(opt4);
+
+            // Update next ID badge
+            document.getElementById('studentIdInput').value = `STU-00${studentCounter}`;
             document.getElementById('studentNameInput').value = '';
             document.getElementById('fatherNameInput').value = '';
-            alert('Student profile successfully save ho gayi hai!');
+            
+            alert('Student profile successfully save ho gayi hai aur tamam options mein update ho gayi hai!');
         }
 
         function generateVoucher() {
