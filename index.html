@@ -383,12 +383,18 @@
                         <input type="text" id="fatherNameInput" placeholder="Enter father's name">
                     </div>
                     <div class="form-group">
-                        <label>Country:</label>
+                        <label>Country (All Countries):</label>
                         <select id="studentCountry">
+                            <option value="All Countries">🌐 All Countries (Global)</option>
                             <option value="Pakistan">Pakistan (PKR)</option>
                             <option value="USA">USA (USD)</option>
                             <option value="UK">UK (GBP)</option>
                             <option value="UAE">UAE (AED)</option>
+                            <option value="Saudi Arabia">Saudi Arabia (SAR)</option>
+                            <option value="Canada">Canada (CAD)</option>
+                            <option value="Australia">Australia (AUD)</option>
+                            <option value="India">India (INR)</option>
+                            <option value="Other">Other Country</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -422,6 +428,26 @@
                                 <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
                             </td>
                         </tr>
+                        <tr>
+                            <td><strong>STU-001</strong></td>
+                            <td>Ahmed</td>
+                            <td>Tariq Mahmood</td>
+                            <td>All Countries</td>
+                            <td class="action-btns">
+                                <button class="btn-edit" onclick="editDirectoryRow(this)">Edit</button>
+                                <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>STU-002</strong></td>
+                            <td>Fatima</td>
+                            <td>Zubair Ahmed</td>
+                            <td>USA</td>
+                            <td class="action-btns">
+                                <button class="btn-edit" onclick="editDirectoryRow(this)">Edit</button>
+                                <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -435,6 +461,8 @@
                     <label>Select Student:</label>
                     <select id="ibadatStudent">
                         <option value="STU-004 - Junaid">STU-004 - Junaid</option>
+                        <option value="STU-001 - Ahmed">STU-001 - Ahmed</option>
+                        <option value="STU-002 - Fatima">STU-002 - Fatima</option>
                     </select>
                 </div>
 
@@ -483,6 +511,8 @@
                         <label>Select Student:</label>
                         <select id="feeStudentSelect">
                             <option value="Junaid (Father: Muhammad Ali)">Junaid (Father: Muhammad Ali)</option>
+                            <option value="Ahmed (Father: Tariq Mahmood)">Ahmed (Father: Tariq Mahmood)</option>
+                            <option value="Fatima (Father: Zubair Ahmed)">Fatima (Father: Zubair Ahmed)</option>
                         </select>
                     </div>
                     <div class="form-group" id="familySelectionGroup" style="display:none;">
@@ -513,10 +543,11 @@
                     <div class="form-group">
                         <label>Country:</label>
                         <select id="voucherCountry" onchange="updateCurrencySymbol()">
-                            <option value="Pakistan" data-curr="PKR" data-rate="1">Pakistan (PKR)</option>
-                            <option value="USA" data-curr="USD" data-rate="280">USA (USD)</option>
-                            <option value="UK" data-curr="GBP" data-rate="350">UK (GBP)</option>
-                            <option value="UAE" data-curr="AED" data-rate="76">UAE (AED)</option>
+                            <option value="All Countries">All Countries (Global)</option>
+                            <option value="Pakistan">Pakistan (PKR)</option>
+                            <option value="USA">USA (USD)</option>
+                            <option value="UK">UK (GBP)</option>
+                            <option value="UAE">UAE (AED)</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -551,6 +582,7 @@
                     <div class="form-group">
                         <label>Country / Currency:</label>
                         <select id="donationCountry">
+                            <option value="All Countries">All Countries</option>
                             <option value="Pakistan">Pakistan (PKR)</option>
                             <option value="USA">USA (USD - Rate: 280)</option>
                             <option value="UK">UK (GBP - Rate: 350)</option>
@@ -644,6 +676,14 @@
                             <td>0</td>
                             <td><strong>100%</strong></td>
                         </tr>
+                        <tr>
+                            <td><strong>Ahmed</strong></td>
+                            <td>1</td>
+                            <td><span style="color: #059669; font-weight: bold;">1</span></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><strong>100%</strong></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -678,7 +718,11 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>Student:</label>
-                        <select id="examStudentSelect"><option value="Junaid">Junaid</option></select>
+                        <select id="examStudentSelect">
+                            <option value="Junaid">Junaid</option>
+                            <option value="Ahmed">Ahmed</option>
+                            <option value="Fatima">Fatima</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Obtained Score (Out of 100):</label>
@@ -755,7 +799,7 @@
 
         function updateCurrencySymbol() {
             let select = document.getElementById('voucherCountry');
-            let curr = select.options[select.selectedIndex].getAttribute('data-curr');
+            let curr = select.options[select.selectedIndex].getAttribute('data-curr') || 'PKR';
             document.getElementById('currLbl').innerText = curr;
         }
 
@@ -832,8 +876,8 @@
             let month = document.getElementById('voucherMonth').value;
             let countrySelect = document.getElementById('voucherCountry');
             let country = countrySelect.value;
-            let curr = countrySelect.options[countrySelect.selectedIndex].getAttribute('data-curr');
-            let rate = parseFloat(countrySelect.options[countrySelect.selectedIndex].getAttribute('data-rate'));
+            let curr = 'PKR';
+            let rate = 1;
             
             let amount = parseFloat(document.getElementById('feeAmount').value) || 0;
             let zakat = parseFloat(document.getElementById('zakatAmount').value) || 0;
@@ -960,7 +1004,7 @@
             let row = btn.closest('tr');
             let sabaqCell = row.cells[3];
             let newSabaq = prompt("Edit Sabaq Details:", sabaqCell.innerText);
-            if (newSabaq !== null && newSabaq.trim() !== "") {
+            if (newS_abaq !== null && newSabaq.trim() !== "") {
                 sabaqCell.innerText = newSabaq.trim();
                 alert('Record updated successfully!');
             }
