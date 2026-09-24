@@ -168,17 +168,6 @@
             font-size: 14px;
         }
 
-        .btn-warning {
-            background-color: #d97706;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
         .table-container {
             background: white;
             border-radius: 10px;
@@ -308,7 +297,7 @@
             <div class="card">
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Select Month:</label>
+                        <label>Select Month (12 Months):</label>
                         <select id="feeMonthSelect">
                             <option value="January 2026">January 2026</option>
                             <option value="February 2026">February 2026</option>
@@ -332,11 +321,17 @@
                     </div>
                     <div class="form-group">
                         <label>Attendance Status:</label>
-                        <select id="attendanceStatus">
+                        <select id="attendanceStatus" onchange="toggleAttendanceDateTime()">
                             <option value="Present">Present</option>
                             <option value="Absent">Absent</option>
                             <option value="Leave">Leave</option>
+                            <option value="Weekend">Weekend</option>
+                            <option value="Skip Day">Skip Day</option>
                         </select>
+                    </div>
+                    <div class="form-group" id="attendanceDateGroup">
+                        <label>Present Date & Time:</label>
+                        <input type="datetime-local" id="attendanceDateTimeInput">
                     </div>
                     <div class="form-group">
                         <label>Sabaq Details:</label>
@@ -352,9 +347,9 @@
                     <thead>
                         <tr>
                             <th>Student ID & Name</th>
-                            <th>Attendance</th>
+                            <th>Attendance Status</th>
+                            <th>Date & Time (If Present)</th>
                             <th>Sabaq Details</th>
-                            <th>Timestamp</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -362,8 +357,8 @@
                         <tr>
                             <td><strong>STU-004 - Junaid</strong></td>
                             <td><span style="color: #059669; font-weight: bold;">Present</span></td>
-                            <td>Para 3 (Surah Al-Baqarah)</td>
                             <td>2026-09-24 11:55 AM</td>
+                            <td>Para 3 (Surah Al-Baqarah)</td>
                             <td class="action-btns">
                                 <button class="btn-edit" onclick="editRow(this)">Edit</button>
                                 <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
@@ -491,8 +486,12 @@
                         </select>
                     </div>
                     <div class="form-group" id="familySelectionGroup" style="display:none;">
-                        <label>Family / Combined Students:</label>
-                        <input type="text" id="familyStudentsInput" value="Junaid & Ahmed (Family)">
+                        <label>Add Multiple Students (Combined Family):</label>
+                        <div style="display: flex; gap: 8px; margin-bottom: 5px;">
+                            <input type="text" id="familyStudent1" placeholder="Student 1 Name" value="Junaid">
+                            <input type="text" id="familyStudent2" placeholder="Student 2 Name" value="Ahmed">
+                        </div>
+                        <input type="text" id="familyStudent3" placeholder="Student 3 Name (Optional)" style="margin-top: 5px;">
                     </div>
                     <div class="form-group">
                         <label>Month (12 Months):</label>
@@ -733,6 +732,16 @@
             document.getElementById('headerTitle').innerText = titles[tabId];
         }
 
+        function toggleAttendanceDateTime() {
+            let status = document.getElementById('attendanceStatus').value;
+            let dateGroup = document.getElementById('attendanceDateGroup');
+            if(status === 'Present') {
+                dateGroup.style.display = 'block';
+            } else {
+                dateGroup.style.display = 'none';
+            }
+        }
+
         function toggleFamilySelection() {
             let type = document.getElementById('voucherType').value;
             if(type === 'Combined Family Fee') {
@@ -762,7 +771,6 @@
             
             let id = `STU-00${studentCounter++}`;
             
-            // Add to Directory Table
             let tbody = document.getElementById('directoryTableBody');
             let newRow = document.createElement('tr');
             newRow.innerHTML = `
@@ -777,7 +785,6 @@
             `;
             tbody.appendChild(newRow);
             
-            // Update Student Dropdowns across the portal
             let studentSelect = document.getElementById('studentSelect');
             let opt = document.createElement('option');
             opt.value = `${id} - ${name}`;
@@ -802,17 +809,26 @@
             opt4.textContent = name;
             examStudent.appendChild(opt4);
 
-            // Update next ID badge
             document.getElementById('studentIdInput').value = `STU-00${studentCounter}`;
             document.getElementById('studentNameInput').value = '';
             document.getElementById('fatherNameInput').value = '';
             
-            alert('Student profile successfully save ho gayi hai aur tamam options mein update ho gayi hai!');
+            alert('Student profile successfully save ho gayi hai!');
         }
 
         function generateVoucher() {
             let vType = document.getElementById('voucherType').value;
-            let nameOrFamily = vType === 'Single Student Fee' ? document.getElementById('feeStudentSelect').value : document.getElementById('familyStudentsInput').value;
+            let nameOrFamily = "";
+            if(vType === 'Single Student Fee') {
+                nameOrFamily = document.getElementById('feeStudentSelect').value;
+            } else {
+                let s1 = document.getElementById('familyStudent1').value.trim();
+                let s2 = document.getElementById('familyStudent2').value.trim();
+                let s3 = document.getElementById('familyStudent3').value.trim();
+                let list = [s1, s2, s3].filter(Boolean);
+                nameOrFamily = list.join(', ') + " (Family)";
+            }
+
             let month = document.getElementById('voucherMonth').value;
             let countrySelect = document.getElementById('voucherCountry');
             let country = countrySelect.value;
@@ -827,11 +843,10 @@
             let convertedPKR = (amount * rate).toFixed(0);
             let convertedZakatPKR = (zakat * rate).toFixed(0);
 
-            // Populate Student Modal Voucher View
             let modalBody = document.getElementById('voucherModalBody');
             modalBody.innerHTML = `
                 <p><strong>Voucher Type:</strong> ${vType}</p>
-                <p><strong>Student / Family:</strong> ${nameOrFamily}</p>
+                <p><strong>Student / Students:</strong> ${nameOrFamily}</p>
                 <p><strong>Month:</strong> ${month}</p>
                 <p><strong>Country:</strong> ${country}</p>
                 <p><strong>Fee Amount:</strong> ${amount} ${curr}</p>
@@ -841,7 +856,6 @@
             `;
             document.getElementById('voucherModal').style.display = 'flex';
 
-            // Add to Admin Table with PKR conversion
             let tbody = document.getElementById('feeTableBody');
             let newRow = document.createElement('tr');
             newRow.innerHTML = `
@@ -891,17 +905,25 @@
         function saveAttendance() {
             let student = document.getElementById('studentSelect').value;
             let status = document.getElementById('attendanceStatus').value;
+            let dateTimeVal = document.getElementById('attendanceDateTimeInput').value;
             let sabaq = document.getElementById('sabaqInput').value.trim() || "No Sabaq Provided";
             let tbody = document.getElementById('attendanceTableBody');
-            let timestamp = new Date().toLocaleString();
-            let statusColor = status === 'Present' ? '#059669' : (status === 'Absent' ? '#dc2626' : '#d97706');
+            
+            let statusColor = '#1f2937';
+            if (status === 'Present') statusColor = '#059669';
+            else if (status === 'Absent') statusColor = '#dc2626';
+            else if (status === 'Leave') statusColor = '#d97706';
+            else if (status === 'Weekend') statusColor = '#2563eb';
+            else if (status === 'Skip Day') statusColor = '#7c3aed';
+
+            let displayTime = (status === 'Present' && dateTimeVal) ? dateTimeVal.replace('T', ' ') : 'N/A';
             
             let newRow = document.createElement('tr');
             newRow.innerHTML = `
                 <td><strong>${student}</strong></td>
                 <td><span style="color: ${statusColor}; font-weight: bold;">${status}</span></td>
+                <td>${displayTime}</td>
                 <td>${sabaq}</td>
-                <td>${timestamp}</td>
                 <td class="action-btns">
                     <button class="btn-edit" onclick="editRow(this)">Edit</button>
                     <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
@@ -909,7 +931,7 @@
             `;
             tbody.insertBefore(newRow, tbody.firstChild);
             document.getElementById('sabaqInput').value = '';
-            alert('Attendance & Sabaq saved! Monthly summary automatically update ho gayi hai.');
+            alert('Attendance & Sabaq saved successfully!');
         }
 
         function calculateResult() {
@@ -936,7 +958,7 @@
 
         function editRow(btn) {
             let row = btn.closest('tr');
-            let sabaqCell = row.cells[2];
+            let sabaqCell = row.cells[3];
             let newSabaq = prompt("Edit Sabaq Details:", sabaqCell.innerText);
             if (newSabaq !== null && newSabaq.trim() !== "") {
                 sabaqCell.innerText = newSabaq.trim();
