@@ -415,17 +415,17 @@
         <!-- Sidebar Navigation -->
         <nav class="sidebar">
             <ul class="sidebar-menu" id="sidebarMenu">
-                <li class="active" onclick="switchView('landing', this)"><a href="#">🏠 Home Landing</a></li>
-                <li onclick="switchView('admissionForm', this)"><a href="#">📝 Online Admission</a></li>
-                <li onclick="switchView('adminDashboard', this)"><a href="#">⚙️ Admin Dashboard</a></li>
-                <li onclick="switchView('teacherDashboard', this)"><a href="#">👨‍🏫 Teacher Portal</a></li>
-                <li onclick="switchView('studentDashboard', this)"><a href="#">🎓 Student Portal</a></li>
-                <li onclick="switchView('attendanceModule', this)"><a href="#">📅 Attendance & Lessons</a></li>
-                <li onclick="switchView('ibadatModule', this)"><a href="#">🕌 Ibadat & Azkar</a></li>
-                <li onclick="switchView('feesModule', this)"><a href="#">💳 Fees & Vouchers</a></li>
-                <li onclick="switchView('examsModule', this)"><a href="#">📝 Exams & Results</a></li>
-                <li onclick="switchView('booksModule', this)"><a href="#">📚 Digital Library</a></li>
-                <li onclick="switchView('certificatesModule', this)"><a href="#">🏆 Certificates</a></li>
+                <li class="active" onclick="switchView('landing', this)"><a href="#landing">🏠 Home Landing</a></li>
+                <li onclick="switchView('admissionForm', this)"><a href="#admissionForm">📝 Online Admission</a></li>
+                <li onclick="switchView('adminDashboard', this)"><a href="#adminDashboard">⚙️ Admin Dashboard</a></li>
+                <li onclick="switchView('teacherDashboard', this)"><a href="#teacherDashboard">👨‍🏫 Teacher Portal</a></li>
+                <li onclick="switchView('studentDashboard', this)"><a href="#studentDashboard">🎓 Student Portal</a></li>
+                <li onclick="switchView('attendanceModule', this)"><a href="#attendanceModule">📅 Attendance & Lessons</a></li>
+                <li onclick="switchView('ibadatModule', this)"><a href="#ibadatModule">🕌 Ibadat & Azkar</a></li>
+                <li onclick="switchView('feesModule', this)"><a href="#feesModule">💳 Fees & Vouchers</a></li>
+                <li onclick="switchView('examsModule', this)"><a href="#examsModule">📝 Exams & Results</a></li>
+                <li onclick="switchView('booksModule', this)"><a href="#booksModule">📚 Digital Library</a></li>
+                <li onclick="switchView('certificatesModule', this)"><a href="#certificatesModule">🏆 Certificates</a></li>
             </ul>
         </nav>
 
@@ -505,12 +505,32 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Class Timing Preference:</label>
+                            <label>Class Timing Preference (24 Hours Slots):</label>
                             <select id="admTiming">
-                                <option value="Morning">Morning (08:00 AM)</option>
-                                <option value="Afternoon">Afternoon (03:00 PM)</option>
-                                <option value="Evening">Evening (06:00 PM)</option>
-                                <option value="Night">Night (09:00 PM)</option>
+                                <option value="01:00 AM">01:00 AM</option>
+                                <option value="02:00 AM">02:00 AM</option>
+                                <option value="03:00 AM">03:00 AM</option>
+                                <option value="04:00 AM">04:00 AM</option>
+                                <option value="05:00 AM">05:00 AM</option>
+                                <option value="06:00 AM">06:00 AM</option>
+                                <option value="07:00 AM">07:00 AM</option>
+                                <option value="08:00 AM">08:00 AM (Morning)</option>
+                                <option value="09:00 AM">09:00 AM</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="12:00 PM">12:00 PM (Noon)</option>
+                                <option value="01:00 PM">01:00 PM</option>
+                                <option value="02:00 PM">02:00 PM</option>
+                                <option value="03:00 PM">03:00 PM (Afternoon)</option>
+                                <option value="04:00 PM">04:00 PM</option>
+                                <option value="05:00 PM">05:00 PM</option>
+                                <option value="06:00 PM">06:00 PM (Evening)</option>
+                                <option value="07:00 PM">07:00 PM</option>
+                                <option value="08:00 PM">08:00 PM</option>
+                                <option value="09:00 PM">09:00 PM (Night)</option>
+                                <option value="10:00 PM">10:00 PM</option>
+                                <option value="11:00 PM">11:00 PM</option>
+                                <option value="12:00 AM">12:00 AM (Midnight)</option>
                             </select>
                         </div>
                     </div>
@@ -733,7 +753,7 @@
                 <input type="password" id="loginPass" placeholder="Password">
             </div>
             <button class="btn-gold" style="width: 100%;" onclick="executeLogin()">Secure Login</button>
-            <button class="btn-top" style="background: none; color: var(--text-muted); margin-top: 10px; border: none;" onclick="closeLoginModal()">Cancel</button>
+            <button class="btn-top" style="background: none; color: var(--text-muted); margin-top: 10px; border: none; cursor:pointer;" onclick="closeLoginModal()">Cancel</button>
         </div>
     </div>
 
@@ -744,17 +764,20 @@
             document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.sidebar-menu li').forEach(li => li.classList.remove('active'));
             
-            document.getElementById(viewId).classList.add('active');
+            const targetSec = document.getElementById(viewId);
+            if(targetSec) targetSec.classList.add('active');
             if(element) element.classList.add('active');
         }
 
         function toggleLanguage() {
             let body = document.body;
-            body.setAttribute('dir', body.getAttribute('dir') === 'ltr' ? 'rtl' : 'ltr');
+            let currentDir = body.getAttribute('dir');
+            body.setAttribute('dir', currentDir === 'ltr' ? 'rtl' : 'ltr');
         }
 
         function openLoginModal(role) {
             currentRole = role;
+            document.getElementById('modalTitleinnerText', `${role} Secure Login`);
             document.getElementById('modalTitle').innerText = `${role} Secure Login`;
             document.getElementById('loginModal').style.display = 'flex';
         }
