@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raza Online Academy - Premium Islamic Management Portal</title>
+    <title>Raza Online Academy - Complete Management Portal</title>
     <style>
         :root {
             --primary-dark: #06281b;
@@ -44,11 +44,11 @@
             flex-direction: column;
         }
 
-        /* Top Navigation Bar */
+        /* Top Navigation */
         .top-navbar {
             background-color: var(--primary-dark);
             color: white;
-            padding: 15px 30px;
+            padding: 12px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -62,32 +62,30 @@
         .brand-container {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .brand-logo {
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             background: linear-gradient(135deg, var(--gold), #b45309);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 18px;
             color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             border: 2px solid white;
         }
 
         .brand-title h1 {
-            font-size: 20px;
-            letter-spacing: 0.5px;
+            font-size: 18px;
             color: #fef3c7;
         }
 
         .brand-title span {
-            font-size: 11px;
+            font-size: 10px;
             color: #9ca3af;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -96,43 +94,42 @@
         .nav-controls {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
-        .btn-lang, .btn-portal {
+        .btn-top {
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
+            padding: 7px 12px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 12px;
             transition: all 0.3s;
         }
 
-        .btn-lang:hover, .btn-portal:hover {
+        .btn-top:hover {
             background-color: var(--gold);
             color: var(--primary-dark);
-            border-color: var(--gold);
         }
 
-        /* Main App Container */
+        /* Layout Container */
         .app-container {
             display: flex;
             flex: 1;
-            height: calc(100vh - 75px);
+            height: calc(100vh - 67px);
             overflow: hidden;
         }
 
-        /* Sidebar Styling */
+        /* Sidebar */
         .sidebar {
-            width: 280px;
+            width: 260px;
             background-color: var(--primary-dark);
             color: #d1d5db;
             display: flex;
             flex-direction: column;
-            padding: 20px 10px;
+            padding: 15px 10px;
             overflow-y: auto;
             flex-shrink: 0;
             border-right: 1px solid rgba(255,255,255,0.05);
@@ -142,33 +139,32 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
         }
 
         .sidebar-menu li a {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
+            gap: 10px;
+            padding: 10px 12px;
             color: #d1d5db;
             text-decoration: none;
-            border-radius: 8px;
-            font-size: 14px;
+            border-radius: 6px;
+            font-size: 13px;
             transition: all 0.2s;
         }
 
         .sidebar-menu li.active a, .sidebar-menu li a:hover {
             background-color: var(--primary-green);
             color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        /* Workspace Content */
+        /* Workspace */
         .workspace {
             flex: 1;
             background-color: var(--cream);
             overflow-y: auto;
-            padding: 30px;
+            padding: 25px;
         }
 
         .view-section {
@@ -177,42 +173,41 @@
 
         .view-section.active {
             display: block;
-            animation: fadeIn 0.4s ease-in-out;
+            animation: fadeIn 0.3s ease-in-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
+            from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Landing Page Design */
+        /* Common Elements */
         .landing-hero {
             background: linear-gradient(135deg, var(--primary-dark), #093823);
             color: white;
-            padding: 60px 40px;
-            border-radius: 16px;
+            padding: 50px 30px;
+            border-radius: 12px;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border: 2px solid var(--gold);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         .landing-hero h1 {
-            font-size: 36px;
+            font-size: 32px;
             color: var(--gold-light);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .landing-hero p {
-            font-size: 18px;
+            font-size: 16px;
             color: #e5e7eb;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .hero-buttons {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
@@ -220,12 +215,11 @@
             background-color: var(--gold);
             color: var(--primary-dark);
             border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 6px;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: all 0.2s;
         }
 
@@ -234,91 +228,85 @@
             color: white;
         }
 
-        /* Cards and Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         .stat-card {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
+            padding: 18px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             border-left: 4px solid var(--primary-green);
         }
 
         .stat-card h4 {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-transform: uppercase;
         }
 
         .stat-card .number {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             color: var(--primary-dark);
         }
 
-        /* Forms and Containers */
         .card-box {
             background: white;
-            padding: 25px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
-            margin-bottom: 25px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
         }
 
         .card-box h3 {
             color: var(--primary-dark);
-            margin-bottom: 20px;
-            font-size: 18px;
+            margin-bottom: 15px;
+            font-size: 16px;
             border-bottom: 2px solid var(--cream);
-            padding-bottom: 8px;
+            padding-bottom: 6px;
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--primary-dark);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 10px 14px;
-            border-radius: 8px;
+            padding: 9px 12px;
+            border-radius: 6px;
             border: 1px solid var(--border-color);
-            font-size: 14px;
+            font-size: 13px;
             outline: none;
-            transition: border 0.2s;
         }
 
         .form-group input:focus, .form-group select:focus {
             border-color: var(--primary-green);
         }
 
-        /* Tables */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
             background: white;
-            border-radius: 12px;
+            border-radius: 8px;
             border: 1px solid var(--border-color);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         table {
@@ -332,9 +320,9 @@
         }
 
         th, td {
-            padding: 14px 18px;
+            padding: 12px 15px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         th {
@@ -347,22 +335,11 @@
             background-color: #f9fafb;
         }
 
-        .badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .badge-success { background: #d1fae5; color: #065f46; }
-        .badge-danger { background: #fee2e2; color: #991b1b; }
-        .badge-warning { background: var(--gold-light); color: #92400e; }
-
         .btn-action {
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 5px 10px;
+            border-radius: 5px;
             border: none;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
             color: white;
@@ -371,7 +348,7 @@
         .btn-reject { background-color: var(--danger); }
         .btn-view { background-color: var(--primary-green); }
 
-        /* Login Modal & Portals Wrapper */
+        /* Modal Overlay */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -384,75 +361,52 @@
 
         .modal-card {
             background: white;
-            padding: 35px;
-            border-radius: 16px;
-            width: 420px;
-            border: 3px solid var(--gold);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            padding: 30px;
+            border-radius: 12px;
+            width: 380px;
+            border: 2px solid var(--gold);
             text-align: center;
         }
 
-        .modal-card h2 {
-            color: var(--primary-dark);
-            margin-bottom: 8px;
-        }
-
-        .modal-card p {
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        /* Books & Certificates Grid */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
         }
 
         .item-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
-            padding: 20px;
+            padding: 18px;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            transition: transform 0.2s;
-        }
-
-        .item-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
         }
 
         .certificate-box {
             background: linear-gradient(135deg, #fffbeb, #ffffff);
-            border: 8px double var(--gold);
-            padding: 40px;
-            border-radius: 12px;
+            border: 6px double var(--gold);
+            padding: 35px;
+            border-radius: 10px;
             text-align: center;
-            margin-top: 20px;
         }
-
-        .hidden { display: none !important; }
     </style>
 </head>
 <body dir="ltr">
 
-    <!-- Top Navigation Header -->
+    <!-- Top Navigation -->
     <header class="top-navbar">
         <div class="brand-container">
             <div class="brand-logo">ROA</div>
             <div class="brand-title">
                 <h1>Raza Online Academy</h1>
-                <span>Islamic Educational System</span>
+                <span>Islamic Educational Management System</span>
             </div>
         </div>
         <div class="nav-controls">
-            <button class="btn-lang" onclick="toggleLanguage()">اردو / English</button>
-            <button class="btn-portal" onclick="openLoginModal('Admin')">Admin Portal</button>
-            <button class="btn-portal" onclick="openLoginModal('Teacher')">Teacher Portal</button>
-            <button class="btn-portal" onclick="openLoginModal('Student')">Student Portal</button>
+            <button class="btn-top" onclick="toggleLanguage()">اردو / English</button>
+            <button class="btn-top" onclick="openLoginModal('Admin')">Admin Portal</button>
+            <button class="btn-top" onclick="openLoginModal('Teacher')">Teacher Portal</button>
+            <button class="btn-top" onclick="openLoginModal('Student')">Student Portal</button>
         </div>
     </header>
 
@@ -468,8 +422,8 @@
                 <li onclick="switchView('studentDashboard', this)"><a href="#">🎓 Student Portal</a></li>
                 <li onclick="switchView('attendanceModule', this)"><a href="#">📅 Attendance & Lessons</a></li>
                 <li onclick="switchView('ibadatModule', this)"><a href="#">🕌 Ibadat & Azkar</a></li>
-                <li onclick="switchView('feesModule', this)"><a href="#">💳 Fees & Donations</a></li>
-                <li onclick="switchView('examsModule', this)"><a href="#">📝 Examinations & Results</a></li>
+                <li onclick="switchView('feesModule', this)"><a href="#">💳 Fees & Vouchers</a></li>
+                <li onclick="switchView('examsModule', this)"><a href="#">📝 Exams & Results</a></li>
                 <li onclick="switchView('booksModule', this)"><a href="#">📚 Digital Library</a></li>
                 <li onclick="switchView('certificatesModule', this)"><a href="#">🏆 Certificates</a></li>
             </ul>
@@ -484,9 +438,9 @@
                     <h1>Raza Online Academy</h1>
                     <p>"Deeni Taleem — Aasan, Munazzam aur Jadeed Andaz Mein"</p>
                     <div class="hero-buttons">
-                        <button class="btn-gold" onclick="switchView('admissionForm', null)">Apply for Admission</button>
+                        <button class="btn-gold" onclick="switchView('admissionForm', document.querySelectorAll('.sidebar-menu li')[1])">Apply for Admission</button>
                         <button class="btn-gold" onclick="openLoginModal('Student')">Student Login</button>
-                        <button class="btn-gold" onclick="switchView('booksModule', null)">Explore Library</button>
+                        <button class="btn-gold" onclick="switchView('booksModule', document.querySelectorAll('.sidebar-menu li')[9])">Explore Library</button>
                     </div>
                 </div>
 
@@ -569,7 +523,7 @@
                 <div class="stats-grid">
                     <div class="stat-card">
                         <h4>Total Students</h4>
-                        <div class="number" id="statTotalStudents">142</div>
+                        <div class="number" id="statTotalStudents">1</div>
                     </div>
                     <div class="stat-card">
                         <h4>Active Teachers</h4>
@@ -577,11 +531,11 @@
                     </div>
                     <div class="stat-card">
                         <h4>Pending Admissions</h4>
-                        <div class="number" id="statPendingAdmissions">3</div>
+                        <div class="number" id="statPendingAdmissions">1</div>
                     </div>
                     <div class="stat-card">
                         <h4>Monthly Collection</h4>
-                        <div class="number">450,000 PKR</div>
+                        <div class="number">5,000 PKR</div>
                     </div>
                 </div>
 
@@ -601,14 +555,14 @@
                             </thead>
                             <tbody id="adminAdmissionTable">
                                 <tr>
-                                    <td>APP-201</td>
-                                    <td>Muhammad Ali</td>
-                                    <td>Ahmed Raza</td>
+                                    <td>APP-101</td>
+                                    <td>Muhammad Abdullah</td>
+                                    <td>Tariq Mehmood</td>
                                     <td>Hifz-ul-Quran</td>
                                     <td>Pakistan</td>
                                     <td>
-                                        <button class="btn-action btn-approve" onclick="approveAdmission('ROA-1004', 'Muhammad Ali', 'Ahmed Raza', 'Pakistan')">Approve & Generate ID</button>
-                                        <button class="btn-action btn-reject">Reject</button>
+                                        <button class="btn-action btn-approve" onclick="approveAdmission('ROA-1002', 'Muhammad Abdullah')">Approve & Generate ID</button>
+                                        <button class="btn-action btn-reject" onclick="this.closest('tr').remove();">Reject</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -635,10 +589,10 @@
                             <tbody>
                                 <tr>
                                     <td><strong>ROA-1001</strong></td>
-                                    <td>Junaid</td>
+                                    <td>Junaid Raza</td>
                                     <td>Hifz-ul-Quran</td>
                                     <td>Evening</td>
-                                    <td><button class="btn-action btn-view" onclick="switchView('attendanceModule', null)">Mark Attendance & Sabaq</button></td>
+                                    <td><button class="btn-action btn-view" onclick="switchView('attendanceModule', document.querySelectorAll('.sidebar-menu li')[5])">Mark Attendance & Sabaq</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -649,7 +603,7 @@
             <!-- 5. STUDENT PORTAL -->
             <section id="studentDashboard" class="view-section">
                 <div class="card-box" style="background: linear-gradient(135deg, var(--primary-dark), #0f766e); color: white;">
-                    <h2>Welcome, Junaid (ROA-1001)</h2>
+                    <h2>Welcome, Junaid Raza (ROA-1001)</h2>
                     <p>Course: Hifz-ul-Quran | Status: Active & Fee Paid</p>
                 </div>
                 <div class="stats-grid">
@@ -687,7 +641,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Daily Lesson (Sabaq / Sabqi / Manzil):</label>
+                            <label>Daily Lesson (Sabaq / Manzil):</label>
                             <input type="text" id="attLesson" placeholder="e.g. Surah Al-Baqarah Ruku 5">
                         </div>
                     </div>
@@ -707,11 +661,11 @@
                         <div class="form-group"><label>Isha Namaz:</label><select><option>Yes</option><option>No</option></select></div>
                         <div class="form-group"><label>313 Durood Pak:</label><select><option>Yes</option><option>No</option></select></div>
                     </div>
-                    <button class="btn-gold">Save Daily Ibadat Log</button>
+                    <button class="btn-gold" onclick="alert('Daily Ibadat Log Saved Successfully!')">Save Daily Ibadat Log</button>
                 </div>
             </section>
 
-            <!-- 8. FEES & DONATIONS MODULE -->
+            <!-- 8. FEES & VOUCHERS MODULE -->
             <section id="feesModule" class="view-section">
                 <div class="card-box">
                     <h3>Multi-Currency Fee Management & Vouchers</h3>
@@ -756,30 +710,30 @@
             <!-- 11. CERTIFICATES -->
             <section id="certificatesModule" class="view-section">
                 <div class="certificate-box">
-                    <h2 style="color: var(--primary-dark); font-size: 28px;">RAZA ONLINE ACADEMY</h2>
-                    <p style="margin: 10px 0; font-weight: bold; color: var(--gold);">CERTIFICATE OF COMPLETION</p>
-                    <p style="font-size: 16px; margin: 20px 0;">This is proudly presented to</p>
-                    <h3 style="font-size: 24px; color: var(--primary-green); border-bottom: 2px solid var(--gold); display: inline-block; padding: 0 20px;">Junaid (ROA-1001)</h3>
-                    <p style="margin-top: 20px;">For successfully completing <strong>Nazra Quran & Tajweed Course</strong> with Grade Mumtaz.</p>
+                    <h2 style="color: var(--primary-dark); font-size: 26px;">RAZA ONLINE ACADEMY</h2>
+                    <p style="margin: 8px 0; font-weight: bold; color: var(--gold);">CERTIFICATE OF COMPLETION</p>
+                    <p style="font-size: 15px; margin: 15px 0;">This is proudly presented to</p>
+                    <h3 style="font-size: 22px; color: var(--primary-green); border-bottom: 2px solid var(--gold); display: inline-block; padding: 0 15px;">Junaid Raza (ROA-1001)</h3>
+                    <p style="margin-top: 15px;">For successfully completing <strong>Nazra Quran & Tajweed Course</strong> with Grade Mumtaz.</p>
                 </div>
             </section>
 
         </main>
     </div>
 
-    <!-- Login Modal System -->
+    <!-- Login Modal -->
     <div class="modal-overlay" id="loginModal">
         <div class="modal-card">
-            <h2 id="modalTitle">Login Portal</h2>
-            <p>Enter your credentials to access Raza Online Academy system</p>
-            <div class="form-group" style="margin-bottom: 15px;">
+            <h2 id="modalTitle" style="color: var(--primary-dark); margin-bottom: 8px;">Login Portal</h2>
+            <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 15px;">Enter credentials to access Raza Online Academy</p>
+            <div class="form-group" style="margin-bottom: 12px;">
                 <input type="text" id="loginUser" placeholder="Username or Student ID">
             </div>
-            <div class="form-group" style="margin-bottom: 20px;">
+            <div class="form-group" style="margin-bottom: 15px;">
                 <input type="password" id="loginPass" placeholder="Password">
             </div>
             <button class="btn-gold" style="width: 100%;" onclick="executeLogin()">Secure Login</button>
-            <button class="btn-lang" style="background: none; color: var(--text-muted); margin-top: 10px;" onclick="closeLoginModal()">Cancel</button>
+            <button class="btn-top" style="background: none; color: var(--text-muted); margin-top: 10px; border: none;" onclick="closeLoginModal()">Cancel</button>
         </div>
     </div>
 
@@ -796,11 +750,7 @@
 
         function toggleLanguage() {
             let body = document.body;
-            if(body.getAttribute('dir') === 'ltr') {
-                body.setAttribute('dir', 'rtl');
-            } else {
-                body.setAttribute('dir', 'ltr');
-            }
+            body.setAttribute('dir', body.getAttribute('dir') === 'ltr' ? 'rtl' : 'ltr');
         }
 
         function openLoginModal(role) {
@@ -815,19 +765,19 @@
 
         function executeLogin() {
             closeLoginModal();
-            if(currentRole === 'Admin') switchView('adminDashboard', null);
-            else if(currentRole === 'Teacher') switchView('teacherDashboard', null);
-            else switchView('studentDashboard', null);
+            if(currentRole === 'Admin') switchView('adminDashboard', document.querySelectorAll('.sidebar-menu li')[2]);
+            else if(currentRole === 'Teacher') switchView('teacherDashboard', document.querySelectorAll('.sidebar-menu li')[3]);
+            else switchView('studentDashboard', document.querySelectorAll('.sidebar-menu li')[4]);
         }
 
         function submitAdmissionApplication() {
             let name = document.getElementById('admName').value;
             if(!name) { alert('Please enter student name!'); return; }
             alert('Admission application submitted successfully! Pending admin approval.');
-            switchView('landing', null);
+            switchView('landing', document.querySelectorAll('.sidebar-menu li')[0]);
         }
 
-        function approveAdmission(id, name, father, country) {
+        function approveAdmission(id, name) {
             alert(`Admission Approved! Student ID generated: ${id}`);
             document.getElementById('adminAdmissionTable').innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--success);">No pending applications</td></tr>`;
             document.getElementById('statPendingAdmissions').innerText = '0';
