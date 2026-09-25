@@ -1,278 +1,139 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raza Online Academy - Complete Management Portal</title>
+    <title>Raza Online Academy - Admin Dashboard Portal</title>
     <style>
         :root {
             --primary-dark: #06281b;
             --primary-green: #0f766e;
-            --light-green: #0d9488;
-            --gold: #d97706;
-            --gold-light: #fef3c7;
-            --cream: #fbfbfa;
+            --light-bg: #f4fbf7;
             --card-bg: #ffffff;
             --text-main: #1f2937;
             --text-muted: #6b7280;
             --border-color: #e5e7eb;
-            --danger: #dc2626;
-            --success: #059669;
-        }
-
-        [dir="rtl"] {
-            font-family: 'Amiri', 'Segoe UI', Tahoma, sans-serif;
-            text-align: right;
-        }
-
-        [dir="ltr"] {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: left;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--cream);
+            background-color: var(--light-bg);
             color: var(--text-main);
-            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-        }
-
-        /* Top Navigation */
-        .top-navbar {
-            background-color: var(--primary-dark);
-            color: white;
-            padding: 12px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--gold);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand-logo {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--gold), #b45309);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 18px;
-            color: white;
-            border: 2px solid white;
-        }
-
-        .brand-title h1 {
-            font-size: 18px;
-            color: #fef3c7;
-        }
-
-        .brand-title span {
-            font-size: 10px;
-            color: #9ca3af;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .nav-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-top {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 7px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 12px;
-            transition: all 0.3s;
-        }
-
-        .btn-top:hover {
-            background-color: var(--gold);
-            color: var(--primary-dark);
-        }
-
-        /* Layout Container */
-        .app-container {
-            display: flex;
-            flex: 1;
-            height: calc(100vh - 67px);
+            height: 100vh;
             overflow: hidden;
         }
 
-        /* Sidebar */
+        /* Sidebar Styling */
         .sidebar {
             width: 260px;
             background-color: var(--primary-dark);
-            color: #d1d5db;
+            color: white;
             display: flex;
             flex-direction: column;
-            padding: 15px 10px;
-            overflow-y: auto;
+            padding: 20px 15px;
             flex-shrink: 0;
-            border-right: 1px solid rgba(255,255,255,0.05);
         }
 
-        .sidebar-menu {
+        .sidebar-brand {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            padding-left: 10px;
+            line-height: 1.4;
+        }
+
+        .sidebar-brand span {
+            font-size: 11px;
+            color: #9ca3af;
+            font-weight: normal;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .nav-links {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 8px;
         }
 
-        .sidebar-menu li a {
+        .nav-links li a {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
+            gap: 12px;
+            padding: 12px 15px;
             color: #d1d5db;
             text-decoration: none;
-            border-radius: 6px;
-            font-size: 13px;
-            transition: all 0.2s;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .sidebar-menu li.active a, .sidebar-menu li a:hover {
+        .nav-links li.active a, .nav-links li a:hover {
             background-color: var(--primary-green);
             color: white;
         }
 
-        /* Workspace */
-        .workspace {
+        /* Main Content Area */
+        .main-content {
             flex: 1;
-            background-color: var(--cream);
+            display: flex;
+            flex-direction: column;
             overflow-y: auto;
-            padding: 25px;
+            padding: 25px 30px;
         }
 
-        .view-section {
+        .header {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .header h2 {
+            font-size: 18px;
+            color: var(--primary-dark);
+        }
+
+        .session-badge {
+            background: #e6f4ea;
+            color: #137333;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .content-section {
             display: none;
         }
 
-        .view-section.active {
+        .content-section.active {
             display: block;
-            animation: fadeIn 0.3s ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Common Elements */
-        .landing-hero {
-            background: linear-gradient(135deg, var(--primary-dark), #093823);
-            color: white;
-            padding: 50px 30px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 25px;
-            border: 2px solid var(--gold);
-        }
-
-        .landing-hero h1 {
-            font-size: 32px;
-            color: var(--gold-light);
-            margin-bottom: 8px;
-        }
-
-        .landing-hero p {
-            font-size: 16px;
-            color: #e5e7eb;
-            margin-bottom: 20px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .btn-gold {
-            background-color: var(--gold);
-            color: var(--primary-dark);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-gold:hover {
-            background-color: #b45309;
-            color: white;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 18px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            border-left: 4px solid var(--primary-green);
-        }
-
-        .stat-card h4 {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-
-        .stat-card .number {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary-dark);
-        }
-
-        .card-box {
+        .card {
             background: white;
             padding: 20px;
             border-radius: 10px;
             border: 1px solid var(--border-color);
             margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
         }
 
-        .card-box h3 {
-            color: var(--primary-dark);
-            margin-bottom: 15px;
-            font-size: 16px;
-            border-bottom: 2px solid var(--cream);
-            padding-bottom: 6px;
-        }
-
-        .form-grid {
+        .form-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 15px;
@@ -281,32 +142,46 @@
 
         .form-group label {
             display: block;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--primary-dark);
             margin-bottom: 5px;
         }
 
-        .form-group input, .form-group select, .form-group textarea {
+        .form-group select, .form-group input {
             width: 100%;
-            padding: 9px 12px;
+            padding: 10px;
             border-radius: 6px;
             border: 1px solid var(--border-color);
-            font-size: 13px;
+            font-size: 14px;
             outline: none;
         }
 
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--primary-green);
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
         }
 
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
+        .table-container {
             background: white;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-x: auto;
             margin-bottom: 20px;
+        }
+
+        .table-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
         }
 
         table {
@@ -315,501 +190,796 @@
             text-align: left;
         }
 
-        [dir="rtl"] table {
-            text-align: right;
-        }
-
         th, td {
             padding: 12px 15px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 13px;
+            font-size: 14px;
         }
 
         th {
-            background-color: var(--primary-dark);
-            color: white;
+            background-color: var(--light-bg);
+            color: var(--primary-dark);
             font-weight: 600;
         }
 
-        tr:hover {
-            background-color: #f9fafb;
-        }
-
-        .btn-action {
+        .action-btns button {
             padding: 5px 10px;
-            border-radius: 5px;
             border: none;
-            font-size: 11px;
-            font-weight: bold;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
             color: white;
+            margin-right: 5px;
         }
-        .btn-approve { background-color: var(--success); }
-        .btn-reject { background-color: var(--danger); }
-        .btn-view { background-color: var(--primary-green); }
 
-        /* Modal Overlay */
-        .modal-overlay {
+        .btn-edit { background-color: var(--primary-green); }
+        .btn-delete { background-color: #dc2626; }
+
+        .ibadat-category-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--primary-green);
+            margin: 15px 0 10px 0;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 5px;
+        }
+
+        .ibadat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .ibadat-item {
+            background: var(--light-bg);
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ibadat-item label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        /* Voucher Modal Design */
+        #voucherModal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(6, 40, 27, 0.8);
+            background: rgba(0,0,0,0.5);
             justify-content: center;
             align-items: center;
-            z-index: 2000;
+            z-index: 1000;
         }
-
-        .modal-card {
+        .voucher-box {
             background: white;
             padding: 30px;
             border-radius: 12px;
-            width: 380px;
-            border: 2px solid var(--gold);
-            text-align: center;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
-        }
-
-        .item-card {
-            background: white;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            padding: 18px;
-            text-align: center;
-        }
-
-        .certificate-box {
-            background: linear-gradient(135deg, #fffbeb, #ffffff);
-            border: 6px double var(--gold);
-            padding: 35px;
-            border-radius: 10px;
-            text-align: center;
+            width: 500px;
+            border: 3px solid var(--primary-green);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
     </style>
 </head>
-<body dir="ltr">
+<body>
 
-    <!-- Top Navigation -->
-    <header class="top-navbar">
-        <div class="brand-container">
-            <div class="brand-logo">ROA</div>
-            <div class="brand-title">
-                <h1>Raza Online Academy</h1>
-                <span>Islamic Educational Management System</span>
-            </div>
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            Raza Online Academy
+            <span>ADMIN DASHBOARD PORTAL</span>
         </div>
-        <div class="nav-controls">
-            <button class="btn-top" onclick="toggleLanguage()">اردو / English</button>
-            <button class="btn-top" onclick="openLoginModal('Admin')">Admin Portal</button>
-            <button class="btn-top" onclick="openLoginModal('Teacher')">Teacher Portal</button>
-            <button class="btn-top" onclick="openLoginModal('Student')">Student Portal</button>
-        </div>
-    </header>
-
-    <!-- App Shell -->
-    <div class="app-container">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <ul class="sidebar-menu" id="sidebarMenu">
-                <li class="active" onclick="switchView('landing', this)"><a href="#landing">🏠 Home Landing</a></li>
-                <li onclick="switchView('admissionForm', this)"><a href="#admissionForm">📝 Online Admission</a></li>
-                <li onclick="switchView('adminDashboard', this)"><a href="#adminDashboard">⚙️ Admin Dashboard</a></li>
-                <li onclick="switchView('teacherDashboard', this)"><a href="#teacherDashboard">👨‍🏫 Teacher Portal</a></li>
-                <li onclick="switchView('studentDashboard', this)"><a href="#studentDashboard">🎓 Student Portal</a></li>
-                <li onclick="switchView('attendanceModule', this)"><a href="#attendanceModule">📅 Attendance & Lessons</a></li>
-                <li onclick="switchView('ibadatModule', this)"><a href="#ibadatModule">🕌 Ibadat & Azkar</a></li>
-                <li onclick="switchView('feesModule', this)"><a href="#feesModule">💳 Fees & Vouchers</a></li>
-                <li onclick="switchView('examsModule', this)"><a href="#examsModule">📝 Exams & Results</a></li>
-                <li onclick="switchView('booksModule', this)"><a href="#booksModule">📚 Digital Library</a></li>
-                <li onclick="switchView('certificatesModule', this)"><a href="#certificatesModule">🏆 Certificates</a></li>
-            </ul>
-        </nav>
-
-        <!-- Main Workspace -->
-        <main class="workspace">
-
-            <!-- 1. LANDING PAGE -->
-            <section id="landing" class="view-section active">
-                <div class="landing-hero">
-                    <h1>Raza Online Academy</h1>
-                    <p>"Deeni Taleem — Aasan, Munazzam aur Jadeed Andaz Mein"</p>
-                    <div class="hero-buttons">
-                        <button class="btn-gold" onclick="switchView('admissionForm', document.querySelectorAll('.sidebar-menu li')[1])">Apply for Admission</button>
-                        <button class="btn-gold" onclick="openLoginModal('Student')">Student Login</button>
-                        <button class="btn-gold" onclick="switchView('booksModule', document.querySelectorAll('.sidebar-menu li')[9])">Explore Library</button>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h4>Quran Education</h4>
-                        <div class="number">Hifz & Nazra</div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Madani Qaida</h4>
-                        <div class="number">Tajweed & Mukharij</div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Islamic Studies</h4>
-                        <div class="number">Shariah & Aqaid</div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Global Students</h4>
-                        <div class="number">Multi-Currency</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 2. ADMISSION FORM -->
-            <section id="admissionForm" class="view-section">
-                <div class="card-box">
-                    <h3>Online Student Admission Form</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Student Full Name:</label>
-                            <input type="text" id="admName" placeholder="Enter full name">
-                        </div>
-                        <div class="form-group">
-                            <label>Father's Name:</label>
-                            <input type="text" id="admFather" placeholder="Enter father name">
-                        </div>
-                        <div class="form-group">
-                            <label>Mobile Number / WhatsApp:</label>
-                            <input type="text" id="admPhone" placeholder="+92 300 0000000">
-                        </div>
-                        <div class="form-group">
-                            <label>Country / Currency:</label>
-                            <select id="admCountry">
-                                <option value="Pakistan">Pakistan (PKR)</option>
-                                <option value="Saudi Arabia">Saudi Arabia (SAR)</option>
-                                <option value="UAE">UAE (AED)</option>
-                                <option value="UK">UK (GBP)</option>
-                                <option value="USA">USA (USD)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Date of Birth:</label>
-                            <input type="date" id="admDob">
-                        </div>
-                        <div class="form-group">
-                            <label>Select Course:</label>
-                            <select id="admCourse">
-                                <option value="Madani Qaida">Madani Qaida</option>
-                                <option value="Nazra Quran">Nazra Quran</option>
-                                <option value="Hifz-ul-Quran">Hifz-ul-Quran</option>
-                                <option value="Dars-e-Nizami Basics">Dars-e-Nizami Basics</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Class Timing Preference (24 Hours Slots):</label>
-                            <select id="admTiming">
-                                <option value="01:00 AM">01:00 AM</option>
-                                <option value="02:00 AM">02:00 AM</option>
-                                <option value="03:00 AM">03:00 AM</option>
-                                <option value="04:00 AM">04:00 AM</option>
-                                <option value="05:00 AM">05:00 AM</option>
-                                <option value="06:00 AM">06:00 AM</option>
-                                <option value="07:00 AM">07:00 AM</option>
-                                <option value="08:00 AM">08:00 AM (Morning)</option>
-                                <option value="09:00 AM">09:00 AM</option>
-                                <option value="10:00 AM">10:00 AM</option>
-                                <option value="11:00 AM">11:00 AM</option>
-                                <option value="12:00 PM">12:00 PM (Noon)</option>
-                                <option value="01:00 PM">01:00 PM</option>
-                                <option value="02:00 PM">02:00 PM</option>
-                                <option value="03:00 PM">03:00 PM (Afternoon)</option>
-                                <option value="04:00 PM">04:00 PM</option>
-                                <option value="05:00 PM">05:00 PM</option>
-                                <option value="06:00 PM">06:00 PM (Evening)</option>
-                                <option value="07:00 PM">07:00 PM</option>
-                                <option value="08:00 PM">08:00 PM</option>
-                                <option value="09:00 PM">09:00 PM (Night)</option>
-                                <option value="10:00 PM">10:00 PM</option>
-                                <option value="11:00 PM">11:00 PM</option>
-                                <option value="12:00 AM">12:00 AM (Midnight)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button class="btn-gold" onclick="submitAdmissionApplication()">Submit Admission Application</button>
-                </div>
-            </section>
-
-            <!-- 3. ADMIN DASHBOARD -->
-            <section id="adminDashboard" class="view-section">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h4>Total Students</h4>
-                        <div class="number" id="statTotalStudents">1</div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Active Teachers</h4>
-                        <div class="number">12</div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Pending Admissions</h4>
-                        <div class="number" id="statPendingAdmissions">1</div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Monthly Collection</h4>
-                        <div class="number">5,000 PKR</div>
-                    </div>
-                </div>
-
-                <div class="card-box">
-                    <h3>Pending Admission Applications (Approval & ID Generation)</h3>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>App ID</th>
-                                    <th>Student Name</th>
-                                    <th>Father Name</th>
-                                    <th>Course</th>
-                                    <th>Country</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adminAdmissionTable">
-                                <tr>
-                                    <td>APP-101</td>
-                                    <td>Muhammad Abdullah</td>
-                                    <td>Tariq Mehmood</td>
-                                    <td>Hifz-ul-Quran</td>
-                                    <td>Pakistan</td>
-                                    <td>
-                                        <button class="btn-action btn-approve" onclick="approveAdmission('ROA-1002', 'Muhammad Abdullah')">Approve & Generate ID</button>
-                                        <button class="btn-action btn-reject" onclick="this.closest('tr').remove();">Reject</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 4. TEACHER PORTAL -->
-            <section id="teacherDashboard" class="view-section">
-                <div class="card-box">
-                    <h3>Teacher Portal — Assigned Students & Daily Lessons</h3>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Student ID</th>
-                                    <th>Student Name</th>
-                                    <th>Course</th>
-                                    <th>Timing</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>ROA-1001</strong></td>
-                                    <td>Junaid Raza</td>
-                                    <td>Hifz-ul-Quran</td>
-                                    <td>Evening</td>
-                                    <td><button class="btn-action btn-view" onclick="switchView('attendanceModule', document.querySelectorAll('.sidebar-menu li')[5])">Mark Attendance & Sabaq</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 5. STUDENT PORTAL -->
-            <section id="studentDashboard" class="view-section">
-                <div class="card-box" style="background: linear-gradient(135deg, var(--primary-dark), #0f766e); color: white;">
-                    <h2>Welcome, Junaid Raza (ROA-1001)</h2>
-                    <p>Course: Hifz-ul-Quran | Status: Active & Fee Paid</p>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h4>Attendance %</h4>
-                        <div class="number">98%</div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Current Lesson</h4>
-                        <div class="number">Para 4</div>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Fee Status</h4>
-                        <div class="number" style="color: var(--success);">Paid</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 6. ATTENDANCE & LESSONS MODULE -->
-            <section id="attendanceModule" class="view-section">
-                <div class="card-box">
-                    <h3>Central Student Attendance & Daily Lesson Entry</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Student ID:</label>
-                            <input type="text" id="attStudentId" value="ROA-1001" placeholder="Enter ROA-XXXX">
-                        </div>
-                        <div class="form-group">
-                            <label>Attendance Status:</label>
-                            <select id="attStatus">
-                                <option value="Present">Present</option>
-                                <option value="Absent">Absent</option>
-                                <option value="Leave">Leave</option>
-                                <option value="Late">Late</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Daily Lesson (Sabaq / Manzil):</label>
-                            <input type="text" id="attLesson" placeholder="e.g. Surah Al-Baqarah Ruku 5">
-                        </div>
-                    </div>
-                    <button class="btn-gold" onclick="saveAttendanceRecord()">Save Attendance & Lesson</button>
-                </div>
-            </section>
-
-            <!-- 7. IBADAT & AZKAR MODULE -->
-            <section id="ibadatModule" class="view-section">
-                <div class="card-box">
-                    <h3>Daily Ibadat & Namaz Tracking</h3>
-                    <div class="form-grid">
-                        <div class="form-group"><label>Fajr Namaz:</label><select><option>Yes</option><option>No</option></select></div>
-                        <div class="form-group"><label>Zuhr Namaz:</label><select><option>Yes</option><option>No</option></select></div>
-                        <div class="form-group"><label>Asr Namaz:</label><select><option>Yes</option><option>No</option></select></div>
-                        <div class="form-group"><label>Maghrib Namaz:</label><select><option>Yes</option><option>No</option></select></div>
-                        <div class="form-group"><label>Isha Namaz:</label><select><option>Yes</option><option>No</option></select></div>
-                        <div class="form-group"><label>313 Durood Pak:</label><select><option>Yes</option><option>No</option></select></div>
-                    </div>
-                    <button class="btn-gold" onclick="alert('Daily Ibadat Log Saved Successfully!')">Save Daily Ibadat Log</button>
-                </div>
-            </section>
-
-            <!-- 8. FEES & VOUCHERS MODULE -->
-            <section id="feesModule" class="view-section">
-                <div class="card-box">
-                    <h3>Multi-Currency Fee Management & Vouchers</h3>
-                    <div class="form-grid">
-                        <div class="form-group"><label>Student ID:</label><input type="text" value="ROA-1001"></div>
-                        <div class="form-group"><label>Month Selection:</label><select><option>January</option><option>February</option><option>March</option><option>November</option></select></div>
-                        <div class="form-group"><label>Fee Amount:</label><input type="number" value="5000"></div>
-                        <div class="form-group"><label>Zakat / Sadaqat (Optional):</label><input type="number" value="0"></div>
-                    </div>
-                    <button class="btn-gold" onclick="alert('Fee Voucher Generated Successfully!')">Generate Fee Voucher</button>
-                </div>
-            </section>
-
-            <!-- 9. EXAMS & RESULTS -->
-            <section id="examsModule" class="view-section">
-                <div class="card-box">
-                    <h3>Examination Evaluation (100 Marks System)</h3>
-                    <div class="form-grid">
-                        <div class="form-group"><label>Student ID:</label><input type="text" value="ROA-1001"></div>
-                        <div class="form-group"><label>Makharij (Max 30):</label><input type="number" value="28"></div>
-                        <div class="form-group"><label>Adaigi (Max 20):</label><input type="number" value="18"></div>
-                        <div class="form-group"><label>Grammar / Qawaid (Max 30):</label><input type="number" value="27"></div>
-                        <div class="form-group"><label>Hija & Fluency (Max 20):</label><input type="number" value="19"></div>
-                    </div>
-                    <button class="btn-gold" onclick="alert('Total Obtained Score: 92/100 (Mumtaz - Grade A+)')">Calculate Result Card</button>
-                </div>
-            </section>
-
-            <!-- 10. DIGITAL BOOKS LIBRARY -->
-            <section id="booksModule" class="view-section">
-                <div class="card-box">
-                    <h3>Academy Digital Books Library</h3>
-                    <div class="cards-grid">
-                        <div class="item-card"><h4>Madani Qaida</h4><p>Dawat-e-Islami</p></div>
-                        <div class="item-card"><h4>Tafseer Sirat-ul-Jinan</h4><p>Mufti Kazim Ali</p></div>
-                        <div class="item-card"><h4>Qanoon-e-Shariat</h4><p>Allama Amjad Ali</p></div>
-                        <div class="item-card"><h4>Islam Ki Bunyadi Batein</h4><p>Part 1, 2, 3</p></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 11. CERTIFICATES -->
-            <section id="certificatesModule" class="view-section">
-                <div class="certificate-box">
-                    <h2 style="color: var(--primary-dark); font-size: 26px;">RAZA ONLINE ACADEMY</h2>
-                    <p style="margin: 8px 0; font-weight: bold; color: var(--gold);">CERTIFICATE OF COMPLETION</p>
-                    <p style="font-size: 15px; margin: 15px 0;">This is proudly presented to</p>
-                    <h3 style="font-size: 22px; color: var(--primary-green); border-bottom: 2px solid var(--gold); display: inline-block; padding: 0 15px;">Junaid Raza (ROA-1001)</h3>
-                    <p style="margin-top: 15px;">For successfully completing <strong>Nazra Quran & Tajweed Course</strong> with Grade Mumtaz.</p>
-                </div>
-            </section>
-
-        </main>
+        <ul class="nav-links">
+            <li class="active" onclick="switchTab('attendance', this)"><a href="#">📅 Daily Sabaq & Attendance</a></li>
+            <li onclick="switchTab('directory', this)"><a href="#">👥 Student Directory</a></li>
+            <li onclick="switchTab('ibadat', this)"><a href="#">🕌 Comprehensive Ibadat</a></li>
+            <li onclick="switchTab('fees', this)"><a href="#">💳 Fee, Zakat & Donations</a></li>
+            <li onclick="switchTab('summaries', this)"><a href="#">📊 Automatic Summaries</a></li>
+            <li onclick="switchTab('exams', this)"><a href="#">📝 Exam Results Portal</a></li>
+        </ul>
     </div>
 
-    <!-- Login Modal -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal-card">
-            <h2 id="modalTitle" style="color: var(--primary-dark); margin-bottom: 8px;">Login Portal</h2>
-            <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 15px;">Enter credentials to access Raza Online Academy</p>
-            <div class="form-group" style="margin-bottom: 12px;">
-                <input type="text" id="loginUser" placeholder="Username or Student ID">
+    <div class="main-content">
+        
+        <div class="header">
+            <h2 id="headerTitle">Daily Sabaq & Attendance Management</h2>
+            <div class="session-badge">Session: 2026-2027</div>
+        </div>
+
+        <!-- 1. ATTENDANCE & SABAQ SECTION WITH CLASS START & END TIME -->
+        <div id="attendance" class="content-section active">
+            <div class="card">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Select Month (12 Months):</label>
+                        <select id="feeMonthSelect">
+                            <option value="January 2026">January 2026</option>
+                            <option value="February 2026">February 2026</option>
+                            <option value="March 2026">March 2026</option>
+                            <option value="April 2026">April 2026</option>
+                            <option value="May 2026">May 2026</option>
+                            <option value="June 2026">June 2026</option>
+                            <option value="July 2026">July 2026</option>
+                            <option value="August 2026">August 2026</option>
+                            <option value="September 2026">September 2026</option>
+                            <option value="October 2026">October 2026</option>
+                            <option value="November 2026" selected>November 2026</option>
+                            <option value="December 2026">December 2026</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Student:</label>
+                        <select id="studentSelect">
+                            <option value="STU-004 - Junaid">STU-004 - Junaid (Father: Muhammad Ali)</option>
+                            <option value="STU-001 - Ahmed">STU-001 - Ahmed (Father: Tariq Mahmood)</option>
+                            <option value="STU-002 - Fatima">STU-002 - Fatima (Father: Zubair Ahmed)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Attendance Status:</label>
+                        <select id="attendanceStatus" onchange="toggleAttendanceDateTime()">
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                            <option value="Leave">Leave</option>
+                            <option value="Weekend">Weekend</option>
+                            <option value="Skip Day">Skip Day</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Class Start Time & Class End Time Fields -->
+                    <div class="form-group" id="attendanceDateGroup">
+                        <label>Class Start Time & Date:</label>
+                        <input type="datetime-local" id="classStartTimeInput">
+                    </div>
+                    <div class="form-group" id="attendanceEndDateGroup">
+                        <label>Class End Time & Date:</label>
+                        <input type="datetime-local" id="classEndTimeInput">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sabaq Details:</label>
+                        <input type="text" id="sabaqInput" placeholder="Enter Sabaq details...">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="saveAttendance()">💾 Save Attendance & Update Monthly Summary</button>
             </div>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <input type="password" id="loginPass" placeholder="Password">
+
+            <div class="table-container">
+                <div class="table-title">Attendance & Sabaq History</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID & Name</th>
+                            <th>Attendance Status</th>
+                            <th>Class Start & End Time</th>
+                            <th>Sabaq Details</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceTableBody">
+                        <tr>
+                            <td><strong>STU-004 - Junaid</strong></td>
+                            <td><span style="color: #059669; font-weight: bold;">Present</span></td>
+                            <td>2026-09-24 [11:00 AM - 12:00 PM]</td>
+                            <td>Para 3 (Surah Al-Baqarah)</td>
+                            <td class="action-btns">
+                                <button class="btn-edit" onclick="editRow(this)">Edit</button>
+                                <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <button class="btn-gold" style="width: 100%;" onclick="executeLogin()">Secure Login</button>
-            <button class="btn-top" style="background: none; color: var(--text-muted); margin-top: 10px; border: none; cursor:pointer;" onclick="closeLoginModal()">Cancel</button>
+        </div>
+
+        <!-- 2. STUDENT DIRECTORY SECTION -->
+        <div id="directory" class="content-section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Add New Student</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Student Name:</label>
+                        <input type="text" id="studentNameInput" placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Father's Name:</label>
+                        <input type="text" id="fatherNameInput" placeholder="Enter father's name">
+                    </div>
+                    <div class="form-group">
+                        <label>Country / Currency Option:</label>
+                        <select id="studentCountry">
+                            <option value="All Countries">🌐 All Countries (Global)</option>
+                            <option value="Pakistan">Pakistan (PKR)</option>
+                            <option value="USA">USA (USD)</option>
+                            <option value="UK">UK (GBP)</option>
+                            <option value="UAE">UAE (AED)</option>
+                            <option value="Saudi Arabia">Saudi Arabia (SAR)</option>
+                            <option value="Canada">Canada (CAD)</option>
+                            <option value="Australia">Australia (AUD)</option>
+                            <option value="India">India (INR)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Student Portal ID:</label>
+                        <input type="text" id="studentIdInput" value="STU-005" readonly>
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="addStudent()">Save Student Profile</button>
+            </div>
+
+            <div class="table-container">
+                <div class="table-title">Registered Students Directory</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Father's Name</th>
+                            <th>Country</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="directoryTableBody">
+                        <tr>
+                            <td><strong>STU-004</strong></td>
+                            <td>Junaid</td>
+                            <td>Muhammad Ali</td>
+                            <td>Pakistan</td>
+                            <td class="action-btns">
+                                <button class="btn-edit" onclick="editDirectoryRow(this)">Edit</button>
+                                <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. COMPREHENSIVE IBADAT SECTION -->
+        <div id="ibadat" class="content-section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Log Daily Ibadat, Tilawat & Werd</h3>
+                <div class="form-group" style="margin-bottom: 15px; max-width: 300px;">
+                    <label>Select Student:</label>
+                    <select id="ibadatStudent">
+                        <option value="STU-004 - Junaid">STU-004 - Junaid</option>
+                        <option value="STU-001 - Ahmed">STU-001 - Ahmed</option>
+                    </select>
+                </div>
+
+                <div class="ibadat-category-title">🕌 5 Namaz Attendance</div>
+                <div class="ibadat-grid">
+                    <div class="ibadat-item"><label>1. Fajr Namaz:</label><select id="namazFajr"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item"><label>2. Zuhar Namaz:</label><select id="namazZuhar"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item"><label>3. Asr Namaz:</label><select id="namazAsr"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item"><label>4. Maghrib Namaz:</label><select id="namazMaghrib"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                    <div class="ibadat-item" style="grid-column: span 2;"><label>5. Isha Namaz:</label><select id="namazIsha" style="width: 150px;"><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                </div>
+
+                <button type="button" class="btn-primary" onclick="saveIbadatLog()" style="margin-top: 10px;">💾 Save Complete Ibadat Log</button>
+            </div>
+        </div>
+
+        <!-- 4. FEE VOUCHERS (WITH ALL COUNTRIES) & SEPARATE DONATIONS SECTION -->
+        <div id="fees" class="content-section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Fee Voucher & Advance Fee (12 Months, All Countries & Zakat/Sadqat inside Fee)</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Voucher Type:</label>
+                        <select id="voucherType" onchange="toggleFamilySelection()">
+                            <option value="Single Student Fee">Single Student Fee</option>
+                            <option value="Combined Family Fee">Combined Family Fee</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="studentSelectionGroup">
+                        <label>Select Student:</label>
+                        <select id="feeStudentSelect">
+                            <option value="Junaid (Father: Muhammad Ali)">Junaid (Father: Muhammad Ali)</option>
+                            <option value="Ahmed (Father: Tariq Mahmood)">Ahmed (Father: Tariq Mahmood)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="familySelectionGroup" style="display:none;">
+                        <label>Add Multiple Students (Combined Family):</label>
+                        <div style="display: flex; gap: 8px; margin-bottom: 5px;">
+                            <input type="text" id="familyStudent1" placeholder="Student 1 Name" value="Junaid">
+                            <input type="text" id="familyStudent2" placeholder="Student 2 Name" value="Ahmed">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fee Month (12 Months Selection):</label>
+                        <select id="voucherMonth">
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November" selected>November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Country / Currency (All Countries Added):</label>
+                        <select id="voucherCountry" onchange="updateCurrencySymbol()">
+                            <option value="All Countries">🌐 All Countries (Global Option)</option>
+                            <option value="Pakistan">Pakistan (PKR)</option>
+                            <option value="USA">USA (USD)</option>
+                            <option value="UK">UK (GBP)</option>
+                            <option value="UAE">UAE (AED)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fee Category (Fee / Advance Fee):</label>
+                        <select id="feeCategoryType">
+                            <option value="Regular Fee">Regular Fee</option>
+                            <option value="Advance Fee">Advance Fee</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fee Amount (<span id="currLbl">PKR</span>):</label>
+                        <input type="number" id="feeAmount" placeholder="Enter fee amount">
+                    </div>
+                    <div class="form-group">
+                        <label>Zakat / Fitra / Sadqat (Inside Fee Column):</label>
+                        <input type="number" id="zakatAmount" value="0" placeholder="Optional amount">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="generateVoucher()">🎫 Generate Auto Fee Voucher</button>
+            </div>
+
+            <!-- Dedicated Separate Donation Portal Section -->
+            <div class="card" style="border-color: #0f766e; background: #fafdfb;">
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">🌟 Dedicated Donation Column (Completely Separate from Fee)</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Donor Name:</label>
+                        <input type="text" id="donorName" placeholder="Enter donor name or anonymous">
+                    </div>
+                    <div class="form-group">
+                        <label>Donation Type:</label>
+                        <select id="donationType">
+                            <option value="General Donation">General Donation</option>
+                            <option value="Sadqa">Sadqa</option>
+                            <option value="Zakat">Zakat</option>
+                            <option value="Academy Fund">Academy Fund</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Country / Currency:</label>
+                        <select id="donationCountry">
+                            <option value="All Countries">All Countries</option>
+                            <option value="Pakistan">Pakistan (PKR)</option>
+                            <option value="USA">USA (USD - Rate: 280)</option>
+                            <option value="UK">UK (GBP - Rate: 350)</option>
+                            <option value="UAE">UAE (AED - Rate: 76)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Donation Amount:</label>
+                        <input type="number" id="donationAmount" placeholder="Enter donation amount">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="saveExternalDonation()">📥 Record Separate Donation</button>
+            </div>
+
+            <div class="table-container">
+                <div class="table-title">Generated Vouchers & Admin Financial Record (Auto Converted to PKR)</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Voucher ID</th>
+                            <th>Type & Name</th>
+                            <th>Month</th>
+                            <th>Fee Type</th>
+                            <th>Original Paid</th>
+                            <th>Admin PKR Converted View</th>
+                            <th>Zakat/Sadqat</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feeTableBody">
+                        <tr>
+                            <td><strong>VOC-1001</strong></td>
+                            <td>Single Fee (Junaid)</td>
+                            <td>November</td>
+                            <td>Regular Fee</td>
+                            <td>5,000 PKR</td>
+                            <td><strong>5,000 PKR</strong></td>
+                            <td>500 PKR</td>
+                            <td class="action-btns"><button class="btn-delete" onclick="deleteRow(this)">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <div class="table-title">Separate Donations Records</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Donor Name</th>
+                            <th>Type</th>
+                            <th>Original Amount</th>
+                            <th>Converted PKR Amount (Admin View)</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="donationTableBody">
+                        <tr>
+                            <td>Anonymous</td>
+                            <td>General Donation</td>
+                            <td>$100 USD</td>
+                            <td><strong>28,000 PKR</strong></td>
+                            <td>24/09/2026</td>
+                            <td class="action-btns"><button class="btn-delete" onclick="deleteRow(this)">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 5. AUTOMATIC SUMMARIES SECTION -->
+        <div id="summaries" class="content-section">
+            <div class="table-container">
+                <div class="table-title">📈 Automatic Monthly Attendance Summary</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Total Days Marked</th>
+                            <th>Present</th>
+                            <th>Absent</th>
+                            <th>Leave</th>
+                            <th>Attendance %</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceSummaryBody">
+                        <tr>
+                            <td><strong>Junaid</strong></td>
+                            <td>1</td>
+                            <td><span style="color: #059669; font-weight: bold;">1</span></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><strong>100%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 6. EXAM RESULTS SECTION -->
+        <div id="exams" class="content-section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: var(--primary-dark);">Exam Results & Evaluation (100 Marks)</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Student:</label>
+                        <select id="examStudentSelect">
+                            <option value="Junaid">Junaid</option>
+                            <option value="Ahmed">Ahmed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Obtained Score (Out of 100):</label>
+                        <input type="number" id="examScore" placeholder="Enter score">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" onclick="calculateResult()">Generate Result Card & Update Summary</button>
+            </div>
+            <div class="card" id="resultCardDisplay" style="display:none; background:#f0fdf4; border-color:#86efac;">
+                <h4 style="color:#166534; margin-bottom:10px;">Automated Result Card</h4>
+                <p id="resultDetails" style="font-size:14px; font-weight:600; color:#14532d;"></p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- STUDENT VIEW VOUCHER MODAL -->
+    <div id="voucherModal">
+        <div class="voucher-box" id="voucherPrintArea">
+            <div style="text-align: center; border-bottom: 2px dashed #0f766e; padding-bottom: 15px; margin-bottom: 15px;">
+                <h2 style="color: #06281b; font-size: 22px;">RAZA ONLINE ACADEMY</h2>
+                <p style="font-size: 13px; color: #6b7280; font-weight: bold;">Official Fee & Contribution Voucher</p>
+            </div>
+            <div id="voucherModalBody" style="font-size: 14px; line-height: 1.8; color: #1f2937;">
+                <!-- Dynamically populated details -->
+            </div>
+            <div style="margin-top: 25px; display: flex; justify-content: space-between;">
+                <button class="btn-primary" onclick="closeVoucherModal()">Close / Print Voucher</button>
+            </div>
         </div>
     </div>
 
     <script>
-        let currentRole = '';
+        let studentCounter = 5;
 
-        function switchView(viewId, element) {
-            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.sidebar-menu li').forEach(li => li.classList.remove('active'));
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
             
-            const targetSec = document.getElementById(viewId);
-            if(targetSec) targetSec.classList.add('active');
-            if(element) element.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+            el.classList.add('active');
+
+            const titles = {
+                'attendance': 'Daily Sabaq & Attendance Management',
+                'directory': 'Student Directory Management',
+                'ibadat': 'Comprehensive Ibadat & Namaz Tracking',
+                'fees': 'Fee Vouchers, Zakat & Donations Management',
+                'summaries': 'Automatic Monthly Attendance & Exam Summaries',
+                'exams': 'Exam Results & Announcement Portal'
+            };
+            document.getElementById('headerTitle').innerText = titles[tabId];
         }
 
-        function toggleLanguage() {
-            let body = document.body;
-            let currentDir = body.getAttribute('dir');
-            body.setAttribute('dir', currentDir === 'ltr' ? 'rtl' : 'ltr');
+        function toggleAttendanceDateTime() {
+            let status = document.getElementById('attendanceStatus').value;
+            let dateGroup = document.getElementById('attendanceDateGroup');
+            let endDateGroup = document.getElementById('attendanceEndDateGroup');
+            if(status === 'Present') {
+                dateGroup.style.display = 'block';
+                endDateGroup.style.display = 'block';
+            } else {
+                dateGroup.style.display = 'none';
+                endDateGroup.style.display = 'none';
+            }
         }
 
-        function openLoginModal(role) {
-            currentRole = role;
-            document.getElementById('modalTitleinnerText', `${role} Secure Login`);
-            document.getElementById('modalTitle').innerText = `${role} Secure Login`;
-            document.getElementById('loginModal').style.display = 'flex';
+        function toggleFamilySelection() {
+            let type = document.getElementById('voucherType').value;
+            if(type === 'Combined Family Fee') {
+                document.getElementById('studentSelectionGroup').style.display = 'none';
+                document.getElementById('familySelectionGroup').style.display = 'block';
+            } else {
+                document.getElementById('studentSelectionGroup').style.display = 'block';
+                document.getElementById('familySelectionGroup').style.display = 'none';
+            }
         }
 
-        function closeLoginModal() {
-            document.getElementById('loginModal').style.display = 'none';
+        function updateCurrencySymbol() {
+            let select = document.getElementById('voucherCountry');
+            let country = select.value;
+            let curr = 'PKR';
+            if(country === 'USA') curr = 'USD';
+            else if(country === 'UK') curr = 'GBP';
+            else if(country === 'UAE') curr = 'AED';
+            else if(country === 'All Countries') curr = 'Global (PKR default)';
+            document.getElementById('currLbl').innerText = curr;
         }
 
-        function executeLogin() {
-            closeLoginModal();
-            if(currentRole === 'Admin') switchView('adminDashboard', document.querySelectorAll('.sidebar-menu li')[2]);
-            else if(currentRole === 'Teacher') switchView('teacherDashboard', document.querySelectorAll('.sidebar-menu li')[3]);
-            else switchView('studentDashboard', document.querySelectorAll('.sidebar-menu li')[4]);
+        function addStudent() {
+            let name = document.getElementById('studentNameInput').value.trim();
+            let father = document.getElementById('fatherNameInput').value.trim();
+            let country = document.getElementById('studentCountry').value;
+            
+            if (!name || !father) { 
+                alert('Baraye meharbani Student aur Father ka naam likhein!'); 
+                return; 
+            }
+            
+            let id = `STU-00${studentCounter++}`;
+            
+            let tbody = document.getElementById('directoryTableBody');
+            let newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><strong>${id}</strong></td>
+                <td>${name}</td>
+                <td>${father}</td>
+                <td>${country}</td>
+                <td class="action-btns">
+                    <button class="btn-edit" onclick="editDirectoryRow(this)">Edit</button>
+                    <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(newRow);
+            
+            let studentSelect = document.getElementById('studentSelect');
+            let opt = document.createElement('option');
+            opt.value = `${id} - ${name}`;
+            opt.textContent = `${id} - ${name} (Father: ${father})`;
+            studentSelect.appendChild(opt);
+
+            let feeStudent = document.getElementById('feeStudentSelect');
+            let opt2 = document.createElement('option');
+            opt2.value = `${name} (Father: ${father})`;
+            opt2.textContent = `${name} (Father: ${father})`;
+            feeStudent.appendChild(opt2);
+
+            let ibadatStudent = document.getElementById('ibadatStudent');
+            let opt3 = document.createElement('option');
+            opt3.value = `${id} - ${name}`;
+            opt3.textContent = `${id} - ${name}`;
+            ibadatStudent.appendChild(opt3);
+
+            let examStudent = document.getElementById('examStudentSelect');
+            let opt4 = document.createElement('option');
+            opt4.value = name;
+            opt4.textContent = name;
+            examStudent.appendChild(opt4);
+
+            document.getElementById('studentIdInput').value = `STU-00${studentCounter}`;
+            document.getElementById('studentNameInput').value = '';
+            document.getElementById('fatherNameInput').value = '';
+            
+            alert('Student profile successfully save ho gayi hai!');
         }
 
-        function submitAdmissionApplication() {
-            let name = document.getElementById('admName').value;
-            if(!name) { alert('Please enter student name!'); return; }
-            alert('Admission application submitted successfully! Pending admin approval.');
-            switchView('landing', document.querySelectorAll('.sidebar-menu li')[0]);
+        function generateVoucher() {
+            let vType = document.getElementById('voucherType').value;
+            let nameOrFamily = "";
+            if(vType === 'Single Student Fee') {
+                nameOrFamily = document.getElementById('feeStudentSelect').value;
+            } else {
+                let s1 = document.getElementById('familyStudent1').value.trim();
+                let s2 = document.getElementById('familyStudent2').value.trim();
+                let list = [s1, s2].filter(Boolean);
+                nameOrFamily = list.join(', ') + " (Family)";
+            }
+
+            let month = document.getElementById('voucherMonth').value;
+            let countrySelect = document.getElementById('voucherCountry');
+            let country = countrySelect.value;
+            let feeCategory = document.getElementById('feeCategoryType').value;
+            
+            let curr = 'PKR';
+            let rate = 1;
+            if(country === 'USA') { curr = 'USD'; rate = 280; }
+            else if(country === 'UK') { curr = 'GBP'; rate = 350; }
+            else if(country === 'UAE') { curr = 'AED'; rate = 76; }
+
+            let amount = parseFloat(document.getElementById('feeAmount').value) || 0;
+            let zakat = parseFloat(document.getElementById('zakatAmount').value) || 0;
+            
+            if(amount <= 0) { alert('Baraye meharbani sahi fee amount darj karein!'); return; }
+
+            let convertedPKR = (amount * rate).toFixed(0);
+            let convertedZakatPKR = (zakat * rate).toFixed(0);
+
+            let modalBody = document.getElementById('voucherModalBody');
+            modalBody.innerHTML = `
+                <p><strong>Voucher Type:</strong> ${vType}</p>
+                <p><strong>Student / Students:</strong> ${nameOrFamily}</p>
+                <p><strong>Fee Month:</strong> ${month}</p>
+                <p><strong>Fee Type:</strong> ${feeCategory}</p>
+                <p><strong>Country Option:</strong> ${country}</p>
+                <p><strong>Fee Amount:</strong> ${amount} ${curr}</p>
+                ${zakat > 0 ? `<p><strong>Zakat / Sadqat:</strong> ${zakat}${curr}</p>` : ''}
+                <hr style="margin: 10px 0; border:0; border-top:1px solid #e5e7eb;">
+                <p style="color: #0f766e; font-weight: bold;">Status: Auto-Generated Voucher Successfully Verified</p>
+            `;
+            document.getElementById('voucherModal').style.display = 'flex';
+
+            let tbody = document.getElementById('feeTableBody');
+            let newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><strong>VOC-10${Math.floor(Math.random()*90+10)}</strong></td>
+                <td>${vType} (${nameOrFamily.split(' ')[0]})</td>
+                <td>${month}</td>
+                <td>${feeCategory}</td>
+                <td>${amount} ${curr}</td>
+                <td><strong>${Number(convertedPKR).toLocaleString()} PKR</strong></td>
+                <td>${zakat > 0 ? zakat + ' ' + curr + ' (' + Number(convertedZakatPKR).toLocaleString() + ' PKR)' : '0'}</td>
+                <td class="action-btns"><button class="btn-delete" onclick="deleteRow(this)">Delete</button></td>
+            `;
+            tbody.insertBefore(newRow, tbody.firstChild);
         }
 
-        function approveAdmission(id, name) {
-            alert(`Admission Approved! Student ID generated: ${id}`);
-            document.getElementById('adminAdmissionTable').innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--success);">No pending applications</td></tr>`;
-            document.getElementById('statPendingAdmissions').innerText = '0';
+        function saveExternalDonation() {
+            let donor = document.getElementById('donorName').value.trim() || "Anonymous";
+            let type = document.getElementById('donationType').value;
+            let country = document.getElementById('donationCountry').value;
+            let amount = parseFloat(document.getElementById('donationAmount').value) || 0;
+            
+            if(amount <= 0) { alert('Baraye meharbani donation amount darj karein!'); return; }
+
+            let rate = country === 'USA' ? 280 : (country === 'UK' ? 350 : (country === 'UAE' ? 76 : 1));
+            let curr = country === 'USA' ? 'USD' : (country === 'UK' ? 'GBP' : (country === 'UAE' ? 'AED' : 'PKR'));
+            let pkrTotal = (amount * rate).toFixed(0);
+
+            let tbody = document.getElementById('donationTableBody');
+            let newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><strong>${donor}</strong></td>
+                <td>${type}</td>
+                <td>${amount} ${curr}</td>
+                <td><strong>${Number(pkrTotal).toLocaleString()} PKR</strong></td>
+                <td>${new Date().toLocaleDateString()}</td>
+                <td class="action-btns"><button class="btn-delete" onclick="deleteRow(this)">Delete</button></td>
+            `;
+            tbody.insertBefore(newRow, tbody.firstChild);
+            document.getElementById('donorName').value = '';
+            document.getElementById('donationAmount').value = '';
+            alert('Separate Donation successfully record ho gayi hai!');
         }
 
-        function saveAttendanceRecord() {
-            let id = document.getElementById('attStudentId').value;
-            let status = document.getElementById('attStatus').value;
-            alert(`Attendance (${status}) and Daily Lesson successfully saved for student ${id}!`);
+        function closeVoucherModal() {
+            document.getElementById('voucherModal').style.display = 'none';
+        }
+
+        function saveAttendance() {
+            let student = document.getElementById('studentSelect').value;
+            let status = document.getElementById('attendanceStatus').value;
+            let startVal = document.getElementById('classStartTimeInput').value;
+            let endVal = document.getElementById('classEndTimeInput').value;
+            let sabaq = document.getElementById('sabaqInput').value.trim() || "No Sabaq Provided";
+            let tbody = document.getElementById('attendanceTableBody');
+            
+            let statusColor = '#1f2937';
+            if (status === 'Present') statusColor = '#059669';
+            else if (status === 'Absent') statusColor = '#dc2626';
+            else if (status === 'Leave') statusColor = '#d97706';
+            else if (status === 'Weekend') statusColor = '#2563eb';
+            else if (status === 'Skip Day') statusColor = '#7c3aed';
+
+            let timingDisplay = (status === 'Present' && startVal && endVal) ? `${startVal.replace('T', ' ')} to ${endVal.replace('T', ' ')}` : 'N/A';
+            
+            let newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><strong>${student}</strong></td>
+                <td><span style="color: ${statusColor}; font-weight: bold;">${status}</span></td>
+                <td>${timingDisplay}</td>
+                <td>${sabaq}</td>
+                <td class="action-btns">
+                    <button class="btn-edit" onclick="editRow(this)">Edit</button>
+                    <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                </td>
+            `;
+            tbody.insertBefore(newRow, tbody.firstChild);
+            document.getElementById('sabaqInput').value = '';
+            alert('Attendance & Class Timings saved successfully!');
+        }
+
+        function calculateResult() {
+            let score = parseInt(document.getElementById('examScore').value);
+            if (isNaN(score) || score < 0 || score > 100) {
+                alert('Baraye meharbani 0 se 100 ke darmiyan sahi score darj karein!');
+                return;
+            }
+            let tier = '';
+            if (score >= 85) { tier = 'Mumtaz (Excellent)'; }
+            else if (score >= 70) { tier = 'Bhtar (Very Good)'; }
+            else if (score >= 60) { tier = 'Munasib (Good / Satisfactory)'; }
+            else { tier = 'Needs Improvement'; }
+
+            document.getElementById('resultCardDisplay').style.display = 'block';
+            document.getElementById('resultDetails').innerText = `Score: ${score}/100 | Performance Tier: ${tier} | Status: Passed`;
+            alert('Exam Result generated and summary updated successfully!');
+        }
+
+        function deleteRow(btn) {
+            let row = btn.closest('tr');
+            if (confirm('Kya aap is record ko delete karna chahte hain?')) { row.remove(); }
+        }
+
+        function editRow(btn) {
+            let row = btn.closest('tr');
+            let sabaqCell = row.cells[3];
+            let newSabaq = prompt("Edit Sabaq Details:", sabaqCell.innerText);
+            if (newSabaq !== null && newSabaq.trim() !== "") {
+                sabaqCell.innerText = newSabaq.trim();
+                alert('Record updated successfully!');
+            }
+        }
+
+        function editDirectoryRow(btn) {
+            let row = btn.closest('tr');
+            let nameCell = row.cells[1];
+            let newName = prompt("Edit Student Name:", nameCell.innerText);
+            if (newName !== null && newName.trim() !== "") {
+                nameCell.innerText = newName.trim();
+                alert('Student profile update ho gayi!');
+            }
         }
     </script>
 </body>
